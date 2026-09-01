@@ -912,7 +912,7 @@
                     <p class="subtitle">HALO, SAYA</p>
 
                     <h1>
-                        D F <span> F</span>
+                        D F <span>R</span>
                     </h1>
 
                     <h2>Teacher, Web Developer, System Analist</h2>
