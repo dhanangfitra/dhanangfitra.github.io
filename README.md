@@ -901,14 +901,7 @@
     <main>
 
         <!-- HERO -->
-        <section id="home" class="hero">
-            <div class="container hero-content">
-
-               
-                
-            </div>
-        </section>
-
+        
 
         <!-- ABOUT -->
         <section id="about" class="section about">
