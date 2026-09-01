@@ -904,40 +904,7 @@
         <section id="home" class="hero">
             <div class="container hero-content">
 
-                <div class="hero-text">
-                    <p class="subtitle">HALO, SAYA</p>
-
-                    <h1>
-                        D F <span>R</span>
-                    </h1>
-
-                    <h2>Teacher, Web Developer, System Analist</h2>
-                     <p class="hero-description">
-                        <b>I am a software engineering and games teacher at SMKN 4 Malang</b><br>
-                        Dhanang Fitra Riaji (DFR) is a Software Engineering educator with experience in web application
-                        development,
-                        databases, and technology-based learning. He is proficient in HTML, CSS, JavaScript, PHP,
-                        Laravel, and
-                        MySQL. He is actively developing LMSs, learning modules, and project-based learning to support
-                        innovative, industry-focused vocational education.
-                    </p>
-                   
-
-                    <div class="hero-buttons">
-                        <a href="#portfolio" class="btn btn-primary">
-                            Lihat Portofolio
-                        </a>
-
-                        <a href="#contact" class="btn btn-outline">
-                            Hubungi Saya
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="image-frame">
-                        <img src="https://6a964bcf3db6a220b863f9b5.imgix.net/sandbox/dfr-profile.png" alt="Foto profil">
-                    </div>
-                </div>
+               
                 
             </div>
         </section>
@@ -955,7 +922,7 @@
                 <div class="about-grid">
 
                     <div class="about-image">
-                        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72" alt="Workspace">
+                        <img src="https://6a964bcf3db6a220b863f9b5.imgix.net/sandbox/dfr-profile.png" alt="Foto profil">
                     </div>
 
                     <div class="about-text">
