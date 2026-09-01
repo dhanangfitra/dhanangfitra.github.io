@@ -913,15 +913,7 @@
 
                     <h2>Teacher, Web Developer, System Analist</h2>
 
-                    <p class="hero-description">
-                        <b>I am a software engineering and games teacher at SMKN 4 Malang</b><br>
-                        Dhanang Fitra Riaji (DFR) is a Software Engineering educator with experience in web application
-                        development,
-                        databases, and technology-based learning. He is proficient in HTML, CSS, JavaScript, PHP,
-                        Laravel, and
-                        MySQL. He is actively developing LMSs, learning modules, and project-based learning to support
-                        innovative, industry-focused vocational education.
-                    </p>
+                   
 
                     <div class="hero-buttons">
                         <a href="#portfolio" class="btn btn-primary">
