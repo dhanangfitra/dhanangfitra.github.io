@@ -1129,7 +1129,7 @@
 
                         <div class="timeline-content">
                             <h3>Web Developer</h3>
-                            <h4>Nama Perusahaan</h4>
+                            <h4>ManggisSoft</h4>
                             <p>
                                 Mengembangkan dan memelihara website
                                 perusahaan serta membuat berbagai
@@ -1146,7 +1146,7 @@
 
                         <div class="timeline-content">
                             <h3>UI Designer</h3>
-                            <h4>Nama Perusahaan</h4>
+                            <h4>ManggisSoft</h4>
                             <p>
                                 Membuat desain antarmuka dan meningkatkan
                                 pengalaman pengguna untuk berbagai produk digital.
