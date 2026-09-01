@@ -919,7 +919,7 @@
                     </div>
 
                     <div class="about-text">
-                        <h3>Saya senang menciptakan sesuatu yang bermakna.</h3>
+                        <h3><i>"Saya senang menciptakan sesuatu yang bermakna."</i></h3>
 
                         <p>
 
@@ -927,13 +927,14 @@
                             dengan pengalaman dalam pengembangan aplikasi web, basis data, dan pembelajaran berbasis
                             teknologi. <br>
                             Saya menguasai HTML, CSS, JavaScript,
-                            PHP, Laravel, dan MySQL. Beliau aktif mengembangkan LMS, modul pembelajaran, dan
+                            PHP, Framework (Laravel, CodeIgniter) dan MySQL.<br>
+                            Saya juga aktif mengembangkan LMS, modul pembelajaran, dan
                             pembelajaran berbasis proyek
                             untuk mendukung pendidikan kejuruan yang inovatif dan berfokus pada industri.
                         </p>
 
                         <p>
-                            Saya percaya bahwa sebuah website bukan hanya harus
+                            Saya percaya bahwa sebuah aplikasi baik website maupun mobile bukan hanya harus
                             terlihat menarik, tetapi juga mudah digunakan,
                             cepat, dan mampu menyampaikan pesan dengan jelas.
                         </p>
@@ -989,10 +990,9 @@
 
                     <div class="skill-card">
                         <div class="skill-icon">02</div>
-                        <h3>Web Design</h3>
+                        <h3>Web Developer</h3>
                         <p>
-                            Membuat desain antarmuka yang sederhana,
-                            profesional, dan user-friendly.
+                            Mengembangkan aplikasi berbasi Website.
                         </p>
                     </div>
 
