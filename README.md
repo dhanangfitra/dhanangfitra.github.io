@@ -923,9 +923,10 @@
 
                         <p>
 
-                            Saya adalah guru rekayasa perangkat lunak dan game di SMKN 4 Malang.
+                            Saya adalah guru Pengembangan Perangkat Lunak dan Gim (PPLG) di SMKN 4 Malang.
                             dengan pengalaman dalam pengembangan aplikasi web, basis data, dan pembelajaran berbasis
-                            teknologi. Beliau mahir dalam HTML, CSS, JavaScript,
+                            teknologi. <br>
+                            Saya menguasai HTML, CSS, JavaScript,
                             PHP, Laravel, dan MySQL. Beliau aktif mengembangkan LMS, modul pembelajaran, dan
                             pembelajaran berbasis proyek
                             untuk mendukung pendidikan kejuruan yang inovatif dan berfokus pada industri.
