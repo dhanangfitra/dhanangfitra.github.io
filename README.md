@@ -933,7 +933,11 @@
                         </a>
                     </div>
                 </div>
-
+                <div class="hero-image">
+                    <div class="image-frame">
+                        <img src="https://6a964bcf3db6a220b863f9b5.imgix.net/sandbox/dfr-profile.png" alt="Foto profil">
+                    </div>
+                </div>
                 
             </div>
         </section>
