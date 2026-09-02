@@ -1228,10 +1228,10 @@
     <footer class="footer">
         <div class="container footer-content">
             <p>
-                © 2026 Nama Anda. All Rights Reserved.
+                © 2026 dfr. All Rights Reserved.
             </p>
 
-            <a href="#home">
+            <a href="#about">
                 Kembali ke atas ↑
             </a>
         </div>
