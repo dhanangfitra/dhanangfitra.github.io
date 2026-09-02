@@ -870,7 +870,7 @@
     <header class="header">
         <nav class="navbar container">
 
-            <a href="#home" class="logo">
+            <a href="#about" class="logo">
                 D F R<span> . </span>
             </a>
 
@@ -885,7 +885,7 @@
 
             <!-- Navigation -->
             <div class="nav-menu">
-                <a href="#home">Home</a>
+                <a href="#about">Home</a>
                 <a href="#about">Tentang</a>
                 <a href="#skills">Keahlian</a>
                 <a href="#portfolio">Portofolio</a>
