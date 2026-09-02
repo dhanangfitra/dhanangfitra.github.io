@@ -1232,7 +1232,7 @@
             </p>
 
             <a href="#about">
-                <span class="contact-icon">↑</span>
+                Kembali ke atas ↑
             </a>
         </div>
     </footer>
