@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengenalan Struktur Dasar HTML - Misi Pertamamu Menjadi Web Developer!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4F46E5',
+                            cyan: '#06B6D4',
+                            purple: '#8B5CF6',
+                            yellow: '#FBBF24',
+                            green: '#22C55E',
+                            red: '#F43F5E',
+                            bg: '#F8FAFC',
+                            dark: '#172033',
+                            card: '#FFFFFF'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F8FAFC;
+            color: #172033;
+            overflow: hidden; /* Mencegah scrollbar utama halaman */
+            user-select: none;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Ambient Animated Grid Pattern */
+        .bg-grid-pattern {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
+                linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+        }
+
+        /* Custom Inner Scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Code Highlighting Glow */
+        .code-highlight {
+            background: rgba(79, 70, 229, 0.15);
+            border-left: 4px solid #4F46E5;
+            transition: all 0.3s ease;
+        }
+
+        /* Drag & Drop Styles */
+        .draggable-source {
+            cursor: grab;
+            touch-action: none;
+        }
+        .draggable-source:active {
+            cursor: grabbing;
+        }
+        .drop-target-active {
+            background-color: #EEF2FF !important;
+            border-color: #4F46E5 !important;
+            border-style: solid !important;
+        }
+
+        /* Speech Bubble Arrow */
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 24px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #ffffff transparent;
+            display: block;
+            width: 0;
+        }
+
+        /* Respect Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-grid-pattern h-screen w-screen flex flex-col justify-between relative selection:bg-brand-blue selection:text-white overflow-hidden">
+
+    <!-- TOP HEADER / NAV BAR -->
+    <header id="main-header" class="shrink-0 bg-white/95 backdrop-blur-md border-b border-slate-100 z-40 shadow-sm h-14 sm:h-16 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center justify-between gap-2">
+            <!-- Brand & Logo -->
+            <div class="flex items-center gap-2 cursor-pointer" onclick="nav('home')">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-blue-500 flex items-center justify-center text-white shadow-md font-mono font-black text-base">
+                    &lt;/&gt;
+                </div>
+                <h1 class="font-extrabold text-slate-900 text-sm sm:text-base tracking-tight flex items-center gap-1">
+                    Belajar <span class="text-indigo-600">HTML</span>
+                </h1>
+            </div>
+
+            <!-- Navigation Pills Bar Center -->
+            <nav id="nav-bar-pills" class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1 rounded-full border border-slate-200/60">
+                <button onclick="nav('home')" id="nav-btn-home" class="nav-item flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-indigo-600 text-white shadow-sm transition">
+                    <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
+                </button>
+                <button onclick="nav('apersepsi')" id="nav-btn-apersepsi" class="nav-item flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-slate-600 hover:text-indigo-600 transition">
+                    <i data-lucide="compass" class="w-3.5 h-3.5"></i> Apersepsi
+                </button>
+                <button onclick="nav('materi')" id="nav-btn-materi" class="nav-item flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-slate-600 hover:text-indigo-600 transition">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Materi
+                </button>
+                <button onclick="nav('eksplorasi')" id="nav-btn-eksplorasi" class="nav-item flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-slate-600 hover:text-indigo-600 transition">
+                    <i data-lucide="code-2" class="w-3.5 h-3.5"></i> Lab HTML
+                </button>
+                <button onclick="nav('game')" id="nav-btn-game" class="nav-item flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-slate-600 hover:text-indigo-600 transition">
+                    <i data-lucide="gamepad-2" class="w-3.5 h-3.5"></i> Game
+                </button>
+                <button onclick="nav('evaluasi')" id="nav-btn-evaluasi" class="nav-item flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-slate-600 hover:text-indigo-600 transition">
+                    <i data-lucide="award" class="w-3.5 h-3.5"></i> Kuis
+                </button>
+            </nav>
+
+            <!-- Dashboard Badges & User Icon Right -->
+            <div class="flex items-center gap-1.5">
+                <button id="sound-toggle-btn" onclick="toggleAudioSystem()" class="p-1.5 text-slate-500 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200/80 rounded-full transition relative" title="Pengaturan Audio & Backsound">
+                    <i id="sound-icon" data-lucide="volume-2" class="w-4 h-4"></i>
+                    <span id="music-indicator" class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                </button>
+
+                <div class="flex items-center gap-1.5 bg-slate-100/90 border border-slate-200/80 rounded-full px-2.5 py-1 text-xs font-extrabold text-slate-700">
+                    <span class="flex items-center text-amber-500 gap-1"><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i> <span id="user-stars">0</span></span>
+                    <span class="text-slate-300">|</span>
+                    <span class="flex items-center text-indigo-600 gap-1"><i data-lucide="zap" class="w-3.5 h-3.5 fill-indigo-600"></i> <span id="user-xp">0</span> XP</span>
+                </div>
+
+                <button onclick="resetProgressWithConfirm()" class="p-1.5 text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-full transition" title="Reset Progres Bintang & XP">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                </button>
+
+                <div class="w-7 h-7 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600">
+                    <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE NAV BAR (SECONDARY) -->
+    <nav id="nav-bar-mobile" class="md:hidden shrink-0 bg-white border-b border-slate-200/80 z-30 shadow-sm overflow-x-auto">
+        <div class="px-3 flex justify-start items-center gap-1 py-1 min-w-max">
+            <button onclick="nav('home')" id="mob-nav-btn-home" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-indigo-600 text-white shadow-sm transition">Home</button>
+            <button onclick="nav('apersepsi')" id="mob-nav-btn-apersepsi" class="px-2.5 py-1 rounded-full text-[11px] font-bold text-slate-600 hover:text-indigo-600 transition">Apersepsi</button>
+            <button onclick="nav('materi')" id="mob-nav-btn-materi" class="px-2.5 py-1 rounded-full text-[11px] font-bold text-slate-600 hover:text-indigo-600 transition">Materi</button>
+            <button onclick="nav('eksplorasi')" id="mob-nav-btn-eksplorasi" class="px-2.5 py-1 rounded-full text-[11px] font-bold text-slate-600 hover:text-indigo-600 transition">Lab HTML</button>
+            <button onclick="nav('game')" id="mob-nav-btn-game" class="px-2.5 py-1 rounded-full text-[11px] font-bold text-slate-600 hover:text-indigo-600 transition">Game</button>
+            <button onclick="nav('evaluasi')" id="mob-nav-btn-evaluasi" class="px-2.5 py-1 rounded-full text-[11px] font-bold text-slate-600 hover:text-indigo-600 transition">Kuis</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER (FLUID FIT WITHOUT SCROLL) -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-1 flex-grow w-full overflow-hidden flex flex-col justify-center min-h-0">
+
+        <!-- ================= HALAMAN 1: PEMBUKA ================= -->
+        <section id="screen-home" class="page-screen h-full flex flex-col justify-center items-center py-1 overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center w-full max-w-7xl mx-auto px-1">
+                
+                <!-- Left Column: Text & CTA Button & Pillars -->
+                <div class="lg:col-span-6 text-center lg:text-left space-y-3 lg:pl-2">
+                    <h1 class="text-3xl sm:text-5xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                        Yuk, Belajar <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-600 to-indigo-600">HTML</span>
+                    </h1>
+                    
+                    <p class="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
+                        Misi pertamamu menjadi Web Developer handal! Pahami kerangka dasar web secara interaktif, menyenangkan, dan penuh tantangan.
+                    </p>
+
+                    <!-- CTA Button -->
+                    <div class="pt-1 flex items-center justify-center lg:justify-start">
+                        <div class="relative group">
+                            <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-40 group-hover:opacity-75 transition duration-300"></div>
+                            
+                            <button onclick="startApp()" class="game-btn relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-extrabold text-xs sm:text-base px-7 py-3 rounded-full shadow-lg flex items-center justify-center gap-2 border border-white/20 hover:scale-105 transition transform">
+                                <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px]">▶</span>
+                                Mulai Belajar
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4 Pillars Feature Icons Bottom -->
+                    <div class="pt-3 grid grid-cols-4 gap-2 max-w-md mx-auto lg:mx-0 border-t border-slate-200/80 mt-3">
+                        <div class="flex flex-col items-center text-center space-y-1 p-1 rounded-xl">
+                            <div class="w-9 h-9 rounded-xl bg-sky-100 border border-sky-200 flex items-center justify-center text-sky-600 shadow-sm">
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-700">Belajar</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center space-y-1 p-1 rounded-xl">
+                            <div class="w-9 h-9 rounded-xl bg-purple-100 border border-purple-200 flex items-center justify-center text-purple-600 shadow-sm">
+                                <i data-lucide="target" class="w-4 h-4"></i>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-700">Eksplorasi</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center space-y-1 p-1 rounded-xl">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-600 shadow-sm">
+                                <i data-lucide="gamepad-2" class="w-4 h-4"></i>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-700">Bermain</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center space-y-1 p-1 rounded-xl">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-600 shadow-sm">
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-700">Raih Bintang</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Scaled Hero Scene -->
+                <div class="lg:col-span-6 flex items-center justify-center relative">
+                    <div class="w-full max-w-md lg:max-w-lg relative">
+                        <svg viewBox="140 40 520 390" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto drop-shadow-xl max-h-[50vh]">
+                            <!-- Background Room Glow -->
+                            <circle cx="390" cy="230" r="220" fill="url(#hero_bg_glow)" opacity="0.65"/>
+
+                            <!-- FLOATING TAG 1: <html > -->
+                            <g class="animate-bounce" style="animation-duration: 3s;">
+                                <rect x="200" y="55" width="95" height="42" rx="14" fill="#F97316" transform="rotate(-12 200 55)"/>
+                                <text x="216" y="82" fill="white" font-family="monospace" font-weight="800" font-size="17" transform="rotate(-12 200 55)">&lt;html&gt;</text>
+                            </g>
+
+                            <!-- FLOATING TAG 2: <head> -->
+                            <g class="animate-bounce" style="animation-duration: 3.5s;">
+                                <rect x="525" y="45" width="95" height="42" rx="14" fill="#8B5CF6" transform="rotate(10 525 45)"/>
+                                <text x="541" y="72" fill="white" font-family="monospace" font-weight="800" font-size="17" transform="rotate(10 525 45)">&lt;head&gt;</text>
+                            </g>
+
+                            <!-- FLOATING TAG 3: <body> -->
+                            <g class="animate-bounce" style="animation-duration: 4s;">
+                                <rect x="540" y="260" width="95" height="42" rx="14" fill="#06B6D4" transform="rotate(-8 540 260)"/>
+                                <text x="556" y="287" fill="white" font-family="monospace" font-weight="800" font-size="17" transform="rotate(-8 540 260)">&lt;body&gt;</text>
+                            </g>
+
+                            <!-- FLOATING TAG 4: <title> -->
+                            <g class="animate-bounce" style="animation-duration: 2.8s;">
+                                <rect x="480" y="335" width="90" height="38" rx="12" fill="#10B981" transform="rotate(14 480 335)"/>
+                                <text x="495" y="360" fill="white" font-family="monospace" font-weight="800" font-size="15" transform="rotate(14 480 335)">&lt;title&gt;</text>
+                            </g>
+
+                            <!-- FLOATING TAG 5: </> -->
+                            <g>
+                                <rect x="515" y="390" width="82" height="42" rx="14" fill="#4F46E5" transform="rotate(-15 515 390)"/>
+                                <text x="536" y="418" fill="white" font-family="monospace" font-weight="900" font-size="20" transform="rotate(-15 515 390)">&lt;/&gt;</text>
+                            </g>
+
+                            <!-- LAPTOP BASE & KEYBOARD -->
+                            <path d="M 270 340 L 530 340 L 605 415 L 195 415 Z" fill="#94A3B8"/>
+                            <path d="M 280 345 L 520 345 L 590 407 L 210 407 Z" fill="#CBD5E1"/>
+                            <path d="M 300 355 L 500 355 M 290 372 L 510 372 M 275 389 L 525 389" stroke="#64748B" stroke-width="6.5" stroke-linecap="round"/>
+
+                            <!-- LAPTOP SCREEN FRAME -->
+                            <rect x="290" y="70" width="250" height="280" rx="18" fill="#1E293B" stroke="#334155" stroke-width="8"/>
+                            <rect x="300" y="80" width="230" height="260" rx="12" fill="#0F172A"/>
+
+                            <!-- LAPTOP SCREEN: CODE EDITOR -->
+                            <text x="312" y="102" fill="#64748B" font-family="monospace" font-size="10">&lt; index.html</text>
+                            <text x="312" y="122" fill="#38BDF8" font-family="monospace" font-size="10" font-weight="bold">&lt;!DOCTYPE html&gt;</text>
+                            <text x="312" y="138" fill="#818CF8" font-family="monospace" font-size="10">&lt;html lang="id"&gt;</text>
+                            <text x="312" y="154" fill="#A78BFA" font-family="monospace" font-size="10">&lt;head&gt;</text>
+                            <text x="324" y="170" fill="#F43F5E" font-family="monospace" font-size="9">&lt;meta charset="UTF-8"&gt;</text>
+                            <text x="324" y="186" fill="#F43F5E" font-family="monospace" font-size="9">&lt;meta name="viewport" ...&gt;</text>
+                            <text x="324" y="202" fill="#FBBF24" font-family="monospace" font-size="9.5">&lt;title&gt;Belajar HTML&lt;/title&gt;</text>
+                            <text x="312" y="218" fill="#A78BFA" font-family="monospace" font-size="10">&lt;/head&gt;</text>
+                            <text x="312" y="234" fill="#34D399" font-family="monospace" font-size="10">&lt;body&gt;</text>
+                            <text x="324" y="250" fill="#F43F5E" font-family="monospace" font-size="9.5">&lt;h1&gt;Halo, Dunia Web!&lt;/h1&gt;</text>
+                            <text x="324" y="266" fill="#9CA3AF" font-family="monospace" font-size="9">&lt;p&gt;Selamat datang ...&lt;/p&gt;</text>
+                            <text x="312" y="282" fill="#34D399" font-family="monospace" font-size="10">&lt;/body&gt;</text>
+                            <text x="312" y="298" fill="#818CF8" font-family="monospace" font-size="10">&lt;/html&gt;</text>
+
+                            <!-- PREVIEW MINI WINDOW -->
+                            <rect x="420" y="125" width="125" height="165" rx="12" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+                            <rect x="420" y="125" width="125" height="24" rx="12" fill="#F1F5F9"/>
+                            <circle cx="432" cy="137" r="3.5" fill="#EF4444"/>
+                            <circle cx="441" cy="137" r="3.5" fill="#F59E0B"/>
+                            <circle cx="450" cy="137" r="3.5" fill="#10B981"/>
+                            <rect x="462" y="131" width="75" height="12" rx="5" fill="#E2E8F0"/>
+                            <text x="466" y="140" fill="#64748B" font-family="sans-serif" font-size="7">https://</text>
+                            
+                            <text x="430" y="170" fill="#0F172A" font-family="sans-serif" font-weight="800" font-size="10">Halo, Dunia Web!</text>
+                            <text x="430" y="186" fill="#64748B" font-family="sans-serif" font-size="8">Selamat datang di</text>
+                            <text x="430" y="198" fill="#64748B" font-family="sans-serif" font-size="8">pembelajaran HTML...</text>
+
+                            <!-- CURSOR MASCOT PODIUM -->
+                            <ellipse cx="245" cy="380" rx="80" ry="24" fill="#38BDF8" opacity="0.35"/>
+                            <ellipse cx="245" cy="380" rx="65" ry="18" fill="#0284C7" opacity="0.55"/>
+                            <ellipse cx="245" cy="375" rx="48" ry="11" fill="#38BDF8"/>
+
+                            <!-- CURSOR MASCOT CHARACTER -->
+                            <g class="animate-float">
+                                <path d="M 200 210 A 50 50 0 0 1 290 210" stroke="#0284C7" stroke-width="13" stroke-linecap="round"/>
+                                <rect x="190" y="198" width="18" height="36" rx="9" fill="#2563EB"/>
+                                <rect x="282" y="198" width="18" height="36" rx="9" fill="#2563EB"/>
+
+                                <path d="M 245 145 L 190 290 L 228 278 L 245 328 L 268 317 L 250 268 L 300 257 Z" fill="white" stroke="#475569" stroke-width="6.5" stroke-linejoin="round"/>
+
+                                <circle cx="232" cy="235" r="5.5" fill="#0F172A"/>
+                                <path d="M 254 235 Q 261 228 268 235" stroke="#0F172A" stroke-width="4" stroke-linecap="round" fill="none"/>
+                                <ellipse cx="225" cy="244" rx="4.5" ry="3" fill="#F43F5E" opacity="0.6"/>
+                                <ellipse cx="272" cy="244" rx="4.5" ry="3" fill="#F43F5E" opacity="0.6"/>
+
+                                <rect x="222" y="328" width="20" height="13" rx="6.5" fill="#7C3AED"/>
+                                <rect x="255" y="320" width="20" height="13" rx="6.5" fill="#7C3AED"/>
+                            </g>
+
+                            <defs>
+                                <radialGradient id="hero_bg_glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(390 230) rotate(90) scale(220)">
+                                    <stop stop-color="#818CF8"/>
+                                    <stop offset="1" stop-color="#818CF8" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN 2: APERSEPSI ================= -->
+        <section id="screen-apersepsi" class="page-screen hidden flex-col justify-between h-full max-w-6xl mx-auto py-1 px-1 overflow-hidden">
+            <!-- Header Banner -->
+            <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/80 shadow-sm flex items-center gap-3 shrink-0">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 border border-amber-200 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                    <svg class="w-6 h-6 text-amber-500 animate-bounce" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.64 21.97C13.14 22.21 12.54 22 12.31 21.5L10.13 16.7L6.87 19.96C6.5 20.33 5.87 20.1 5.87 19.57V3.43C5.87 2.9 6.5 2.67 6.87 3.04L19.46 15.63C19.83 16 19.6 16.63 19.07 16.63H14.88L17.06 21.43C17.3 21.93 17.09 22.53 16.59 22.77L13.64 21.97Z"/>
+                    </svg>
+                </div>
+                <div class="space-y-0.5">
+                    <span class="text-[10px] font-black uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">Tantangan Pertama</span>
+                    <h2 class="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-tight">Menurutmu, Web Mana yang Lebih Mudah Dibaca?</h2>
+                    <p class="text-[11px] text-slate-500 font-medium">Bandingkan kedua tampilan simulasi halaman web di bawah ini dan tentukan pilihanmu!</p>
+                </div>
+            </div>
+
+            <!-- Two Cards Side-by-Side (Fit Heights) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-auto py-1">
+                <!-- Card Website A -->
+                <div class="edutech-card rounded-2xl p-3.5 border-2 border-emerald-200 bg-white flex flex-col justify-between shadow-md hover:shadow-lg transition">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                            <span class="font-extrabold text-slate-800 text-sm flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> Website A (Terstruktur)
+                            </span>
+                            <span class="text-[10px] font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full">Menggunakan Tag HTML</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 font-medium">Memiliki judul utama (&lt;h1&gt;), tanggal (&lt;span&gt;), dan paragraf (&lt;p&gt;).</p>
+                        
+                        <!-- Simulated Browser Window A -->
+                        <div class="bg-slate-900 rounded-xl overflow-hidden border border-slate-700 shadow-inner">
+                            <div class="bg-slate-800 px-2.5 py-1 border-b border-slate-700 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                <span class="text-[9px] font-mono text-slate-400 ml-1">https://berita-sekolah.com</span>
+                            </div>
+                            <div class="p-3 bg-white text-slate-800 h-32 sm:h-36 overflow-y-auto space-y-1.5">
+                                <h3 class="font-black text-indigo-600 text-sm border-b pb-1">Portal Berita Sekolah</h3>
+                                <p class="text-[10px] text-slate-400 font-bold">Dipublikasikan pada: 28 Oktober 2026</p>
+                                <p class="font-semibold text-slate-700 text-xs leading-relaxed">
+                                    Selamat datang di portal resmi kegiatan sekolah. Kami menyediakan informasi lengkap seputar jadwal pembelajaran, kegiatan ekstrakurikuler, serta pengumuman prestasi siswa secara transparan.
+                                </p>
+                                <div class="p-1.5 bg-indigo-50 border border-indigo-100 rounded text-[10px] font-medium text-indigo-800">
+                                    📌 Pengumuman: Libur semester gasal dimulai minggu depan.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="btn-select-web-a" onclick="answerApersepsi('A')" class="game-btn mt-3 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-2.5 rounded-xl text-xs border-b-4 border-emerald-800 transition shadow-md">
+                        Pilih Website A
+                    </button>
+                </div>
+
+                <!-- Card Website B -->
+                <div class="edutech-card rounded-2xl p-3.5 border-2 border-rose-200 bg-white flex flex-col justify-between shadow-md hover:shadow-lg transition">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                            <span class="font-extrabold text-slate-800 text-sm flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span> Website B (Membingungkan)
+                            </span>
+                            <span class="text-[10px] font-extrabold text-rose-600 bg-rose-50 border border-rose-100 px-2 py-0.5 rounded-full">Teks Polosan (Tanpa Tag)</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 font-medium">Seluruh teks digabung tanpa struktur pemisah elemen HTML.</p>
+
+                        <!-- Simulated Browser Window B -->
+                        <div class="bg-slate-900 rounded-xl overflow-hidden border border-slate-700 shadow-inner">
+                            <div class="bg-slate-800 px-2.5 py-1 border-b border-slate-700 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                <span class="text-[9px] font-mono text-slate-400 ml-1">https://berita-mentah.com</span>
+                            </div>
+                            <div class="p-3 bg-amber-50 text-slate-900 h-32 sm:h-36 font-mono text-[11px] leading-normal break-all overflow-y-auto">
+                                PortalBeritaSekolahDipublikasikanpada28Oktober2026SelamatdatangdiportalresmikegiatansekolahKamimenyediakaninformasilengkapseputarjadwalpembelajarankegiatanekstrakurikulersertapengumumanprestasisiswasecaratransparanPengumbuhanLibursemestergasaldimulaiminggudepan.
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="btn-select-web-b" onclick="answerApersepsi('B')" class="game-btn mt-3 w-full bg-rose-500 hover:bg-rose-600 text-white font-extrabold py-2.5 rounded-xl text-xs border-b-4 border-rose-800 transition shadow-md">
+                        Pilih Website B
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN 3: MATERI ================= -->
+        <section id="screen-materi" class="page-screen hidden flex-col justify-between h-full max-w-6xl mx-auto py-1 overflow-hidden">
+            <div class="bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl p-2.5 text-white shadow flex items-center justify-between shrink-0">
+                <div>
+                    <h2 class="text-sm sm:text-base font-extrabold">Kenalan dengan Kerangka HTML5</h2>
+                    <p class="text-indigo-100 text-[11px]">Klik baris kode untuk melihat penjelasannya!</p>
+                </div>
+                <button onclick="nav('eksplorasi')" class="game-btn bg-brand-yellow text-slate-900 font-extrabold text-xs px-3 py-1.5 rounded-lg border-b-2 border-amber-600 shrink-0">
+                    Coba di Lab Kode 🧪
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 my-auto h-[calc(100%-3.5rem)] items-center overflow-hidden">
+                <!-- Interactive Code Display -->
+                <div class="lg:col-span-7 bg-slate-900 rounded-2xl p-3 border border-slate-800 shadow-xl text-white font-mono text-[11px] sm:text-xs h-full flex flex-col justify-start overflow-y-auto">
+                    <div class="space-y-0.5 w-full shrink-0">
+                        <div id="line-1" onclick="explainTag(1)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition code-highlight border-l-4 border-transparent leading-snug">&lt;!DOCTYPE html&gt;</div>
+                        <div id="line-2" onclick="explainTag(2)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-4 border-l-4 border-transparent leading-snug">&lt;html lang="id"&gt;</div>
+                        <div id="line-3" onclick="explainTag(3)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-7 border-l-4 border-transparent leading-snug">&lt;head&gt;</div>
+                        <div id="line-4" onclick="explainTag(4)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-10 border-l-4 border-transparent leading-snug">&lt;meta charset="UTF-8"&gt;</div>
+                        <div id="line-5" onclick="explainTag(5)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-10 border-l-4 border-transparent leading-snug">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</div>
+                        <div id="line-6" onclick="explainTag(6)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-10 border-l-4 border-transparent leading-snug">&lt;title&gt;Halaman Pertamaku&lt;/title&gt;</div>
+                        <div id="line-7" onclick="explainTag(7)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-7 border-l-4 border-transparent leading-snug">&lt;/head&gt;</div>
+                        <div id="line-8" onclick="explainTag(8)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-7 border-l-4 border-transparent leading-snug">&lt;body&gt;</div>
+                        <div id="line-9" onclick="explainTag(9)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-10 border-l-4 border-transparent leading-snug">&lt;h1&gt;Halo, Dunia Web!&lt;/h1&gt;</div>
+                        <div id="line-10" onclick="explainTag(10)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-10 border-l-4 border-transparent leading-snug">&lt;p&gt;Aku sedang belajar HTML.&lt;/p&gt;</div>
+                        <div id="line-11" onclick="explainTag(11)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-7 border-l-4 border-transparent leading-snug">&lt;/body&gt;</div>
+                        <div id="line-12" onclick="explainTag(12)" class="p-1 rounded cursor-pointer hover:bg-slate-800 transition pl-4 border-l-4 border-transparent leading-snug">&lt;/html&gt;</div>
+                    </div>
+                </div>
+
+                <!-- Explanation Box -->
+                <div class="lg:col-span-5 space-y-2 h-full flex flex-col justify-between overflow-hidden">
+                    <div class="edutech-card rounded-2xl p-4 border-2 border-brand-blue bg-white flex-grow flex flex-col justify-center space-y-2 shadow-md min-h-0 overflow-y-auto">
+                        <div class="inline-flex items-center gap-1.5 w-fit bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">
+                            <span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+                            <span id="tag-category" class="text-[10px] font-black uppercase tracking-wider text-brand-purple">Penjelasan Tag</span>
+                        </div>
+                        <h3 id="tag-title" class="text-lg sm:text-xl font-black text-slate-900 font-mono tracking-tight text-indigo-950">&lt;!DOCTYPE html&gt;</h3>
+                        <p id="tag-desc" class="text-slate-700 font-semibold text-xs sm:text-sm leading-relaxed">
+                            Mendeklarasikan tipe dokumen kepada browser bahwa halaman web ini ditulis menggunakan standar bahasa HTML5 terbaru.
+                        </p>
+                    </div>
+
+                    <div class="edutech-card rounded-xl p-2.5 bg-slate-50 border border-slate-200 shrink-0">
+                        <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-wide">Browser Preview</span>
+                        <div class="bg-white rounded-lg p-2 border border-slate-200 mt-1 shadow-sm">
+                            <h1 class="text-sm font-black text-slate-900">Halo, Dunia Web!</h1>
+                            <p class="text-[11px] font-medium text-slate-600">Aku sedang belajar HTML.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN 4: LAB HTML ================= -->
+        <section id="screen-eksplorasi" class="page-screen hidden flex-col justify-between h-full max-w-full mx-auto py-1 px-1 overflow-hidden">
+            <!-- Header Lab & Misi Navigasi -->
+            <div class="bg-white border border-slate-200/80 rounded-xl p-2 shadow-sm flex flex-wrap items-center justify-between gap-1.5 shrink-0">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-brand-blue/10 flex items-center justify-center text-brand-blue font-black text-xs">
+                        🧪
+                    </div>
+                    <div>
+                        <h2 class="text-xs sm:text-sm font-extrabold text-slate-900 leading-none">Laboratorium Coding Interaktif</h2>
+                        <p class="text-[10px] text-slate-500 font-medium mt-0.5">Eksplorasi kode HTML secara real-time</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1 overflow-x-auto py-0.5 max-w-full">
+                    <button onclick="setLabMission(1)" id="mis-btn-1" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-brand-blue text-white shadow-sm transition">Misi 1</button>
+                    <button onclick="setLabMission(2)" id="mis-btn-2" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Misi 2</button>
+                    <button onclick="setLabMission(3)" id="mis-btn-3" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Misi 3</button>
+                    <button onclick="setLabMission(4)" id="mis-btn-4" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Misi 4</button>
+                    <button onclick="setLabMission(5)" id="mis-btn-5" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Misi 5</button>
+                </div>
+            </div>
+
+            <!-- Banner Deskripsi Misi -->
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300/80 rounded-lg px-2.5 py-1 flex items-center gap-2 shrink-0 my-1 shadow-sm">
+                <div class="w-5 h-5 rounded bg-amber-400 text-slate-900 flex items-center justify-center font-black text-[10px] shrink-0">
+                    🎯
+                </div>
+                <div class="flex-grow min-w-0">
+                    <h4 id="lab-mission-title" class="font-extrabold text-amber-950 text-xs leading-tight">Misi 1: Tag Title</h4>
+                    <p id="lab-mission-desc" class="text-[10px] sm:text-[11px] text-amber-800 font-medium truncate">Ubah isi tag &lt;title&gt; menjadi "Profil Saya"!</p>
+                </div>
+            </div>
+
+            <!-- Editor Split Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 flex-grow h-[calc(100%-8.5rem)] my-0.5 min-h-0">
+                <!-- Panel Kiri: Code Editor -->
+                <div class="bg-slate-900 rounded-xl border border-slate-800 shadow-lg overflow-hidden flex flex-col h-full min-h-0">
+                    <div class="bg-slate-800/90 px-2.5 py-1 border-b border-slate-700/80 flex items-center justify-between shrink-0">
+                        <div class="flex items-center gap-1.5">
+                            <span class="flex gap-1">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            </span>
+                            <span class="text-[11px] font-mono font-bold text-slate-300 ml-1">index.html</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button onclick="resetLabCode()" class="px-2.5 py-0.5 text-[10px] bg-slate-700 hover:bg-slate-600 text-slate-200 rounded font-bold transition">
+                                Reset
+                            </button>
+                            <button onclick="runLabCode()" class="game-btn px-3 py-0.5 text-[10px] bg-brand-green hover:bg-emerald-600 text-white rounded font-black transition border-b border-emerald-800">
+                                ▶ Jalankan
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="lab-code-input" class="w-full flex-grow bg-slate-900 text-emerald-400 font-mono text-[11px] sm:text-xs p-2 focus:outline-none resize-none leading-relaxed tracking-normal overflow-hidden" spellcheck="false"><!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Halaman Webku</title>
+</head>
+<body>
+    <h1>Halo, Web Developer!</h1>
+    <p>Saya siap belajar HTML5.</p>
+</body>
+</html></textarea>
+                </div>
+
+                <!-- Panel Kanan: Preview Browser -->
+                <div class="bg-white rounded-xl border border-slate-200/90 shadow-lg overflow-hidden flex flex-col h-full min-h-0">
+                    <div class="bg-slate-100/90 px-2.5 py-1 border-b border-slate-200 flex items-center gap-1.5 shrink-0">
+                        <div class="w-2 h-2 rounded-full bg-slate-400"></div>
+                        <div class="bg-white border border-slate-200/80 rounded px-2 py-0.5 text-[10px] font-bold text-slate-600 flex-grow truncate font-mono">
+                            https://preview-lokal.internal/
+                        </div>
+                        <span id="preview-tab-title" class="text-[10px] font-extrabold text-brand-blue bg-brand-blue/10 px-2 py-0.5 rounded truncate max-w-[120px]">
+                            Preview
+                        </span>
+                    </div>
+                    <iframe id="lab-preview-iframe" class="w-full flex-grow bg-white" sandbox="allow-same-origin"></iframe>
+                </div>
+            </div>
+
+            <!-- Action Bar Bottom -->
+            <div class="flex items-center justify-between shrink-0 py-0.5 border-t border-slate-200/60 mt-0.5">
+                <span class="text-[10px] text-slate-500 font-medium hidden sm:inline-block">💡 Tip: Klik "Jalankan" untuk menguji kodemu secara langsung.</span>
+                <button onclick="checkLabMission()" class="game-btn bg-brand-purple hover:bg-purple-700 text-white font-extrabold text-xs px-5 py-1.5 rounded-lg shadow border-b-2 border-purple-900 ml-auto">
+                    Periksa Hasil Misi 🚀
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN 5: GAME ================= -->
+        <section id="screen-game" class="page-screen hidden flex-col justify-between h-full max-w-5xl mx-auto py-1 overflow-hidden">
+            <div class="bg-white border border-slate-200/80 rounded-xl p-2 shadow-sm flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-brand-purple/10 flex items-center justify-center text-brand-purple font-black text-xs">
+                        🎮
+                    </div>
+                    <div>
+                        <h2 class="text-xs sm:text-sm font-extrabold text-slate-900">HTML Challenge: Susun Kerangka!</h2>
+                        <p class="text-[10px] text-slate-500 font-medium">Pilih tag lalu pasangkan pada slot kerangka dokumen yang tepat</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Main Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 flex-grow my-1 items-stretch min-h-0 overflow-hidden">
+                <!-- Panel Kiri: Code Structure Preview Area -->
+                <div class="lg:col-span-8 bg-[#0B132B] rounded-2xl p-4 border border-slate-800 shadow-xl font-mono text-xs flex flex-col justify-center space-y-1.5 overflow-y-auto">
+                    <!-- Line 1: DOCTYPE -->
+                    <div class="text-sky-400 font-extrabold">&lt;!DOCTYPE html&gt;</div>
+                    
+                    <!-- Line 2: html slot -->
+                    <div class="pl-2">
+                        <div onclick="placeGameTag(this, 'html')" class="game-slot inline-flex w-28 h-7 border-2 border-dashed border-slate-500 rounded-lg bg-slate-900/60 items-center justify-center font-bold text-slate-400 cursor-pointer hover:border-brand-purple transition"></div>
+                    </div>
+                    
+                    <!-- Line 3: head slot -->
+                    <div class="pl-5">
+                        <div onclick="placeGameTag(this, 'head')" class="game-slot inline-flex w-28 h-7 border-2 border-dashed border-slate-500 rounded-lg bg-slate-900/60 items-center justify-center font-bold text-slate-400 cursor-pointer hover:border-brand-green transition"></div>
+                    </div>
+                    
+                    <!-- Line 4: title slot + text + title close -->
+                    <div class="pl-8 flex items-center gap-1.5">
+                        <div onclick="placeGameTag(this, 'title')" class="game-slot inline-flex w-28 h-7 border-2 border-dashed border-slate-500 rounded-lg bg-slate-900/60 items-center justify-center font-bold text-slate-400 cursor-pointer hover:border-brand-yellow transition"></div>
+                        <span class="text-white font-bold text-xs">Webku</span>
+                        <span class="text-amber-400 font-extrabold text-xs">&lt;/title&gt;</span>
+                    </div>
+                    
+                    <!-- Line 5: head close -->
+                    <div class="pl-5 text-emerald-400 font-extrabold">&lt;/head&gt;</div>
+                    
+                    <!-- Line 6: body slot -->
+                    <div class="pl-5">
+                        <div onclick="placeGameTag(this, 'body')" class="game-slot inline-flex w-28 h-7 border-2 border-dashed border-slate-500 rounded-lg bg-slate-900/60 items-center justify-center font-bold text-slate-400 cursor-pointer hover:border-rose-400 transition"></div>
+                    </div>
+                    
+                    <!-- Line 7: comment -->
+                    <div class="pl-8 text-slate-500 font-bold text-xs">&lt;!-- Konten --&gt;</div>
+                    
+                    <!-- Line 8: body close -->
+                    <div class="pl-5 text-rose-400 font-extrabold">&lt;/body&gt;</div>
+                    
+                    <!-- Line 9: html close -->
+                    <div class="text-purple-400 font-extrabold">&lt;/html&gt;</div>
+                </div>
+
+                <!-- Panel Kanan: Tag Selection & Control Box -->
+                <div class="lg:col-span-4 bg-[#111A2E] rounded-2xl p-3.5 border-2 border-amber-400/90 shadow-xl flex flex-col justify-between items-center text-center space-y-2">
+                    <h3 class="text-amber-400 text-sm font-black tracking-wide">Pilihan Tag:</h3>
+                    
+                    <!-- Tag Buttons Grid -->
+                    <div id="tag-pool-container" class="grid grid-cols-2 gap-2 w-full max-w-xs">
+                        <button onclick="selectGameTag(this, 'head')" class="draggable-tag game-btn py-2 px-2 bg-[#10B981] hover:bg-emerald-600 text-white font-mono font-extrabold text-xs rounded-xl shadow transition border-b-2 border-emerald-800 flex items-center justify-center">
+                            &lt;head&gt;
+                        </button>
+                        <button onclick="selectGameTag(this, 'body')" class="draggable-tag game-btn py-2 px-2 bg-[#F43F5E] hover:bg-rose-600 text-white font-mono font-extrabold text-xs rounded-xl shadow transition border-b-2 border-rose-800 flex items-center justify-center">
+                            &lt;body&gt;
+                        </button>
+                        <button onclick="selectGameTag(this, 'html')" class="draggable-tag game-btn py-2 px-2 bg-[#8B5CF6] hover:bg-purple-600 text-white font-mono font-extrabold text-xs rounded-xl shadow transition border-b-2 border-purple-800 flex items-center justify-center">
+                            &lt;html&gt;
+                        </button>
+                        <button onclick="selectGameTag(this, 'title')" class="draggable-tag game-btn py-2 px-2 bg-[#F59E0B] hover:bg-amber-600 text-white font-mono font-extrabold text-xs rounded-xl shadow transition border-b-2 border-amber-800 flex items-center justify-center">
+                            &lt;title&gt;
+                        </button>
+                    </div>
+
+                    <!-- Status Display Box -->
+                    <div id="game-tag-status" class="w-full bg-[#0B132B] border border-slate-700/80 py-2 px-2 rounded-xl text-[11px] font-bold text-sky-200 text-center shadow-inner">
+                        Pilih tag terlebih dahulu.
+                    </div>
+
+                    <!-- Control Action Buttons -->
+                    <div class="w-full space-y-1.5">
+                        <button onclick="checkGameDragResult()" class="game-btn w-full py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs rounded-xl shadow border-b-2 border-emerald-800 transition">
+                            Periksa Hasil 🚀
+                        </button>
+                        <button onclick="resetGameDrag()" class="game-btn w-full py-1.5 bg-[#2A364F] hover:bg-slate-700 text-slate-200 font-extrabold text-[11px] rounded-xl shadow transition border-b border-slate-900">
+                            Ulangi Game
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN 6: EVALUASI ================= -->
+        <section id="screen-evaluasi" class="page-screen hidden flex-col justify-center items-center h-full max-w-2xl mx-auto py-1 overflow-hidden">
+            <!-- Intro State -->
+            <div id="eval-intro-card" class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm text-center space-y-3 w-full">
+                <h2 class="text-xl font-black text-slate-900">Final Mission: Buktikan Kamu Jago HTML!</h2>
+                <p class="text-slate-600 font-medium text-xs sm:text-sm">
+                    Jawab 10 soal pilihan ganda untuk meraih nilai minimal 75 dan dapatkan bintang emas!
+                </p>
+                <button onclick="startEvaluation()" class="game-btn bg-gradient-to-r from-brand-blue to-brand-purple text-white font-black text-sm px-6 py-2.5 rounded-xl shadow border-b-4 border-indigo-900">
+                    Mulai Ujian 📝
+                </button>
+            </div>
+
+            <!-- Quiz Card -->
+            <div id="eval-quiz-card" class="hidden bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm space-y-3 w-full my-auto">
+                <div class="flex items-center justify-between border-b pb-1.5">
+                    <span id="quiz-question-number" class="text-[11px] font-extrabold text-brand-blue bg-brand-blue/10 px-2.5 py-0.5 rounded-full">Soal 1 / 10</span>
+                    <span class="text-xs font-bold text-slate-500">Skor: <span id="quiz-current-score" class="text-brand-blue font-extrabold">0</span></span>
+                </div>
+                <h3 id="quiz-question-text" class="text-sm sm:text-base font-extrabold text-slate-900"></h3>
+                <div id="quiz-options-container" class="space-y-1.5"></div>
+            </div>
+
+            <!-- Result Card -->
+            <div id="eval-result-card" class="hidden bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xl text-center space-y-3 w-full my-auto">
+                <div id="result-badge-icon" class="text-4xl"></div>
+                <h2 id="result-title" class="text-xl font-black text-slate-900"></h2>
+                <div id="result-stars-box" class="flex justify-center gap-1 text-amber-400"></div>
+                <div class="bg-slate-50 border rounded-xl p-2 max-w-xs mx-auto">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">Nilai Akhir</span>
+                    <p id="result-final-score" class="text-2xl font-black text-brand-blue">0</p>
+                </div>
+                <p id="result-appreciation-msg" class="text-slate-700 font-bold text-xs leading-relaxed"></p>
+                <div class="flex justify-center gap-2">
+                    <button onclick="startEvaluation()" class="game-btn bg-slate-800 text-white font-extrabold px-4 py-1.5 rounded-xl text-xs">Ulangi Kuis 🔄</button>
+                    <button onclick="nav('home')" class="game-btn bg-brand-blue text-white font-extrabold px-4 py-1.5 rounded-xl text-xs">Home 🚀</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="shrink-0 bg-white border-t border-slate-200/80 py-1">
+        <div class="max-w-7xl mx-auto px-4 text-center text-[10px] font-semibold text-slate-500">
+            Pengenalan Struktur Dasar HTML • Media Pembelajaran Interaktif Web Development
+        </div>
+    </footer>
+
+    <!-- GLOBAL MODAL DIALOG -->
+    <div id="global-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full border border-slate-200 shadow-2xl text-center space-y-4 animate-float-fast">
+            <div id="modal-icon" class="text-5xl">💡</div>
+            <h3 id="modal-title" class="text-xl font-black text-slate-900">Judul Modal</h3>
+            <p id="modal-desc" class="text-slate-600 text-sm font-medium leading-relaxed"></p>
+            <div id="modal-actions" class="flex flex-col gap-2 pt-1">
+                <button id="modal-primary-btn" onclick="closeModal()" class="game-btn w-full bg-brand-blue hover:bg-indigo-600 text-white font-extrabold py-3 rounded-xl border-b-4 border-indigo-900">
+                    Paham! 👍
+                </button>
+                <button id="modal-secondary-btn" onclick="closeModal()" class="hidden game-btn w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold py-2.5 rounded-xl border-b-2 border-slate-300">
+                    🔄 Coba Lagi
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    /* ==========================================================================
+       AUDIO SYSTEM & RELAXING BACKSOUND (Web Audio API - Synthesized Chill Chords)
+       ========================================================================== */
+    let audioCtx = null;
+    let isSoundMuted = false;
+    let isBacksoundPlaying = false;
+    let bgMusicTimer = null;
+
+    // Progression Nada Lo-Fi / Ambiens Konsentrasi (Cmaj7 -> Am7 -> Fmaj7 -> G7)
+    const chillChords = [
+        [261.63, 329.63, 392.00, 493.88], // Cmaj7
+        [220.00, 261.63, 329.63, 392.00], // Am7
+        [174.61, 220.00, 261.63, 329.63], // Fmaj7
+        [196.00, 246.94, 293.66, 349.23]  // G7
+    ];
+    let chordIndex = 0;
+
+    function initAudioContext() {
+        if (!audioCtx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContext();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    }
+
+    // Generator Melodi Backsound Tenang & Relaksasi
+    function playAmbientChordStep() {
+        if (isSoundMuted || !isBacksoundPlaying || !audioCtx) return;
+
+        try {
+            const currentChord = chillChords[chordIndex];
+            chordIndex = (chordIndex + 1) % chillChords.length;
+
+            currentChord.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                // Gunakan gelombang sine & triangle halus
+                osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                // Volume dibuat sangat lembut untuk latar belajar
+                const now = audioCtx.currentTime;
+                const duration = 3.8;
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.025, now + 1.2); // Soft Attack
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration); // Slow Fade Out
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now + (idx * 0.15)); // Arpeggio halus
+                osc.stop(now + duration);
+            });
+        } catch(e) {}
+    }
+
+    function startRelaxingBacksound() {
+        initAudioContext();
+        if (isBacksoundPlaying) return;
+        isBacksoundPlaying = true;
+        playAmbientChordStep();
+        bgMusicTimer = setInterval(playAmbientChordStep, 4000);
+    }
+
+    function stopRelaxingBacksound() {
+        isBacksoundPlaying = false;
+        if (bgMusicTimer) {
+            clearInterval(bgMusicTimer);
+            bgMusicTimer = null;
+        }
+    }
+
+    function playSynthesizedTone(frequency, duration, type = 'sine') {
+        if (isSoundMuted) return;
+        try {
+            initAudioContext();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = type;
+            osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        } catch(e) {}
+    }
+
+    function soundCorrect() {
+        playSynthesizedTone(523.25, 0.1, 'sine'); // C5
+        setTimeout(() => playSynthesizedTone(659.25, 0.2, 'sine'), 100); // E5
+    }
+
+    function soundWrong() {
+        playSynthesizedTone(220, 0.25, 'sawtooth'); // A3
+    }
+
+    function soundClick() {
+        playSynthesizedTone(440, 0.05, 'sine');
+    }
+
+    function toggleAudioSystem() {
+        initAudioContext();
+        isSoundMuted = !isSoundMuted;
+        const icon = document.getElementById('sound-icon');
+        const indicator = document.getElementById('music-indicator');
+
+        if (isSoundMuted) {
+            icon.setAttribute('data-lucide', 'volume-x');
+            if (indicator) indicator.classList.add('hidden');
+            stopRelaxingBacksound();
+        } else {
+            icon.setAttribute('data-lucide', 'volume-2');
+            if (indicator) indicator.classList.remove('hidden');
+            startRelaxingBacksound();
+            soundClick();
+        }
+        lucide.createIcons();
+    }
+
+    /* ==========================================================================
+       APP STATE MANAGEMENT & LOCAL STORAGE
+       ========================================================================== */
+    let state = {
+        xp: 0,
+        stars: 0,
+        currentPage: 'home',
+        completedPages: new Set(),
+        apersepsiAnswered: false,
+        gameDragCompleted: false,
+        evalScore: 0
+    };
+
+    function loadSavedState() {
+        try {
+            const saved = localStorage.getItem('webdev_html_basics_state');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state.xp = parsed.xp || 0;
+                state.stars = parsed.stars || 0;
+            }
+        } catch(e) {}
+        updateDashboardHeader();
+    }
+
+    function saveState() {
+        try {
+            localStorage.setItem('webdev_html_basics_state', JSON.stringify({
+                xp: state.xp,
+                stars: state.stars
+            }));
+        } catch(e) {}
+        updateDashboardHeader();
+    }
+
+    function addXP(amount) {
+        state.xp += amount;
+        saveState();
+    }
+
+    function addStar(amount = 1) {
+        state.stars += amount;
+        saveState();
+    }
+
+    function updateDashboardHeader() {
+        document.getElementById('user-xp').innerText = state.xp;
+        document.getElementById('user-stars').innerText = state.stars;
+    }
+
+    function resetProgressWithConfirm() {
+        if (confirm("Apakah kamu yakin ingin mereset seluruh progres belajar, skor, dan aktivitas ke kondisi awal?")) {
+            localStorage.removeItem('webdev_html_basics_state');
+            
+            // Reset State Utama
+            state.xp = 0;
+            state.stars = 0;
+            state.completedPages.clear();
+            state.apersepsiAnswered = false;
+            state.gameDragCompleted = false;
+            state.evalScore = 0;
+            updateDashboardHeader();
+
+            // Reset Apersepsi Activity
+            const feedbackBox = document.getElementById('apersepsi-feedback');
+            if (feedbackBox) feedbackBox.classList.add('hidden');
+
+            // Reset Materi Activity
+            explainTag(1);
+
+            // Reset Lab HTML Activity
+            setLabMission(1);
+            resetLabCode();
+
+            // Reset Game Challenge Activity
+            resetGameDrag();
+
+            // Reset Kuis Evaluasi Activity
+            currentEvalIdx = 0;
+            userEvalAnswers = [];
+            document.getElementById('eval-intro-card').classList.remove('hidden');
+            document.getElementById('eval-quiz-card').classList.add('hidden');
+            document.getElementById('eval-result-card').classList.add('hidden');
+
+            alert("Seluruh aktivitas dan progres telah berhasil dikembalikan ke kondisi awal!");
+            nav('home');
+        }
+    }
+
+    /* ==========================================================================
+       NAVIGATION SYSTEM
+       ========================================================================== */
+    const pages = ['home', 'apersepsi', 'materi', 'eksplorasi', 'game', 'evaluasi'];
+
+    function nav(targetPage) {
+        soundClick();
+        state.currentPage = targetPage;
+        state.completedPages.add(targetPage);
+
+        // Reset highlight for all navigation buttons (Desktop & Mobile)
+        pages.forEach(p => {
+            const el = document.getElementById(`screen-${p}`);
+            if (el) el.classList.add('hidden');
+            
+            const btn = document.getElementById(`nav-btn-${p}`);
+            if (btn) {
+                btn.className = "nav-item flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-600 hover:text-indigo-600 transition";
+            }
+
+            const mobBtn = document.getElementById(`mob-nav-btn-${p}`);
+            if (mobBtn) {
+                mobBtn.className = "px-3 py-1 rounded-full text-xs font-bold text-slate-600 hover:text-indigo-600 transition";
+            }
+        });
+
+        // Show target screen
+        const targetEl = document.getElementById(`screen-${targetPage}`);
+        if (targetEl) targetEl.classList.remove('hidden');
+
+        // Set Active Blue Highlight for Active Menu Button (Desktop & Mobile)
+        const activeBtn = document.getElementById(`nav-btn-${targetPage}`);
+        if (activeBtn) {
+            activeBtn.className = "nav-item flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold bg-indigo-600 text-white shadow-sm transition";
+        }
+
+        const activeMobBtn = document.getElementById(`mob-nav-btn-${targetPage}`);
+        if (activeMobBtn) {
+            activeMobBtn.className = "px-3 py-1 rounded-full text-xs font-bold bg-indigo-600 text-white shadow-sm transition";
+        }
+
+        // Update Progress Bar
+        const progressPercent = (state.completedPages.size / pages.length) * 100;
+        const progressBar = document.getElementById('learning-progress-bar');
+        if (progressBar) progressBar.style.width = `${progressPercent}%`;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function startApp() {
+        initAudioContext();
+        startRelaxingBacksound();
+        nav('apersepsi');
+    }
+
+    function confirmExit() {
+        if (confirm("Apakah kamu ingin keluar ke halaman pembuka?")) {
+            nav('home');
+        }
+    }
+
+    /* ==========================================================================
+       GLOBAL MODAL HELPER
+       ========================================================================== */
+    function showModal(title, desc, icon = "💡", primaryBtnText = "Paham! 👍", onPrimaryClick = null, secondaryBtnText = null, onSecondaryClick = null) {
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-desc').innerText = desc;
+        document.getElementById('modal-icon').innerText = icon;
+        
+        const primaryBtn = document.getElementById('modal-primary-btn');
+        primaryBtn.innerText = primaryBtnText;
+        primaryBtn.onclick = () => {
+            closeModal();
+            if (onPrimaryClick && typeof onPrimaryClick === 'function') {
+                onPrimaryClick();
+            }
+        };
+
+        const secondaryBtn = document.getElementById('modal-secondary-btn');
+        if (secondaryBtnText) {
+            secondaryBtn.innerText = secondaryBtnText;
+            secondaryBtn.classList.remove('hidden');
+            secondaryBtn.onclick = () => {
+                closeModal();
+                if (onSecondaryClick && typeof onSecondaryClick === 'function') {
+                    onSecondaryClick();
+                }
+            };
+        } else {
+            secondaryBtn.classList.add('hidden');
+        }
+
+        document.getElementById('global-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        soundClick();
+        document.getElementById('global-modal').classList.add('hidden');
+    }
+
+    /* ==========================================================================
+       HALAMAN 2: APERSEPSI LOGIC
+       ========================================================================== */
+    function answerApersepsi(choice) {
+        if (choice === 'A') {
+            soundCorrect();
+            if (!state.apersepsiAnswered) {
+                addXP(20);
+                addStar(1);
+                state.apersepsiAnswered = true;
+            }
+            // Tampilkan popup modal dialog Tepat Sekali! hanya dengan tombol Lanjut ke Materi
+            showModal(
+                "Tepat Sekali! 🎉", 
+                "Website A disusun menggunakan struktur HTML yang jelas. HTML membantu browser menyusun judul, paragraf, dan bagian konten agar informasi mudah dibaca!", 
+                "🎉",
+                "Lanjut ke Materi 👉",
+                () => nav('materi')
+            );
+        } else {
+            soundWrong();
+            // Tampilkan modal popup untuk pilihan kurang tepat
+            showModal(
+                "Kurang Tepat! 🤔", 
+                "Website B terlihat padat dan membingungkan karena tidak memanfaatkan tag HTML untuk memisahkan judul dan paragraf. Coba lagi!", 
+                "🤔",
+                "Coba Lagi 🔄",
+                () => retryApersepsi()
+            );
+        }
+    }
+
+    function retryApersepsi() {
+        soundClick();
+    }
+
+    /* ==========================================================================
+       HALAMAN 3: MATERI EXPLANATION LOGIC
+       ========================================================================== */
+    const tagExplanations = {
+        1: { title: "<!DOCTYPE html>", category: "Deklarasi Dokumen", desc: "Memberi tahu browser bahwa dokumen ini menggunakan standar HTML5 terbaru." },
+        2: { title: "<html lang=\"id\">", category: "Elemen Root", desc: "Elemen pembungkus utama seluruh konten web. Atribut lang=\"id\" menandakan bahasa dokumen adalah Bahasa Indonesia." },
+        3: { title: "<head>", category: "Header Metadata", desc: "Bagian kepala dokumen. Berisi informasi meta, pengaturan karakter, dan judul yang umumnya tidak muncul di halaman utama." },
+        4: { title: "<meta charset=\"UTF-8\">", category: "Pengkodean Karakter", desc: "Memastikan karakter seperti huruf, angka, dan simbol ditampilkan secara benar oleh browser." },
+        5: { title: "<meta name=\"viewport\">", category: "Responsivitas Layar", desc: "Pengaturan penting agar tampilan website otomatis menyesuaikan lebar layar HP, tablet, maupun komputer." },
+        6: { title: "<title>", category: "Judul Tab Browser", desc: "Menentukan teks judul yang muncul pada tab bagian atas browser kamu." },
+        7: { title: "</head>", category: "Penutup Header", desc: "Menandai batas akhir dari bagian informasi metadata." },
+        8: { title: "<body>", category: "Badan Konten Utama", desc: "Bagian paling penting di mana seluruh teks, gambar, video, dan tombol disajikan untuk pengunjung!" },
+        9: { title: "<h1>", category: "Heading / Judul Utama", desc: "Elemen judul tingkat pertama untuk menampilkan teks ukuran besar dan utama." },
+        10: { title: "<p>", category: "Paragraf Teks", desc: "Elemen untuk membungkus kalimat paragraf teks biasa." },
+        11: { title: "</body>", category: "Penutup Badan", desc: "Menandai batas akhir dari seluruh konten visual website." },
+        12: { title: "</html>", category: "Penutup Root", desc: "Tag penutup utama seluruh dokumen HTML." }
+    };
+
+    function explainTag(lineNum) {
+        soundClick();
+        // Remove highlight from all lines
+        for (let i = 1; i <= 12; i++) {
+            const line = document.getElementById(`line-${i}`);
+            if (line) line.classList.remove('code-highlight');
+        }
+
+        // Highlight current line
+        const targetLine = document.getElementById(`line-${lineNum}`);
+        if (targetLine) targetLine.classList.add('code-highlight');
+
+        // Update card
+        const data = tagExplanations[lineNum];
+        if (data) {
+            document.getElementById('tag-title').innerText = data.title;
+            document.getElementById('tag-category').innerText = data.category;
+            document.getElementById('tag-desc').innerText = data.desc;
+        }
+    }
+
+    function copyMateriCode() {
+        const codeText = `<!DOCTYPE html>\n<html lang="id">\n<head>\n    <meta charset="UTF-8">\n    <title>Halaman Pertamaku</title>\n</head>\n<body>\n    <h1>Halo, Dunia Web!</h1>\n    <p>Aku sedang belajar HTML.</p>\n</body>\n</html>`;
+        navigator.clipboard.writeText(codeText).then(() => {
+            soundCorrect();
+            showModal("Berhasil Disalin!", "Kode kerangka HTML telah disalin ke clipboard kamu.", "📋");
+        });
+    }
+
+    /* ==========================================================================
+       HALAMAN 4: EKSPLORASI LAB LOGIC (ISOLATED IFRAME PREVIEW)
+       ========================================================================== */
+    let currentLabMission = 1;
+
+    const labMissions = {
+        1: { title: "Misi 1: Kenali Tag Title", desc: "Ubah isi tag <title> menjadi 'Profil Saya' lalu tekan tombol Jalankan!" },
+        2: { title: "Misi 2: Ubah Judul Utama", desc: "Ubah isi tag <h1> menjadi 'Halo, Aku Web Developer!' lalu jalankan kode!" },
+        3: { title: "Misi 3: Tambah Paragraf", desc: "Tambahkan tag paragraf baru <p>Saya siswa SMK hebat.</p> di bawah tag h1!" },
+        4: { title: "Misi 4: Atur Bahasa Dokumen", desc: "Ubah atribut lang pada tag html menjadi lang='id'!" },
+        5: { title: "Misi 5: Kreasi Bebas", desc: "Tambahkan judul h2 atau kalimat perkenalanmu sendiri di dalam body!" }
+    };
+
+    function setLabMission(num) {
+        soundClick();
+        currentLabMission = num;
+        for (let i = 1; i <= 5; i++) {
+            const btn = document.getElementById(`mis-btn-${i}`);
+            if (i === num) {
+                btn.className = "px-3 py-1.5 rounded-xl text-xs font-extrabold bg-brand-blue text-white shadow-sm";
+            } else {
+                btn.className = "px-3 py-1.5 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-600 hover:bg-slate-200";
+            }
+        }
+
+        const data = labMissions[num];
+        document.getElementById('lab-mission-title').innerText = data.title;
+        document.getElementById('lab-mission-desc').innerText = data.desc;
+    }
+
+    function runLabCode() {
+        soundClick();
+        const code = document.getElementById('lab-code-input').value;
+        const iframe = document.getElementById('lab-preview-iframe');
+
+        // Update iframe via srcdoc for sandbox safety
+        iframe.srcdoc = code;
+
+        // Extract title tag text for browser frame bar
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(code, 'text/html');
+        const titleText = doc.querySelector('title')?.innerText || 'Preview Browser';
+        document.getElementById('preview-tab-title').innerText = titleText;
+    }
+
+    function resetLabCode() {
+        soundClick();
+        document.getElementById('lab-code-input').value = `<!DOCTYPE html>\n<html lang="id">\n<head>\n    <meta charset="UTF-8">\n    <title>Halaman Webku</title>\n</head>\n<body>\n    <h1>Halo, Web Developer!</h1>\n    <p>Saya siap belajar HTML5.</p>\n</body>\n</html>`;
+        runLabCode();
+    }
+
+    function checkLabMission() {
+        const code = document.getElementById('lab-code-input').value;
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(code, 'text/html');
+
+        let success = false;
+        if (currentLabMission === 1) {
+            const title = doc.querySelector('title')?.innerText.trim();
+            if (title === "Profil Saya") success = true;
+        } else if (currentLabMission === 2) {
+            const h1 = doc.querySelector('h1')?.innerText.trim();
+            if (h1 === "Halo, Aku Web Developer!") success = true;
+        } else if (currentLabMission === 3) {
+            const pList = doc.querySelectorAll('p');
+            if (pList.length >= 2) success = true;
+        } else if (currentLabMission === 4) {
+            const lang = doc.querySelector('html')?.getAttribute('lang');
+            if (lang === "id") success = true;
+        } else {
+            success = true;
+        }
+
+        if (success) {
+            soundCorrect();
+            addXP(15);
+            showModal("Misi Selesai! 🎉", "Luar biasa, kodemu sudah tepat dan berfungsi dengan baik!", "🌟");
+            if (currentLabMission < 5) setLabMission(currentLabMission + 1);
+        } else {
+            soundWrong();
+            showModal("Hampir Benar!", "Periksa kembali petunjuk instruksi misi dan pastikan kamu tidak salah mengetik tag.", "⚠️");
+        }
+    }
+
+    /* ==========================================================================
+       HALAMAN 5: GAME CHALLENGE LOGIC (DRAG & DROP / CLICK ATTACH)
+       ========================================================================== */
+    let selectedGameTag = null;
+    let gamePlacedTags = {};
+
+    function selectGameTag(btn, tagType) {
+        soundClick();
+        // Clear previous outline
+        document.querySelectorAll('.draggable-tag').forEach(b => {
+            b.classList.remove('ring-4', 'ring-amber-300', 'scale-105');
+        });
+        
+        btn.classList.add('ring-4', 'ring-amber-300', 'scale-105');
+        selectedGameTag = tagType;
+
+        document.getElementById('game-tag-status').innerText = `Tag <${tagType}> dipilih. Klik slot kosong!`;
+    }
+
+    function placeGameTag(slot, expectedType) {
+        if (!selectedGameTag) {
+            soundWrong();
+            showModal("Pilih Tag Dulu!", "Klik salah satu tombol tag di sebelah kanan terlebih dahulu.", "👇");
+            return;
+        }
+
+        soundClick();
+        gamePlacedTags[expectedType] = selectedGameTag;
+
+        let tagColorClass = "text-amber-400";
+        if (selectedGameTag === 'head') tagColorClass = "text-emerald-400";
+        if (selectedGameTag === 'body') tagColorClass = "text-rose-400";
+        if (selectedGameTag === 'html') tagColorClass = "text-purple-400";
+
+        slot.innerText = `<${selectedGameTag}>`;
+        slot.className = `game-slot inline-flex w-32 h-8 border-2 border-solid border-slate-600 rounded-xl bg-slate-800 items-center justify-center font-bold font-mono text-xs ${tagColorClass} cursor-pointer`;
+    }
+
+    function checkGameDragResult() {
+        const required = ['html', 'head', 'title', 'body'];
+        let correctCount = 0;
+
+        required.forEach(key => {
+            if (gamePlacedTags[key] === key) correctCount++;
+        });
+
+        if (correctCount === required.length) {
+            soundCorrect();
+            if (!state.gameDragCompleted) {
+                addXP(30);
+                addStar(1);
+                state.gameDragCompleted = true;
+            }
+            showModal("Kerangka Sempurna! 🚀", "Hebat! Kamu berhasil menyusun seluruh tag kerangka HTML5 secara benar berurutan!", "🏆");
+        } else {
+            soundWrong();
+            showModal("Masih Ada Posisi Keliru", `Kamu baru menyusun ${correctCount} dari 4 tag dengan benar. Coba cek kembali urutannya!`, "❌");
+        }
+    }
+
+    function resetGameDrag() {
+        soundClick();
+        selectedGameTag = null;
+        gamePlacedTags = {};
+        document.getElementById('game-tag-status').innerText = "Pilih tag terlebih dahulu.";
+        document.querySelectorAll('.draggable-tag').forEach(b => {
+            b.classList.remove('ring-4', 'ring-amber-300', 'scale-105');
+        });
+        document.querySelectorAll('.game-slot').forEach(s => {
+            s.innerText = "";
+            s.className = "game-slot inline-flex w-32 h-8 border-2 border-dashed border-slate-500 rounded-xl bg-slate-900/60 items-center justify-center font-bold text-slate-400 cursor-pointer hover:border-brand-purple transition";
+        });
+    }
+
+    /* ==========================================================================
+       HALAMAN 6: EVALUASI AKHIR (10 SOAL KUIS)
+       ========================================================================== */
+    const evalQuestions = [
+        {
+            q: "Apa singkatan resmi dari HTML?",
+            opts: ["HyperText Markup Language", "Hyperlink Mobile Language", "Hyper Tool Multi Language", "HyperTell Markup Language"],
+            ans: 0
+        },
+        {
+            q: "Tag mana yang berfungsi memberitahu browser bahwa dokumen menggunakan standar HTML5?",
+            opts: ["<html>", "<head>", "<!DOCTYPE html>", "<body>"],
+            ans: 2
+        },
+        {
+            q: "Elemen yang menjadi induk pembungkus seluruh dokumen HTML adalah...",
+            opts: ["<body>", "<html>", "<head>", "<meta>"],
+            ans: 1
+        },
+        {
+            q: "Bagian metadata dokumen yang umumnya tidak ditampilkan di halaman utama browser ditulis di dalam elemen...",
+            opts: ["<body>", "<h1>", "<head>", "<title>"],
+            ans: 2
+        },
+        {
+            q: "Di mana tag <title> seharusnya diletakkan?",
+            opts: ["Di dalam <body>", "Di dalam <head>", "Di luar <html>", "Di bawah </body>"],
+            ans: 1
+        },
+        {
+            q: "Tag mana yang membungkus seluruh konten visual utama (teks, gambar, tombol) yang tampil untuk pengunjung?",
+            opts: ["<head>", "<title>", "<body>", "<html>"],
+            ans: 2
+        },
+        {
+            q: "Manakah penulisan tag penutup untuk elemen body yang benar?",
+            opts: ["<body/>", "</body >", "</body>", "<close-body>"],
+            ans: 2
+        },
+        {
+            q: "Apa fungsi utama dari sintaks <meta charset=\"UTF-8\">?",
+            opts: ["Mengatur warna latar", "Mengatur pengkodean karakter teks", "Membuat judul besar", "Menghubungkan gambar"],
+            ans: 1
+        },
+        {
+            q: "Manakah urutan kerangka dasar HTML5 yang tepat dari atas ke bawah?",
+            opts: ["DOCTYPE -> html -> head -> body", "head -> body -> html -> DOCTYPE", "body -> head -> html -> DOCTYPE", "html -> DOCTYPE -> body -> head"],
+            ans: 0
+        },
+        {
+            q: "Apa yang terjadi jika sebuah halaman web dibangun tanpa tag HTML sama sekali?",
+            opts: ["Website tetap rapi", "Browser tidak paham struktur sehingga teks berantakan", "Otomatis jadi teratur", "Komputer langsung rusak"],
+            ans: 1
+        }
+    ];
+
+    let currentEvalIdx = 0;
+    let userEvalAnswers = [];
+
+    function startEvaluation() {
+        soundClick();
+        currentEvalIdx = 0;
+        userEvalAnswers = [];
+
+        document.getElementById('eval-intro-card').classList.add('hidden');
+        document.getElementById('eval-result-card').classList.add('hidden');
+        document.getElementById('eval-quiz-card').classList.remove('hidden');
+
+        renderEvalQuestion();
+    }
+
+    function renderEvalQuestion() {
+        const qData = evalQuestions[currentEvalIdx];
+        document.getElementById('quiz-question-number').innerText = `Soal ${currentEvalIdx + 1} / 10`;
+        document.getElementById('quiz-question-text').innerText = qData.q;
+        document.getElementById('quiz-current-score').innerText = userEvalAnswers.reduce((acc, curr, idx) => curr === evalQuestions[idx].ans ? acc + 10 : acc, 0);
+
+        const container = document.getElementById('quiz-options-container');
+        container.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D'];
+        qData.opts.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = "game-btn w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-brand-blue bg-white hover:bg-slate-50 transition font-semibold text-slate-800 flex items-center gap-3";
+            btn.onclick = () => selectEvalOption(idx);
+            btn.innerHTML = `
+                <span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 font-extrabold flex items-center justify-center shrink-0">${letters[idx]}</span>
+                <span class="text-sm sm:text-base">${opt.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</span>
+            `;
+            container.appendChild(btn);
+        });
+    }
+
+    function selectEvalOption(optIdx) {
+        const correct = evalQuestions[currentEvalIdx].ans;
+        if (optIdx === correct) {
+            soundCorrect();
+        } else {
+            soundWrong();
+        }
+
+        userEvalAnswers.push(optIdx);
+        currentEvalIdx++;
+
+        if (currentEvalIdx < evalQuestions.length) {
+            renderEvalQuestion();
+        } else {
+            finishEvaluation();
+        }
+    }
+
+    function finishEvaluation() {
+        document.getElementById('eval-quiz-card').classList.add('hidden');
+        document.getElementById('eval-result-card').classList.remove('hidden');
+
+        let finalScore = 0;
+        userEvalAnswers.forEach((ans, idx) => {
+            if (ans === evalQuestions[idx].ans) finalScore += 10;
+        });
+
+        document.getElementById('result-final-score').innerText = finalScore;
+
+        const starsBox = document.getElementById('result-stars-box');
+        starsBox.innerHTML = '';
+        let starCount = finalScore >= 80 ? 3 : (finalScore >= 60 ? 2 : 1);
+
+        for (let i = 0; i < 3; i++) {
+            if (i < starCount) {
+                starsBox.innerHTML += `<i data-lucide="star" class="w-10 h-10 fill-amber-400 text-amber-400 animate-bounce"></i>`;
+            } else {
+                starsBox.innerHTML += `<i data-lucide="star" class="w-10 h-10 text-slate-300"></i>`;
+            }
+        }
+        lucide.createIcons();
+
+        const title = document.getElementById('result-title');
+        const badgeIcon = document.getElementById('result-badge-icon');
+        const msg = document.getElementById('result-appreciation-msg');
+
+        if (finalScore >= 75) {
+            soundCorrect();
+            badgeIcon.innerText = "🎓";
+            title.innerText = "HTML Master! Luar biasa!";
+            msg.innerText = "Hebat! Kamu sudah paham tentang tag dasar HTML!";
+            addXP(50);
+            addStar(2);
+        } else {
+            soundWrong();
+            badgeIcon.innerText = "💪";
+            title.innerText = "Tetap Semangat!";
+            msg.innerText = "Bagus! Ayo pelajari kembali materi kerangka HTML5 dan coba lagi kuisnya untuk meraih nilai sempurna!";
+        }
+    }
+
+    /* ==========================================================================
+       INITIALIZATION ON DOM LOADED
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+        loadSavedState();
+        nav('home');
+        runLabCode();
+
+        // Mengaktifkan audio saat interaksi pertama
+        const enableAudioOnUserGesture = () => {
+            initAudioContext();
+            if (!isSoundMuted) startRelaxingBacksound();
+            window.removeEventListener('click', enableAudioOnUserGesture);
+            window.removeEventListener('keydown', enableAudioOnUserGesture);
+        };
+        window.addEventListener('click', enableAudioOnUserGesture);
+        window.addEventListener('keydown', enableAudioOnUserGesture);
+    });
+</script>
+</body>
+</html>
