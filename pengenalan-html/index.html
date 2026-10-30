@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Pengenalan Struktur Dasar HTML — Misi Pertamamu Menjadi Web Developer!</title>
+  <meta name="description" content="Media pembelajaran interaktif Struktur Dasar HTML5 untuk SMK Kelas XI: apersepsi, materi, lab coding, game, dan evaluasi.">
+  <meta name="theme-color" content="#4F46E5">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <!-- Font online (opsional). Jika offline, CSS otomatis memakai font sistem. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Lewati ke konten utama</a>
+
+  <!-- ============================================================
+       HALAMAN 1 — PEMBUKA
+       ============================================================ -->
+  <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+    <div class="welcome-bg" aria-hidden="true">
+      <span class="ftag ftag-1">&lt;html&gt;</span>
+      <span class="ftag ftag-2">&lt;/body&gt;</span>
+      <span class="ftag ftag-3">&lt;head&gt;</span>
+      <span class="ftag ftag-4">&lt;title&gt;</span>
+      <span class="ftag ftag-5">&lt;/&gt;</span>
+      <span class="ftag ftag-6">&lt;!DOCTYPE&gt;</span>
+      <span class="ftag ftag-7">&lt;p&gt;</span>
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+    </div>
+
+    <header class="welcome-top">
+      <div class="brand">
+        <img src="assets/images/logo.svg" alt="" width="40" height="40">
+        <span class="brand-text"><strong>Misi HTML</strong><small>Web Statis · SMK</small></span>
+      </div>
+      <div class="welcome-tools">
+        <button type="button" class="btn btn-glass" id="welcome-music" aria-pressed="false">
+          <i data-icon="music"></i><span class="label">Musik: Mati</span>
+        </button>
+        <button type="button" class="btn btn-glass btn-icon" data-open-settings aria-label="Pengaturan suara dan tampilan">
+          <i data-icon="sliders"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="welcome-grid">
+      <div class="welcome-copy">
+        <p class="eyebrow"><i data-icon="code"></i> SMK Kelas XI · Fase F · Web Statis</p>
+        <h1 id="welcome-title" class="welcome-title">Pengenalan <span class="grad-text">Struktur Dasar</span> HTML</h1>
+        <p class="welcome-sub">Misi Pertamamu Menjadi Web Developer!</p>
+        <ul class="welcome-pills" aria-label="Alur belajar">
+          <li><i data-icon="book"></i>Belajar</li>
+          <li><i data-icon="flask"></i>Eksplorasi</li>
+          <li><i data-icon="gamepad"></i>Bermain</li>
+          <li><i data-icon="star"></i>Raih Bintang</li>
+        </ul>
+        <div class="welcome-actions">
+          <button type="button" class="btn btn-primary btn-lg" id="btn-start">
+            <i data-icon="rocket"></i><span>Mulai Belajar</span>
+          </button>
+          <p class="welcome-progress" id="welcome-progress" hidden></p>
+        </div>
+        <p class="welcome-note"><i data-icon="info"></i> Sekitar 2 × 45 menit · Progres tersimpan otomatis</p>
+      </div>
+
+      <div class="welcome-art">
+        <img class="hero-img" src="assets/images/hero-coding.svg" alt="Ilustrasi laptop yang menampilkan kode HTML dan jendela browser berisi hasilnya" width="520" height="400">
+        <div class="welcome-mascot">
+          <div class="bubble bubble-welcome" id="welcome-bubble">Hai! Aku <strong>Cursor Pintar</strong>. Siap menyusun halaman web pertamamu?</div>
+          <div class="mascot mascot-lg" data-mascot data-mood="wave"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       APLIKASI UTAMA
+       ============================================================ -->
+  <div id="app" class="shell" hidden>
+    <aside class="sidebar" aria-label="Navigasi utama">
+      <div class="brand">
+        <img src="assets/images/logo.svg" alt="" width="40" height="40">
+        <span class="brand-text"><strong>Misi HTML</strong><small>Struktur Dasar HTML5</small></span>
+      </div>
+      <nav>
+        <ul class="side-nav" id="side-nav"></ul>
+      </nav>
+      <div class="side-progress">
+        <div class="side-progress-head"><span>Progres belajar</span><strong id="side-progress-text">0%</strong></div>
+        <div class="bar" role="progressbar" aria-label="Progres belajar keseluruhan" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="side-progress-bar"><span></span></div>
+      </div>
+      <button type="button" class="nav-item nav-exit" data-action="exit"><i data-icon="logout"></i><span>Keluar</span></button>
+    </aside>
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <img class="topbar-logo" src="assets/images/logo.svg" alt="" width="32" height="32">
+        <nav class="breadcrumb" aria-label="Posisi kamu">
+          <ol><li class="crumb-root">Misi Web Developer</li><li aria-current="page" id="crumb-current">Home</li></ol>
+        </nav>
+      </div>
+      <div class="topbar-right">
+        <div class="chip chip-xp" title="Poin pengalaman (XP)"><i data-icon="zap"></i><span><strong id="hud-xp">0</strong> XP</span></div>
+        <div class="chip chip-star" title="Bintang yang sudah diraih"><i data-icon="star"></i><span><strong id="hud-stars">0</strong>/<span id="hud-stars-max">8</span></span></div>
+        <button type="button" class="btn btn-ghost btn-icon" id="btn-mute" aria-pressed="false" aria-label="Matikan semua suara"><i data-icon="volume"></i></button>
+        <button type="button" class="btn btn-ghost btn-icon" data-open-settings aria-label="Pengaturan suara dan tampilan"><i data-icon="sliders"></i></button>
+        <button type="button" class="btn btn-ghost btn-icon only-mobile" data-action="exit" aria-label="Keluar ke layar pembuka"><i data-icon="logout"></i></button>
+      </div>
+    </header>
+
+    <main id="main" class="main" tabindex="-1">
+
+      <!-- ===================== HOME / DASHBOARD ===================== -->
+      <section class="screen screen-home" id="screen-home" data-screen="home" aria-labelledby="t-home" hidden>
+        <div class="home-layout">
+          <div class="card card-hero">
+            <div class="hero-top">
+              <div class="hero-copy">
+                <p class="kicker">Dashboard Misi</p>
+                <h2 class="screen-title" id="t-home" tabindex="-1">Halo, calon Web Developer!</h2>
+                <p class="hero-lead" id="home-lead">Selesaikan 6 misi untuk menguasai kerangka dasar HTML5.</p>
+              </div>
+              <div class="home-ring" aria-hidden="true">
+                <svg viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="50" class="ring-bg"/>
+                  <circle cx="60" cy="60" r="50" class="ring-fg" id="home-ring-fg"/>
+                </svg>
+                <div class="home-ring-text"><strong id="home-ring-value">0%</strong><span>selesai</span></div>
+              </div>
+            </div>
+            <div class="guide guide-hero" data-guide="home">
+              <div class="mascot" data-mascot data-mood="happy"></div>
+              <p class="bubble" aria-live="polite">Aku akan menemanimu di setiap misi. Ikuti urutan dari atas ya!</p>
+            </div>
+            <div class="stat-row">
+              <div class="stat"><i data-icon="zap" class="stat-ic ic-indigo"></i><div><strong id="stat-xp">0</strong><span>XP</span></div></div>
+              <div class="stat"><i data-icon="star" class="stat-ic ic-yellow"></i><div><strong id="stat-stars">0</strong><span>Bintang</span></div></div>
+              <div class="stat"><i data-icon="check-circle" class="stat-ic ic-green"></i><div><strong id="stat-done">0/6</strong><span>Misi</span></div></div>
+              <div class="stat"><i data-icon="trophy" class="stat-ic ic-violet"></i><div><strong id="stat-best">–</strong><span>Nilai</span></div></div>
+            </div>
+            <div class="hero-actions">
+              <button type="button" class="btn btn-primary" id="btn-continue"><i data-icon="play"></i><span>Lanjutkan Misi</span></button>
+            </div>
+          </div>
+
+          <div class="home-side">
+            <h3 class="section-title">Peta Misi</h3>
+            <ol class="module-grid" id="module-grid"></ol>
+            <h3 class="section-title">Lencana</h3>
+            <div class="badge-grid" id="badge-grid"></div>
+            <div class="home-footer">
+              <p class="storage-note" id="storage-note" hidden><i data-icon="info"></i> Progres hanya sementara (penyimpanan browser nonaktif).</p>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-info"><i data-icon="target"></i><span>Tujuan &amp; Panduan Guru</span></button>
+              <button type="button" class="btn btn-secondary btn-sm" data-action="welcome"><i data-icon="home"></i><span>Layar Pembuka</span></button>
+              <button type="button" class="btn btn-danger-ghost btn-sm" id="btn-reset"><i data-icon="rotate"></i><span>Reset Progres</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== HALAMAN 2 — APERSEPSI ===================== -->
+      <section class="screen" id="screen-apersepsi" data-screen="apersepsi" aria-labelledby="t-apersepsi" hidden>
+        <header class="screen-head">
+          <span class="step-pill">Misi 1</span>
+          <h2 class="screen-title" id="t-apersepsi" tabindex="-1"><span class="hide-sm">Menurutmu, </span>Web Mana yang Lebih Mudah Dibaca?</h2>
+        </header>
+
+        <div class="stages" data-stages="apersepsi">
+          <!-- Langkah 1: Amati -->
+          <div class="stage stage-observe" data-title="Amati kedua halaman">
+            <div class="guide guide-compact" data-guide="apersepsi-observe">
+              <div class="mascot mascot-sm" data-mascot data-mood="think"></div>
+              <p class="bubble">Amati judul, paragraf, dan daftarnya. Mana yang membuatmu cepat menemukan informasi?</p>
+            </div>
+            <div class="compare-grid">
+              <figure class="compare-card card" id="card-a">
+                <figcaption class="compare-label"><span class="label-badge label-a">A</span>Halaman A</figcaption>
+                <div class="compare-media">
+                  <img src="assets/images/web-rapi.svg" alt="Halaman A: mockup web Klub Coding SMK dengan judul besar, paragraf berjarak nyaman, subjudul Kegiatan Kami, dan daftar kegiatan yang rapi" width="400" height="300">
+                  <div class="peek-layer" id="peek-layer" hidden aria-hidden="true">
+                    <div class="peek-box">
+                      <span class="peek-tag" style="top:16%;left:9%">&lt;h1&gt;</span>
+                      <span class="peek-tag" style="top:34%;left:58%">&lt;p&gt;</span>
+                      <span class="peek-tag" style="top:50%;left:34%">&lt;h2&gt;</span>
+                      <span class="peek-tag" style="top:64%;left:56%">&lt;ul&gt; &lt;li&gt;</span>
+                    </div>
+                  </div>
+                </div>
+              </figure>
+              <figure class="compare-card card" id="card-b">
+                <figcaption class="compare-label"><span class="label-badge label-b">B</span>Halaman B</figcaption>
+                <div class="compare-media">
+                  <img src="assets/images/web-berantakan.svg" alt="Halaman B: mockup web dengan tulisan berhimpitan, ukuran huruf tidak konsisten, warna mencolok, dan informasi acak" width="400" height="300">
+                </div>
+              </figure>
+            </div>
+          </div>
+
+          <!-- Langkah 2: Jawab -->
+          <div class="stage stage-answer" data-title="Jawab pertanyaan">
+            <div class="answer-layout">
+              <div class="mini-compare" aria-hidden="true">
+                <div class="mini-card" id="mini-a"><span class="label-badge label-a">A</span><img src="assets/images/web-rapi.svg" alt=""></div>
+                <div class="mini-card" id="mini-b"><span class="label-badge label-b">B</span><img src="assets/images/web-berantakan.svg" alt=""></div>
+              </div>
+              <div class="card question-card">
+                <fieldset class="q-fieldset">
+                  <legend class="q-prompt">Menurut kalian, halaman mana yang lebih mudah dibaca? Mengapa?</legend>
+                  <div class="option-list" id="apersepsi-options"></div>
+                </fieldset>
+                <div class="feedback" id="apersepsi-feedback" role="status" aria-live="polite" hidden></div>
+                <div class="action-row" id="apersepsi-actions">
+                  <button type="button" class="btn btn-secondary btn-sm" id="apersepsi-retry" hidden><i data-icon="rotate"></i><span>Coba Lagi</span></button>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btn-peek" hidden><i data-icon="eye"></i><span>Intip Struktur HTML Halaman A</span></button>
+                  <button type="button" class="btn btn-primary btn-sm" id="apersepsi-next" hidden><span>Lanjut ke Materi</span><i data-icon="arrow-right"></i></button>
+                </div>
+              </div>
+              <div class="guide guide-side" data-guide="apersepsi">
+                <div class="mascot" data-mascot data-mood="think"></div>
+                <p class="bubble" aria-live="polite">Pilih jawaban yang menurutmu paling tepat.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="stage-bar" data-stage-bar="apersepsi"></footer>
+      </section>
+
+      <!-- ===================== HALAMAN 3 — MATERI ===================== -->
+      <section class="screen" id="screen-materi" data-screen="materi" aria-labelledby="t-materi" hidden>
+        <header class="screen-head">
+          <span class="step-pill">Misi 2</span>
+          <h2 class="screen-title" id="t-materi" tabindex="-1">Kenalan dengan Kerangka HTML5</h2>
+        </header>
+
+        <div class="stages" data-stages="materi">
+          <!-- Langkah 1: Apa itu HTML -->
+          <div class="stage stage-intro" data-title="Apa itu HTML?">
+            <div class="intro-grid">
+              <div class="card intro-card">
+                <h3><i data-icon="file-code"></i>Apa itu HTML?</h3>
+                <p><strong>HTML</strong> adalah singkatan dari <strong>HyperText Markup Language</strong>. HTML digunakan untuk menyusun <strong>struktur dan konten</strong> halaman web. Browser membaca kode HTML lalu menampilkan konten sesuai elemen yang digunakan.</p>
+                <dl class="acronym">
+                  <div><dt>HyperText</dt><dd>Teks yang bisa saling terhubung lewat tautan.</dd></div>
+                  <div><dt>Markup</dt><dd>Penanda (tag) yang memberi arti pada konten.</dd></div>
+                  <div><dt>Language</dt><dd>Bahasa dengan aturan penulisan yang dipahami browser.</dd></div>
+                </dl>
+              </div>
+              <div class="card core-card">
+                <h3><i data-icon="star"></i>5 struktur inti yang akan kamu pelajari</h3>
+                <ol class="core-list">
+                  <li><code>&lt;!DOCTYPE html&gt;</code><span>penanda dokumen HTML5</span></li>
+                  <li><code>&lt;html&gt;</code><span>pembungkus seluruh dokumen</span></li>
+                  <li><code>&lt;head&gt;</code><span>informasi dokumen</span></li>
+                  <li><code>&lt;title&gt;</code><span>judul di tab browser</span></li>
+                  <li><code>&lt;body&gt;</code><span>konten yang tampil</span></li>
+                </ol>
+                <div class="guide guide-compact" data-guide="materi-intro">
+                  <div class="mascot mascot-sm" data-mascot data-mood="happy"></div>
+                  <p class="bubble">Tekan <strong>Berikutnya</strong> untuk membedah kodenya baris demi baris!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Langkah 2: Kerangka interaktif -->
+          <div class="stage stage-code" data-title="Bedah kerangka HTML5">
+            <div class="materi-grid">
+              <div class="code-window materi-code-window">
+                <div class="code-head">
+                  <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <span class="code-file"><i data-icon="file-code"></i><span class="hide-xs">halaman-pertamaku.html</span><span class="show-xs">index.html</span></span>
+                  <div class="code-tools">
+                    <button type="button" class="btn btn-code" id="materi-copy"><i data-icon="copy"></i><span>Salin</span></button>
+                    <button type="button" class="btn btn-code btn-code-run" id="materi-run"><i data-icon="play"></i><span>Jalankan Kode</span></button>
+                  </div>
+                </div>
+                <div class="code-body" id="materi-code" role="group" aria-label="Kode kerangka HTML5. Pilih baris untuk melihat penjelasan."></div>
+                <div class="code-legend" aria-label="Keterangan warna">
+                  <span><i class="lg lg-wrap"></i>Pembungkus dokumen</span>
+                  <span><i class="lg lg-head"></i>Informasi dokumen</span>
+                  <span><i class="lg lg-body"></i>Konten halaman</span>
+                </div>
+              </div>
+
+              <article class="card explain-card" id="explain-card" aria-live="polite">
+                <div class="explain-top">
+                  <button type="button" class="btn btn-secondary btn-icon btn-icon-sm" id="explain-prev" aria-label="Bagian sebelumnya"><i data-icon="chevron-left"></i></button>
+                  <span class="explain-count" id="explain-count">Bagian 1 dari 9</span>
+                  <button type="button" class="btn btn-primary btn-icon btn-icon-sm" id="explain-next" aria-label="Bagian berikutnya"><i data-icon="chevron-right"></i></button>
+                  <span class="group-pill" id="explain-group">Pembungkus dokumen</span>
+                </div>
+                <h3 class="explain-tag" id="explain-tag">&lt;!DOCTYPE html&gt;</h3>
+                <p class="explain-text" id="explain-text"></p>
+                <p class="explain-analogy" id="explain-analogy"></p>
+                <div class="explain-dots" id="explain-dots" aria-hidden="true"></div>
+                <div class="guide guide-compact guide-explain" data-guide="materi">
+                  <div class="mascot mascot-sm" data-mascot data-mood="think"></div>
+                  <p class="bubble" aria-live="polite">Klik baris kode mana pun, atau tekan tombol panah.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Langkah 3: Cek cepat -->
+          <div class="stage stage-quick" data-title="Cek cepat head atau body">
+            <div class="card quick-check">
+              <div class="quick-head">
+                <h3><i data-icon="target"></i>Cek Cepat: Masuk <code>&lt;head&gt;</code> atau <code>&lt;body&gt;</code>?</h3>
+                <p><em>head</em> = informasi dokumen &nbsp;·&nbsp; <em>body</em> = konten yang tampil di halaman.</p>
+              </div>
+              <ul class="quick-list" id="quick-list"></ul>
+              <div class="feedback" id="quick-feedback" role="status" aria-live="polite" hidden></div>
+            </div>
+          </div>
+        </div>
+        <footer class="stage-bar" data-stage-bar="materi"></footer>
+      </section>
+
+      <!-- ===================== HALAMAN 4 — LAB ===================== -->
+      <section class="screen screen-lab" id="screen-eksplorasi" data-screen="eksplorasi" aria-labelledby="t-lab" hidden>
+        <header class="screen-head">
+          <span class="step-pill">Misi 3</span>
+          <h2 class="screen-title" id="t-lab" tabindex="-1">Bangun Halaman Web Pertamamu!</h2>
+          <div class="mission-strip" id="mission-strip" role="list" aria-label="Daftar misi lab"></div>
+        </header>
+
+        <div class="card mission-card" id="mission-card">
+          <div class="mission-icon" aria-hidden="true"><i data-icon="target"></i></div>
+          <div class="mission-body">
+            <p class="mission-count"><span id="mission-count">Misi 1 dari 5</span><span class="bar mission-bar" role="progressbar" aria-label="Progres misi lab" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="lab-progress"><span></span></span></p>
+            <h3 id="mission-title">Temukan judul tab</h3>
+            <p id="mission-text"></p>
+          </div>
+          <button type="button" class="btn btn-success" id="lab-check"><i data-icon="check-circle"></i><span>Periksa Jawaban</span></button>
+        </div>
+        <div class="feedback lab-feedback" id="lab-feedback" role="status" aria-live="polite" hidden></div>
+
+        <div class="lab-switch" role="tablist" aria-label="Tampilan lab">
+          <button type="button" role="tab" class="lab-switch-btn" id="lab-view-code" aria-selected="true" aria-controls="lab-editor-pane"><i data-icon="code"></i>Kode</button>
+          <button type="button" role="tab" class="lab-switch-btn" id="lab-view-preview" aria-selected="false" aria-controls="lab-preview-pane"><i data-icon="eye"></i>Hasil di Browser</button>
+        </div>
+
+        <div class="lab-grid" data-view="code">
+          <div class="code-window editor-window" id="lab-editor-pane">
+            <div class="code-head">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="code-file"><i data-icon="file-code"></i>index.html</span>
+              <span class="caret-pos" id="caret-pos" aria-live="off">Baris 1</span>
+            </div>
+            <div class="lab-toolbar">
+              <button type="button" class="btn btn-code btn-code-run" id="lab-run"><i data-icon="play"></i><span>Jalankan</span></button>
+              <button type="button" class="btn btn-code" id="lab-reset"><i data-icon="rotate"></i><span>Reset<span class="hide-xs"> Kode</span></span></button>
+              <button type="button" class="btn btn-code" id="lab-hint"><i data-icon="lightbulb"></i><span>Petunjuk</span></button>
+              <button type="button" class="btn btn-code" id="lab-solution" aria-haspopup="dialog"><i data-icon="eye"></i><span><span class="hide-xs">Tampilkan </span>Hasil</span></button>
+            </div>
+            <div class="editor">
+              <div class="editor-gutter" id="editor-gutter" aria-hidden="true"></div>
+              <div class="editor-area">
+                <pre class="editor-highlight" id="editor-highlight" aria-hidden="true"></pre>
+                <textarea id="lab-editor" class="editor-input" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-label="Editor kode HTML" aria-describedby="editor-help"></textarea>
+              </div>
+            </div>
+            <div class="editor-foot">
+              <div class="lint" id="lab-lint" aria-label="Pemeriksaan struktur"></div>
+              <p class="editor-help" id="editor-help"><kbd>Tab</kbd> = spasi · <kbd>Esc</kbd> lalu <kbd>Tab</kbd> = keluar editor · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> = jalankan</p>
+            </div>
+          </div>
+
+          <div class="lab-side" id="lab-preview-pane">
+            <div class="browser lab-browser">
+              <div class="browser-bar">
+                <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="browser-tab"><img src="assets/images/logo.svg" alt="" width="14" height="14"><span id="lab-tab-title">Halaman Pertamaku</span></span>
+                <span class="browser-url"><i data-icon="lock"></i>index.html</span>
+              </div>
+              <iframe id="lab-frame" title="Pratinjau browser hasil kode lab" sandbox="" referrerpolicy="no-referrer"></iframe>
+              <p class="browser-note"><i data-icon="shield"></i> Pratinjau aman: JavaScript tidak dijalankan.</p>
+            </div>
+            <div class="guide guide-compact guide-lab" data-guide="lab">
+              <div class="mascot mascot-sm" data-mascot data-mood="think"></div>
+              <p class="bubble" aria-live="polite">Baca misinya, ubah kode, tekan Jalankan, lalu Periksa Jawaban.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== HALAMAN 5 — GAME ===================== -->
+      <section class="screen screen-game" id="screen-game" data-screen="game" aria-labelledby="t-game" hidden>
+        <header class="screen-head">
+          <span class="step-pill">Misi 4–5</span>
+          <h2 class="screen-title" id="t-game" tabindex="-1">HTML Challenge<span class="hide-sm">: Susun, Cocokkan, dan Menang!</span></h2>
+        </header>
+
+        <div class="game-bar">
+          <div class="tabs" role="tablist" aria-label="Pilih permainan">
+            <button type="button" class="tab" role="tab" id="tab-a" aria-controls="panel-a" aria-selected="true"><i data-icon="puzzle"></i><span>Game A<span class="hide-xs"> · Susun Kerangka</span></span><i data-icon="check" class="tab-done" id="tab-a-done" hidden></i></button>
+            <button type="button" class="tab" role="tab" id="tab-b" aria-controls="panel-b" aria-selected="false" tabindex="-1"><i data-icon="list"></i><span>Game B<span class="hide-xs"> · Kuis Latihan</span></span><i data-icon="check" class="tab-done" id="tab-b-done" hidden></i></button>
+          </div>
+          <div class="game-hud" aria-label="Status game">
+            <span class="chip chip-xp"><i data-icon="zap"></i><strong id="game-points">0</strong><span class="hide-xs">poin</span></span>
+            <span class="chip chip-star"><i data-icon="star"></i><strong id="game-stars">0/2</strong></span>
+            <span class="hud-progress hide-xs"><span id="game-progress-text">0/2</span><span class="bar" id="game-progress" role="progressbar" aria-label="Progres game" aria-valuemin="0" aria-valuemax="2" aria-valuenow="0"><span></span></span></span>
+          </div>
+        </div>
+
+        <!-- Game A -->
+        <div class="tab-panel panel-a" role="tabpanel" id="panel-a" aria-labelledby="tab-a">
+          <div class="game-a-grid">
+            <div class="code-window board-window">
+              <div class="code-head">
+                <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="code-file"><i data-icon="file-code"></i>kerangka.html</span>
+                <span class="slot-count" id="slot-count">0/9 terisi</span>
+              </div>
+              <div class="board" id="board" role="group" aria-label="Kerangka dokumen dengan 9 slot kosong"></div>
+            </div>
+            <div class="tray-wrap card">
+              <div class="guide guide-compact" data-guide="gameA">
+                <div class="mascot mascot-sm" data-mascot data-mood="think"></div>
+                <p class="bubble" aria-live="polite">Seret kartu ke slot. Di HP? Ketuk kartu, lalu ketuk slotnya.</p>
+              </div>
+              <p class="tray-help" id="tray-help">Pilih kartu, lalu pilih slot tujuan.</p>
+              <div class="tray" id="tray" role="group" aria-label="Kartu tag yang belum dipasang"></div>
+              <div class="feedback" id="gameA-feedback" role="status" aria-live="polite" hidden></div>
+              <div class="game-actions">
+                <button type="button" class="btn btn-success" id="gameA-check"><i data-icon="check-circle"></i><span>Periksa<span class="hide-xs"> Susunan</span></span></button>
+                <button type="button" class="btn btn-secondary" id="gameA-hint"><i data-icon="lightbulb"></i><span>Petunjuk</span></button>
+                <button type="button" class="btn btn-secondary" id="gameA-reset"><i data-icon="rotate"></i><span>Ulangi</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game B -->
+        <div class="tab-panel panel-b" role="tabpanel" id="panel-b" aria-labelledby="tab-b" hidden>
+          <div class="quiz-layout">
+            <div class="card quiz-card" id="practice-card"></div>
+            <div class="guide guide-side" data-guide="gameB">
+              <div class="mascot" data-mascot data-mood="think"></div>
+              <p class="bubble" aria-live="polite">Latihan ini tidak mengurangi nilai. Baca penjelasan setelah menjawab ya!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== HALAMAN 6 — EVALUASI ===================== -->
+      <section class="screen screen-kuis" id="screen-kuis" data-screen="kuis" aria-labelledby="t-kuis" hidden>
+        <header class="screen-head">
+          <span class="step-pill">Misi 6</span>
+          <h2 class="screen-title" id="t-kuis" tabindex="-1">Final Mission<span class="hide-sm">: Buktikan Kamu Jago HTML!</span></h2>
+        </header>
+
+        <!-- Intro -->
+        <div class="eval-view eval-intro card" id="eval-intro">
+          <div class="eval-intro-art">
+            <div class="mascot mascot-lg" data-mascot data-mood="happy"></div>
+          </div>
+          <div class="eval-intro-copy">
+            <p class="eval-desc">Jawab 10 soal berikut untuk membuktikan bahwa kamu memahami struktur dasar HTML5.</p>
+            <ul class="rule-list">
+              <li><i data-icon="list"></i>10 soal pilihan ganda, masing-masing 4 pilihan.</li>
+              <li><i data-icon="check-circle"></i>Benar = 10 poin, salah = 0 poin. Skor maksimum 100.</li>
+              <li><i data-icon="save"></i>Jawaban tersimpan otomatis, boleh berpindah soal.</li>
+              <li><i data-icon="flag"></i>Semua soal wajib dijawab sebelum dikumpulkan.</li>
+            </ul>
+            <div class="action-row">
+              <button type="button" class="btn btn-primary btn-lg" id="eval-start"><i data-icon="rocket"></i><span>Mulai Evaluasi</span></button>
+              <button type="button" class="btn btn-secondary" id="eval-see-result" hidden><i data-icon="trophy"></i><span>Lihat Hasil</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pengerjaan -->
+        <div class="eval-view eval-run" id="eval-run" hidden>
+          <div class="eval-progress">
+            <div class="eval-progress-head"><span>Terjawab <strong id="eval-answered">0</strong>/10</span><span class="bar" id="eval-bar" role="progressbar" aria-label="Soal terjawab" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><span></span></span><span id="eval-qnum">Soal 1</span></div>
+            <div class="q-nav" id="eval-nav" role="group" aria-label="Navigasi nomor soal"></div>
+          </div>
+          <div class="card quiz-card eval-card" id="eval-card"></div>
+          <div class="eval-actions">
+            <button type="button" class="btn btn-secondary" id="eval-prev" aria-label="Soal sebelumnya"><i data-icon="chevron-left"></i><span class="hide-xs" aria-hidden="true">Sebelumnya</span></button>
+            <button type="button" class="btn btn-secondary" id="eval-next" aria-label="Soal berikutnya"><span class="hide-xs" aria-hidden="true">Berikutnya</span><i data-icon="chevron-right"></i></button>
+            <button type="button" class="btn btn-primary" id="eval-submit"><i data-icon="flag"></i><span>Selesai &amp; Kumpulkan</span></button>
+          </div>
+        </div>
+
+        <!-- Hasil -->
+        <div class="eval-view eval-result card" id="eval-result" hidden></div>
+
+        <!-- Pembahasan (satu soal per tampilan) -->
+        <div class="eval-view eval-review" id="eval-review" hidden>
+          <div class="review-head">
+            <h3><i data-icon="book"></i>Pembahasan</h3>
+            <label class="switch"><input type="checkbox" id="review-wrong-only"><span class="switch-ui" aria-hidden="true"></span><span>Hanya yang salah</span></label>
+          </div>
+          <div class="review-body" id="review-list" aria-live="polite"></div>
+          <div class="review-foot">
+            <button type="button" class="btn btn-secondary btn-icon" id="review-prev" aria-label="Pembahasan sebelumnya"><i data-icon="chevron-left"></i></button>
+            <span class="review-pos" id="review-pos">1/1</span>
+            <button type="button" class="btn btn-secondary btn-icon" id="review-next" aria-label="Pembahasan berikutnya"><i data-icon="chevron-right"></i></button>
+            <span class="review-spacer"></span>
+            <button type="button" class="btn btn-secondary" id="review-back"><i data-icon="trophy"></i><span>Lihat Hasil</span></button>
+            <button type="button" class="btn btn-primary" id="review-retry"><i data-icon="rotate"></i><span>Ulangi<span class="hide-xs"> Kuis</span></span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navigasi utama (seluler)">
+      <ul id="bottom-nav"></ul>
+    </nav>
+  </div>
+
+  <!-- ============================================================
+       DIALOG & LAPISAN
+       ============================================================ -->
+  <dialog class="dialog" id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-msg">
+    <form method="dialog" class="dialog-inner">
+      <div class="dialog-icon" id="confirm-icon"></div>
+      <h2 id="confirm-title">Konfirmasi</h2>
+      <p id="confirm-msg"></p>
+      <div class="dialog-actions">
+        <button type="submit" value="cancel" class="btn btn-secondary" id="confirm-cancel">Batal</button>
+        <button type="submit" value="ok" class="btn btn-primary" id="confirm-ok">Ya</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="dialog dialog-wide" id="preview-dialog" aria-labelledby="preview-title">
+    <form method="dialog" class="dialog-inner dialog-left">
+      <div class="dialog-head">
+        <h2 id="preview-title"><i data-icon="eye"></i>Hasil di Browser</h2>
+        <button type="submit" value="close" class="btn btn-ghost btn-icon" aria-label="Tutup pratinjau"><i data-icon="x"></i></button>
+      </div>
+      <div class="browser">
+        <div class="browser-bar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="browser-tab"><img src="assets/images/logo.svg" alt="" width="14" height="14"><span id="materi-tab-title">Halaman Pertamaku</span></span>
+          <span class="browser-url"><i data-icon="lock"></i>halaman-pertamaku.html</span>
+        </div>
+        <iframe id="materi-frame" title="Pratinjau hasil kode materi" sandbox="" referrerpolicy="no-referrer"></iframe>
+      </div>
+      <p class="set-note"><i data-icon="info"></i> Teks <code>&lt;title&gt;</code> muncul di <strong>tab</strong>, sedangkan isi <code>&lt;body&gt;</code> muncul di <strong>halaman</strong>.</p>
+    </form>
+  </dialog>
+
+  <dialog class="dialog dialog-wide" id="solution-dialog" aria-labelledby="solution-title">
+    <form method="dialog" class="dialog-inner dialog-left">
+      <div class="dialog-head">
+        <h2 id="solution-title"><i data-icon="eye"></i>Contoh Hasil Akhir</h2>
+        <button type="submit" value="close" class="btn btn-ghost btn-icon" aria-label="Tutup contoh hasil"><i data-icon="x"></i></button>
+      </div>
+      <p>Bandingkan dengan kodemu. Kamu tetap perlu mengetik sendiri untuk menyelesaikan misi.</p>
+      <div class="code-window"><div class="code-body code-static" id="solution-code"></div></div>
+    </form>
+  </dialog>
+
+  <dialog class="dialog dialog-wide" id="info-dialog" aria-labelledby="info-title">
+    <form method="dialog" class="dialog-inner dialog-left">
+      <div class="dialog-head">
+        <h2 id="info-title"><i data-icon="target"></i>Tujuan &amp; Panduan</h2>
+        <button type="submit" value="close" class="btn btn-ghost btn-icon" aria-label="Tutup"><i data-icon="x"></i></button>
+      </div>
+      <div class="info-scroll">
+        <h3 class="info-h">Tujuan Pembelajaran</h3>
+        <ol class="tp-list">
+          <li>Menjelaskan pengertian HTML dan fungsinya dalam membangun struktur halaman web statis.</li>
+          <li>Mengidentifikasi fungsi <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;title&gt;</code>, dan <code>&lt;body&gt;</code>.</li>
+          <li>Menyusun kerangka dasar dokumen HTML5 secara berurutan dan benar.</li>
+          <li>Membedakan bagian metadata dokumen dengan bagian konten yang ditampilkan pada browser.</li>
+          <li>Menyelesaikan latihan interaktif dan kuis tentang struktur dasar HTML.</li>
+        </ol>
+        <h3 class="info-h">Panduan untuk Guru</h3>
+        <ul class="tp-list">
+          <li><strong>Pertemuan 1:</strong> Apersepsi bersama di proyektor → Materi Kerangka HTML5 → Cek Cepat.</li>
+          <li><strong>Pertemuan 2:</strong> Lab HTML (5 misi) → Game → Evaluasi akhir.</li>
+          <li>Navigasi bebas: semua bagian bisa dibuka langsung dari menu.</li>
+          <li>Progres tersimpan per browser. Tekan <em>Reset Progres</em> sebelum siswa lain memakai perangkat yang sama.</li>
+        </ul>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="dialog" id="settings-dialog" aria-labelledby="settings-title">
+    <form method="dialog" class="dialog-inner dialog-left">
+      <div class="dialog-head">
+        <h2 id="settings-title"><i data-icon="sliders"></i>Pengaturan</h2>
+        <button type="submit" value="close" class="btn btn-ghost btn-icon" aria-label="Tutup pengaturan"><i data-icon="x"></i></button>
+      </div>
+      <fieldset class="set-group">
+        <legend>Suara</legend>
+        <label class="switch"><input type="checkbox" id="set-music"><span class="switch-ui" aria-hidden="true"></span><span>Musik latar</span></label>
+        <label class="range"><span>Volume musik</span><input type="range" id="set-music-vol" min="0" max="100" step="5"></label>
+        <label class="switch"><input type="checkbox" id="set-sfx"><span class="switch-ui" aria-hidden="true"></span><span>Efek suara</span></label>
+        <label class="range"><span>Volume efek</span><input type="range" id="set-sfx-vol" min="0" max="100" step="5"></label>
+        <button type="button" class="btn btn-secondary btn-sm" id="set-test"><i data-icon="volume"></i><span>Tes suara</span></button>
+      </fieldset>
+      <fieldset class="set-group">
+        <legend>Tampilan</legend>
+        <label class="select"><span>Animasi</span>
+          <select id="set-motion">
+            <option value="system">Ikuti pengaturan perangkat</option>
+            <option value="full">Animasi penuh</option>
+            <option value="reduce">Kurangi animasi</option>
+          </select>
+        </label>
+      </fieldset>
+    </form>
+  </dialog>
+
+  <dialog class="dialog" id="reward-dialog" aria-labelledby="reward-title">
+    <form method="dialog" class="dialog-inner">
+      <div class="reward-art" id="reward-art"></div>
+      <p class="kicker">Lencana baru terbuka!</p>
+      <h2 id="reward-title">Lencana</h2>
+      <p id="reward-msg"></p>
+      <div class="dialog-actions">
+        <button type="submit" value="ok" class="btn btn-primary">Keren, lanjut!</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="false"></div>
+  <div class="fx-layer" id="fx-layer" aria-hidden="true"></div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>

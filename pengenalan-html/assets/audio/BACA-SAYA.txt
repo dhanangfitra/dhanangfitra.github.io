@@ -1,0 +1,24 @@
+FOLDER AUDIO (OPSIONAL)
+=======================
+
+Aplikasi SUDAH punya suara tanpa file apa pun: musik latar dan efek suara
+dibuat langsung oleh browser memakai Web Audio API.
+
+Jika ingin memakai file audio sendiri (wajib bebas royalti / berlisensi sah):
+
+1. Simpan file dengan nama PERSIS seperti ini di folder ini:
+     background-music.mp3   (musik latar, akan diputar berulang)
+     correct.mp3            (jawaban benar)
+     wrong.mp3              (jawaban salah)
+     complete.mp3           (misi selesai)
+
+2. Buka js/app.js, cari bagian AUDIO_CONFIG, lalu ubah:
+     useFiles: false   menjadi   useFiles: true
+
+3. Simpan dan muat ulang halaman.
+
+Jika salah satu file tidak ada atau gagal dimuat, aplikasi otomatis kembali
+memakai suara Web Audio API, sehingga pembelajaran tidak terganggu.
+
+Sumber audio bebas royalti yang bisa dipertimbangkan: Pixabay Music,
+YouTube Audio Library, atau Freesound (periksa lisensi masing-masing file).
