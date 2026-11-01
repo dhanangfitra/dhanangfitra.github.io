@@ -27,13 +27,13 @@
 
 /* ============ BASE ============ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); overflow-x: hidden; overflow-x: clip; max-width: 100%; }
 body {
   font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
-  overflow-x: hidden;
+  overflow-x: hidden; overflow-x: clip; max-width: 100%;
   transition: background .4s, color .4s;
 }
 img { max-width: 100%; display: block; }
@@ -91,6 +91,7 @@ section { padding: 110px 0; position: relative; }
 
 /* ============ NAVBAR ============ */
 .nav {
+  transform: translateZ(0); backface-visibility: hidden;
   position: fixed; top: 0; inset-inline: 0; z-index: 100; height: var(--nav-h);
   display: flex; align-items: center; transition: background .3s, border-color .3s;
   border-bottom: 1px solid transparent;
@@ -110,7 +111,9 @@ section { padding: 110px 0; position: relative; }
   width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
   border: 1px solid var(--border); background: var(--surface); transition: transform .3s, border-color .3s;
 }
-.icon-btn:hover { border-color: var(--primary); transform: rotate(-10deg); }
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn:hover { border-color: var(--primary); transform: rotate(-10deg); }
+}
 .icon-btn svg { width: 20px; height: 20px; }
 .theme-toggle .sun { display: none; }
 [data-theme="dark"] .theme-toggle .sun { display: block; }
@@ -364,6 +367,7 @@ footer p { color: var(--muted); font-size: .9rem; }
 .socials { display: flex; gap: 10px; }
 
 .to-top {
+  backface-visibility: hidden; will-change: opacity, transform;
   position: fixed; right: 22px; bottom: 22px; z-index: 90; width: 50px; height: 50px; border-radius: 16px;
   background: var(--grad); color: #fff; display: grid; place-items: center; box-shadow: 0 12px 30px -10px rgba(109, 93, 252, .8);
   opacity: 0; visibility: hidden; transform: translateY(20px); transition: .4s;
@@ -414,14 +418,47 @@ footer p { color: var(--muted); font-size: .9rem; }
 }
 @media (max-width: 560px) {
   .skills-grid, .projects, .info-grid, .row { grid-template-columns: 1fr; }
-  .floating { padding: 8px 12px; font-size: .75rem; }
-  .floating .ic { width: 30px; height: 30px; font-size: .9rem; }
-  .f3 { display: none; }
+  /* 4 kartu di 4 sudut ring, semuanya tampil di HP */
+  .hero-visual { padding: 34px 0; }
+  .floating { padding: 7px 10px; gap: 8px; font-size: .72rem; line-height: 1.25; border-radius: 14px; text-align: left; }
+  .floating small { font-size: .64rem; }
+  .floating .ic { width: 28px; height: 28px; font-size: .85rem; border-radius: 8px; }
+  .f1 { top: 2px; left: 0; right: auto; bottom: auto; }
+  .f4 { top: 2px; right: 0; left: auto; bottom: auto; }
+  .f3 { bottom: 2px; left: 0; right: auto; top: auto; display: flex; }
+  .f2 { bottom: 2px; right: 0; left: auto; top: auto; }
   .contact-info, form.contact-form { padding: 24px; }
   .avail { padding: 12px 8px; }
   .avail b { font-size: .82rem; }
   footer .container { flex-direction: column; text-align: center; }
 }
+/* ============ MOBILE / TOUCH STABILITY ============ */
+/* Di perangkat sentuh: matikan efek hover yang "tertinggal" setelah disentuh */
+@media (hover: none) {
+  .btn-primary:hover, .btn-ghost:hover, .skill-card:hover, .chip:hover, .project:hover,
+  .t-card:hover, .c-item:hover, .icon-btn:hover { transform: none; }
+  .project:hover .project-img img { transform: none; }
+  .skill-card:hover .skill-icon { transform: none; }
+}
+@media (max-width: 860px) {
+  /* latar blur dibuat diam & lebih ringan agar tombol yang menempel di layar tidak berkedip */
+  .bg-blobs span { animation: none; filter: blur(70px); opacity: .28; }
+  .bg-blobs span:nth-child(1) { width: 300px; height: 300px; }
+  .bg-blobs span:nth-child(2) { width: 280px; height: 280px; }
+  .bg-blobs span:nth-child(3) { display: none; }
+  /* navbar padat (tanpa efek kaca) dan tidak berganti-ganti saat scroll */
+  .about-img::before { inset: 14px -8px -14px 8px; }
+  .nav, .nav.scrolled {
+    background: var(--bg);
+    backdrop-filter: none; -webkit-backdrop-filter: none; border-color: var(--border);
+    transition: none;
+  }
+  .card, .btn-ghost, .exp-badge { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .card { background: color-mix(in srgb, var(--bg-2) 92%, transparent); }
+  .icon-btn { transition: border-color .2s; background: var(--bg-2); }
+  .to-top { transition: opacity .3s, visibility .3s; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }

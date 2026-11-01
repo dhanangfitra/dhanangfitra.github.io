@@ -20,18 +20,30 @@
   // ---- Scroll effects ----
   const nav = $("#nav"), toTop = $("#toTop"), progress = $("#progress");
   const sections = $$("section[id]");
-  const onScroll = () => {
+  // state disimpan agar class hanya diubah saat benar-benar berubah (tidak berkedip)
+  let isScrolled = null, showTop = null, activeId = null, ticking = false;
+  const setActive = id => {
+    if (id === activeId) return;
+    activeId = id;
+    $$("#navLinks a").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+  };
+  const update = () => {
+    ticking = false;
     const y = window.scrollY;
-    nav.classList.toggle("scrolled", y > 20);
-    toTop.classList.toggle("show", y > 600);
+    const s = y > 20;
+    if (s !== isScrolled) { isScrolled = s; nav.classList.toggle("scrolled", s); }
+    // ambang dengan histeresis: muncul > 600px, hilang < 450px (tidak kedip saat address bar HP berubah)
+    const t = showTop ? y > 450 : y > 600;
+    if (t !== showTop) { showTop = t; toTop.classList.toggle("show", t); }
     const h = document.documentElement.scrollHeight - innerHeight;
     progress.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";
     let current = "home";
-    sections.forEach(s => { if (y >= s.offsetTop - 140) current = s.id; });
-    $$("#navLinks a").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + current));
+    sections.forEach(sec => { if (y >= sec.offsetTop - 140) current = sec.id; });
+    setActive(current);
   };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  update();
   toTop.addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
 
   // ---- Typing effect ----
