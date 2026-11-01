@@ -55,18 +55,13 @@ button { cursor: pointer; }
     linear-gradient(90deg, rgba(255, 255, 255, .25) 1px, transparent 1px);
   background-size: 40px 40px;
 }
-#fit {
-  position: absolute;
-  top: env(safe-area-inset-top, 0px); right: env(safe-area-inset-right, 0px);
-  bottom: env(safe-area-inset-bottom, 0px); left: env(safe-area-inset-left, 0px);
-}
+#fit { position: absolute; inset: 0; }
 #stage {
   position: absolute; left: 0; top: 0; width: 1280px; height: 720px;
   transform-origin: 0 0; overflow: hidden; background: #E8EEFF;
   font-size: 18px; line-height: 1.45; contain: layout paint;
-  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .55);
 }
-#world { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; display: block; }
+#world { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; touch-action: none; }
 .layer { position: absolute; inset: 0; }
 
 /* ---------- Komponen umum ---------- */
@@ -132,11 +127,12 @@ b, strong { font-weight: 800; }
 
 /* ---------- Layar judul ---------- */
 #title { overflow: hidden; background: #3B82F6; }
+.title-scene { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform: translate(-50%, -50%) scale(var(--cover, 1)); }
 .title-art { position: absolute; inset: 0; }
 .title-art canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; image-rendering: crisp-edges; background: linear-gradient(180deg, #3B82F6, #93C5FD 60%, #4ADE80 70%); }
-.title-hero { position: absolute; left: 60px; bottom: 4px; width: 300px; height: 450px; z-index: 2; image-rendering: pixelated; image-rendering: crisp-edges; filter: drop-shadow(0 8px 0 rgba(20, 83, 45, .28)); animation: hero-idle 1.6s ease-in-out infinite; transform-origin: 50% 100%; }
+.title-hero { position: absolute; left: calc(60px + var(--sl, 0px)); bottom: 4px; width: 300px; height: 450px; z-index: 2; image-rendering: pixelated; image-rendering: crisp-edges; filter: drop-shadow(0 8px 0 rgba(20, 83, 45, .28)); animation: hero-idle 1.6s ease-in-out infinite; transform-origin: 50% 100%; }
 @keyframes hero-idle { 0%, 100% { scale: 1 1; } 50% { scale: 1.015 .985; } }
-.title-sign { position: absolute; left: 440px; top: 22px; width: 720px; height: 300px; z-index: 3; animation: sign-in .9s var(--ease) both; }
+.title-sign { position: absolute; left: calc(50% - 200px); top: calc(var(--ty, 0px) + 22px); width: 720px; height: 300px; z-index: 3; animation: sign-in .9s var(--ease) both; }
 .title-sign svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 12px 16px rgba(30, 27, 75, .35)); }
 .title-sign text { font-family: "Judul", "Poppins", "Segoe UI Black", "Arial Black", var(--font); font-weight: 700; }
 .t-shadow { fill: #1E1B4B; stroke: #1E1B4B; stroke-width: 22px; stroke-linejoin: round; transform: translateY(9px); }
@@ -144,7 +140,7 @@ b, strong { font-weight: 800; }
 .t-fill { stroke: #fff; stroke-width: 2.5px; paint-order: stroke; }
 .t-sub { fill: #fff; stroke: #1E1B4B; stroke-width: 7px; paint-order: stroke; stroke-linejoin: round; }
 .t-ribbon { fill: #FDE68A; letter-spacing: .5px; }
-.title-btns { position: absolute; left: 620px; top: 338px; width: 360px; display: grid; gap: 13px; z-index: 4; }
+.title-btns { position: absolute; left: calc(50% - 20px); top: calc(var(--ty, 0px) + 338px); width: 360px; display: grid; gap: 13px; z-index: 4; }
 .gbtn {
   position: relative; display: flex; align-items: center; justify-content: center; gap: 12px;
   height: 62px; border-radius: 18px; border: 3px solid var(--edge); color: #fff;
@@ -164,11 +160,11 @@ b, strong { font-weight: 800; }
 .g-cyan { --c1: #67E8F9; --c2: #0891B2; --edge: #164E63; }
 .g-yellow { --c1: #FDE047; --c2: #EAB308; --edge: #854D0E; }
 .g-purple { --c1: #A78BFA; --c2: #7C3AED; --edge: #3B0764; }
-.title-guide { position: absolute; right: 26px; top: 360px; width: 230px; z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.title-guide { position: absolute; right: calc(26px + var(--sr, 0px)); top: calc(var(--ty, 0px) + 360px); width: 230px; z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .title-guide .bubble { font-size: 15px; padding: 10px 13px; line-height: 1.35; animation: pop .6s var(--ease) both 1s; }
 .title-guide .bubble::after { content: ""; position: absolute; left: 50%; bottom: -10px; width: 16px; height: 16px; background: #fff; border-right: 2px solid var(--indigo-100); border-bottom: 2px solid var(--indigo-100); transform: translateX(-50%) rotate(45deg); }
 .title-guide .mascot { width: 104px; }
-.title-foot { position: absolute; left: 620px; width: 360px; bottom: 8px; margin: 0; text-align: center; font-size: 14px; font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, .6); z-index: 4; }
+.title-foot { position: absolute; left: calc(50% - 20px); width: 360px; bottom: 8px; margin: 0; text-align: center; font-size: 14px; font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, .6); z-index: 4; }
 
 /* animasi pemandangan */
 .cloud { animation: drift 40s linear infinite; }
@@ -221,7 +217,7 @@ b, strong { font-weight: 800; }
 #hud { pointer-events: none; }
 #hud > * { pointer-events: auto; }
 .banner {
-  position: absolute; left: 18px; top: 16px; width: 430px; padding: 12px 16px 14px;
+  position: absolute; left: calc(18px + var(--sl, 0px)); top: 16px; width: 430px; padding: 12px 16px 14px;
   background: rgba(255, 255, 255, .95); border-radius: 20px; box-shadow: var(--shadow); border: 1px solid var(--line);
 }
 .banner-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -230,7 +226,7 @@ b, strong { font-weight: 800; }
 .banner h3 { margin: 6px 0 2px; font-size: 21px; line-height: 1.2; }
 .banner p { margin: 0; font-size: 15px; color: #3A4562; line-height: 1.35; }
 .compass {
-  position: absolute; left: 18px; top: 168px; display: flex; align-items: center; gap: 12px;
+  position: absolute; left: calc(18px + var(--sl, 0px)); top: 168px; display: flex; align-items: center; gap: 12px;
   padding: 8px 16px 8px 8px; border-radius: 99px; background: rgba(23, 32, 51, .86); color: #fff; box-shadow: var(--shadow);
 }
 .compass-dial { width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle, #312E81, #1E1B4B); display: grid; place-items: center; border: 2px solid #6366F1; }
@@ -238,7 +234,7 @@ b, strong { font-weight: 800; }
 .compass-txt { display: grid; line-height: 1.2; }
 .compass-txt small { font-size: 12px; color: #A5B4FC; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 .compass-txt strong { font-size: 16px; }
-.hud-right { position: absolute; right: 16px; top: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.hud-right { position: absolute; right: calc(16px + var(--sr, 0px)); top: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 .hud-stats { display: flex; gap: 8px; }
 .stat-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 99px; background: rgba(255, 255, 255, .95); font-weight: 900; font-size: 20px; box-shadow: var(--shadow); border: 1px solid var(--line); }
 .stat-chip.bump { animation: bump .5s var(--ease); }
@@ -259,9 +255,9 @@ b, strong { font-weight: 800; }
 .key { display: inline-grid; place-items: center; min-width: 32px; height: 32px; padding: 0 8px; border-radius: 8px; background: #fff; color: var(--text); font-weight: 900; box-shadow: 0 3px 0 #94A3B8; }
 
 /* Kontrol sentuh */
-#joy { position: absolute; left: 40px; bottom: 40px; width: var(--joy, 190px); height: var(--joy, 190px); border-radius: 50%; background: rgba(255, 255, 255, .35); border: 3px solid rgba(255, 255, 255, .8); box-shadow: inset 0 0 0 10px rgba(79, 70, 229, .12), var(--shadow); touch-action: none; }
+#joy { position: absolute; left: calc(40px + var(--sl, 0px)); bottom: calc(40px + var(--sb, 0px)); width: var(--joy, 190px); height: var(--joy, 190px); border-radius: 50%; background: rgba(255, 255, 255, .35); border: 3px solid rgba(255, 255, 255, .8); box-shadow: inset 0 0 0 10px rgba(79, 70, 229, .12), var(--shadow); touch-action: none; }
 #joy-knob { position: absolute; left: 50%; top: 50%; width: 44%; height: 44%; transform-origin: center; translate: -50% -50%; border-radius: 50%; background: var(--grad); box-shadow: 0 8px 18px -6px rgba(79, 70, 229, .9), inset 0 3px 0 rgba(255, 255, 255, .4); pointer-events: none; }
-#talk-btn { position: absolute; right: 44px; bottom: 54px; width: var(--talk, 150px); height: var(--talk, 150px); border-radius: 50%; border: 4px solid #fff; background: linear-gradient(135deg, #F59E0B, #F97316); color: #fff; font-weight: 900; font-size: 20px; line-height: 1.15; box-shadow: var(--shadow); display: grid; place-items: center; text-align: center; animation: pulse 1.6s infinite; }
+#talk-btn { position: absolute; right: calc(44px + var(--sr, 0px)); bottom: calc(54px + var(--sb, 0px)); width: var(--talk, 150px); height: var(--talk, 150px); border-radius: 50%; border: 4px solid #fff; background: linear-gradient(135deg, #F59E0B, #F97316); color: #fff; font-weight: 900; font-size: 20px; line-height: 1.15; box-shadow: var(--shadow); display: grid; place-items: center; text-align: center; animation: pulse 1.6s infinite; }
 
 /* ---------- Dialog ---------- */
 #dialog { pointer-events: none; }
@@ -647,8 +643,9 @@ b, strong { font-weight: 800; }
 .t-cloud.c3 { top: 24px; width: 110px; --dur: 70s; --dl: -52s; }
 .t-cloud.c4 { top: 232px; width: 140px; --dur: 52s; --dl: -24s; }
 @keyframes cloud-drift { 0% { transform: translateX(1300px); opacity: 0; } 6% { opacity: .95; } 90% { opacity: .95; } 100% { transform: translateX(470px); opacity: 0; } }
+.title-tags { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .sky-tag {
-  position: absolute; left: var(--x); top: var(--y); translate: -50% -50%; rotate: var(--r);
+  position: absolute; top: calc(var(--ty, 0px) + var(--y)); translate: -50% -50%; rotate: var(--r);
   padding: 6px 14px; border-radius: 12px; background: var(--c); color: #fff;
   font: 900 21px/1 ui-monospace, Consolas, "Courier New", monospace; letter-spacing: .02em; white-space: nowrap;
   border: 3px solid #fff; box-shadow: 0 5px 0 rgba(15, 23, 42, .25), 0 0 0 0 var(--c);
@@ -657,6 +654,14 @@ b, strong { font-weight: 800; }
 @keyframes tag-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes tag-glow { 0%, 100% { box-shadow: 0 5px 0 rgba(15, 23, 42, .25), 0 0 0 0 transparent; } 50% { box-shadow: 0 12px 6px rgba(15, 23, 42, .18), 0 0 18px 4px rgba(255, 255, 255, .7); } }
 @media (prefers-reduced-motion: reduce) { .t-cloud { opacity: .95; animation: none; } .t-cloud.c1 { left: 620px; } .t-cloud.c2 { left: 900px; } .t-cloud.c3 { left: 760px; } .t-cloud.c4 { left: 1020px; } }
+
+/* ---------- Zoom layar ---------- */
+.zoom-pill { display: inline-flex; align-items: center; gap: 2px; padding: 4px; border-radius: 99px; background: rgba(255, 255, 255, .95); box-shadow: var(--shadow); border: 1px solid var(--line); }
+.z-btn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; color: var(--indigo-600); display: grid; place-items: center; }
+.z-btn:hover:not(:disabled) { background: var(--indigo-50); }
+.z-btn:disabled { color: #CBD5E1; }
+.z-btn .ic { width: 26px; height: 26px; }
+.z-val { min-width: 62px; height: 44px; border: 0; border-radius: 12px; background: var(--indigo-50); color: var(--indigo-600); font-weight: 900; font-size: 16px; }
 
 </style>
 </head>
@@ -681,6 +686,11 @@ b, strong { font-weight: 800; }
           <div class="hud-stats">
             <span class="stat-chip hearts" id="hud-hearts" aria-label="Nyawa">❤️ 3/3</span>
             <span class="stat-chip" id="hud-score" aria-label="Skor">🏅 0</span>
+            <div class="zoom-pill" role="group" aria-label="Zoom layar">
+              <button class="z-btn" id="b-zout" aria-label="Perkecil tampilan (tombol −)" title="Perkecil (−)"><i data-icon="zout"></i></button>
+              <button class="z-val" id="zoom-val" aria-label="Kembalikan zoom ke 100% (tombol 0)" title="Zoom · klik untuk 100%">100%</button>
+              <button class="z-btn" id="b-zin" aria-label="Perbesar tampilan (tombol +)" title="Perbesar (+)"><i data-icon="zin"></i></button>
+            </div>
           </div>
           <div class="hud-btns" role="toolbar" aria-label="Menu game">
             <button class="hud-btn" id="b-ctrl" aria-pressed="true" aria-label="Tampilkan atau sembunyikan kontrol sentuh" title="Kontrol sentuh"><i data-icon="joystick"></i></button>
@@ -690,7 +700,7 @@ b, strong { font-weight: 800; }
             <button class="hud-btn" id="b-report" aria-label="Laporan akhir" title="Laporan Akhir" hidden><i data-icon="trophy"></i></button>
             <button class="hud-btn" id="b-music" aria-pressed="true" aria-label="Musik latar" title="Musik latar"><i data-icon="music"></i></button>
             <button class="hud-btn" id="b-sfx" aria-pressed="true" aria-label="Efek suara" title="Efek suara"><i data-icon="volume"></i></button>
-            <button class="hud-btn" id="b-set" aria-label="Pengaturan suara" title="Pengaturan Suara"><i data-icon="sliders"></i></button>
+            <button class="hud-btn" id="b-set" aria-label="Pengaturan suara dan zoom" title="Pengaturan"><i data-icon="sliders"></i></button>
             <button class="hud-btn" id="b-full" aria-label="Layar penuh" title="Layar penuh"><i data-icon="full"></i></button>
           </div>
           <section class="quest" id="quest" aria-label="Daftar misi">
@@ -737,6 +747,7 @@ b, strong { font-weight: 800; }
 
       <!-- Layar judul -->
       <section id="title" class="layer" aria-labelledby="tt-h1">
+        <div class="title-scene">
         <div class="title-art" id="title-art" aria-hidden="true"><canvas id="title-bg" width="427" height="240"></canvas></div>
         <div class="title-sky" aria-hidden="true">
           <div class="t-sun">
@@ -749,11 +760,14 @@ b, strong { font-weight: 800; }
             </svg>
           </div>
           <div class="t-cloud c1"><svg viewBox="0 0 130 70"><ellipse cx="60" cy="44" rx="60" ry="24" fill="#fff"/><circle cx="40" cy="30" r="26" fill="#fff"/><circle cx="78" cy="22" r="30" fill="#fff"/><circle cx="106" cy="38" r="20" fill="#fff"/><ellipse cx="62" cy="58" rx="56" ry="10" fill="#DBEAFE"/></svg></div><div class="t-cloud c2"><svg viewBox="0 0 130 70"><ellipse cx="60" cy="44" rx="60" ry="24" fill="#fff"/><circle cx="40" cy="30" r="26" fill="#fff"/><circle cx="78" cy="22" r="30" fill="#fff"/><circle cx="106" cy="38" r="20" fill="#fff"/><ellipse cx="62" cy="58" rx="56" ry="10" fill="#DBEAFE"/></svg></div><div class="t-cloud c3"><svg viewBox="0 0 130 70"><ellipse cx="60" cy="44" rx="60" ry="24" fill="#fff"/><circle cx="40" cy="30" r="26" fill="#fff"/><circle cx="78" cy="22" r="30" fill="#fff"/><circle cx="106" cy="38" r="20" fill="#fff"/><ellipse cx="62" cy="58" rx="56" ry="10" fill="#DBEAFE"/></svg></div><div class="t-cloud c4"><svg viewBox="0 0 130 70"><ellipse cx="60" cy="44" rx="60" ry="24" fill="#fff"/><circle cx="40" cy="30" r="26" fill="#fff"/><circle cx="78" cy="22" r="30" fill="#fff"/><circle cx="106" cy="38" r="20" fill="#fff"/><ellipse cx="62" cy="58" rx="56" ry="10" fill="#DBEAFE"/></svg></div>
-          <span class="sky-tag" style="--x:448px;--y:286px;--r:-6deg;--c:#EA580C;--d:0s">&lt;html&gt;</span>
-          <span class="sky-tag" style="--x:510px;--y:372px;--r:5deg;--c:#7C3AED;--d:.6s">&lt;head&gt;</span>
-          <span class="sky-tag" style="--x:1196px;--y:196px;--r:6deg;--c:#DB2777;--d:1.2s">&lt;title&gt;</span>
-          <span class="sky-tag" style="--x:1096px;--y:282px;--r:-5deg;--c:#2563EB;--d:1.8s">&lt;body&gt;</span>
-          <span class="sky-tag" style="--x:1222px;--y:300px;--r:8deg;--c:#0891B2;--d:2.4s">&lt;/&gt;</span>
+        </div>
+        </div>
+        <div class="title-tags" aria-hidden="true">
+          <span class="sky-tag" style="left:calc(50% + -192px);--y:286px;--r:-6deg;--c:#EA580C;--d:0s">&lt;html&gt;</span>
+          <span class="sky-tag" style="left:calc(50% + -130px);--y:372px;--r:5deg;--c:#7C3AED;--d:.6s">&lt;head&gt;</span>
+          <span class="sky-tag" style="left:calc(100% - 84px - var(--sr,0px));--y:196px;--r:6deg;--c:#DB2777;--d:1.2s">&lt;title&gt;</span>
+          <span class="sky-tag" style="left:calc(100% - 184px - var(--sr,0px));--y:282px;--r:-5deg;--c:#2563EB;--d:1.8s">&lt;body&gt;</span>
+          <span class="sky-tag" style="left:calc(100% - 58px - var(--sr,0px));--y:300px;--r:8deg;--c:#0891B2;--d:2.4s">&lt;/&gt;</span>
         </div>
         <canvas class="title-hero" id="title-hero" width="120" height="180" aria-hidden="true"></canvas>
         <div class="title-sign">
@@ -829,7 +843,7 @@ const GAME_DATA = {
   meta: {
     judul: 'Jelajah HTML',
     subjudul: 'RPG 2D Kota Webtopia',
-    pembuat: '[NAMA PEMBUAT]',
+    pembuat: 'Dhanang Fitra Riaji, M.T.',
     materi: 'Pembuatan Web Statis — Struktur Dasar HTML5',
     sasaran: 'SMK Kelas XI (Fase F)',
     kredit: [
@@ -1597,7 +1611,8 @@ window.JH_ART = (function () {
 
   const D = GAME_DATA;
   const ART = {"webRapi": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0id3ItdCB3ci1kIj4KICA8dGl0bGUgaWQ9IndyLXQiPkhhbGFtYW4gQTogd2ViIHlhbmcgcmFwaTwvdGl0bGU+CiAgPGRlc2MgaWQ9IndyLWQiPk1vY2t1cCBicm93c2VyIGJlcmlzaSBqdWR1bCBiZXNhciAiS2x1YiBDb2RpbmcgU01LIiwgcGFyYWdyYWYgYmVyamFyYWsgbnlhbWFuLCBzdWJqdWR1bCAiS2VnaWF0YW4gS2FtaSIsIGRhbiBkYWZ0YXIga2VnaWF0YW4geWFuZyB0ZXJzdXN1biByYXBpLjwvZGVzYz4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0id3ItYWNjIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMCI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzRGNDZFNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM4QjVDRjYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzOTgiIGhlaWdodD0iMjk4IiByeD0iMTYiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI0UyRThGMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHBhdGggZD0iTTE3IDFoMzY2YTE2IDE2IDAgMCAxIDE2IDE2djE3SDFWMTdBMTYgMTYgMCAwIDEgMTcgMXoiIGZpbGw9IiNGMUY1RjkiLz4KICA8Y2lyY2xlIGN4PSIyMCIgY3k9IjE4IiByPSI1IiBmaWxsPSIjRjQzRjVFIi8+CiAgPGNpcmNsZSBjeD0iMzYiIGN5PSIxOCIgcj0iNSIgZmlsbD0iI0ZCQkYyNCIvPgogIDxjaXJjbGUgY3g9IjUyIiBjeT0iMTgiIHI9IjUiIGZpbGw9IiMyMkM1NUUiLz4KICA8cmVjdCB4PSI3MiIgeT0iOSIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxOCIgcng9IjkiIGZpbGw9IiNmZmYiLz4KICA8dGV4dCB4PSI4NiIgeT0iMjIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NDc0OEIiPmtsdWJjb2Rpbmcuc2NoLmlkPC90ZXh0PgoKICA8cmVjdCB4PSIyOCIgeT0iNTIiIHdpZHRoPSI2IiBoZWlnaHQ9IjM0IiByeD0iMyIgZmlsbD0idXJsKCN3ci1hY2MpIi8+CiAgPHRleHQgeD0iNDQiIHk9Ijc4IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAnU2Vnb2UgVUknLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjMTcyMDMzIj5LbHViIENvZGluZyBTTUs8L3RleHQ+CgogIDx0ZXh0IGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksICdTZWdvZSBVSScsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIuNSIgZmlsbD0iIzQ3NTU2OSI+CiAgICA8dHNwYW4geD0iMjgiIHk9IjExMiI+VGVtcGF0IGJlbGFqYXIgbWVtYnVhdCB3ZWIgYmVyc2FtYSB0ZW1hbi10ZW1hbi48L3RzcGFuPgogICAgPHRzcGFuIHg9IjI4IiB5PSIxMzAiPlBlcnRlbXVhbiBzZXRpYXAgS2FtaXMgc29yZSBkaSBMYWIgS29tcHV0ZXIgMi48L3RzcGFuPgogIDwvdGV4dD4KCiAgPHRleHQgeD0iMjgiIHk9IjE2OCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzRGNDZFNSI+S2VnaWF0YW4gS2FtaTwvdGV4dD4KCiAgPGcgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMi41IiBmaWxsPSIjMzM0MTU1Ij4KICAgIDxjaXJjbGUgY3g9IjM0IiBjeT0iMTkyIiByPSI0IiBmaWxsPSIjMDZCNkQ0Ii8+CiAgICA8dGV4dCB4PSI0NiIgeT0iMTk2Ij5CZWxhamFyIEhUTUwgZGFyaSBub2w8L3RleHQ+CiAgICA8Y2lyY2xlIGN4PSIzNCIgY3k9IjIxNiIgcj0iNCIgZmlsbD0iIzA2QjZENCIvPgogICAgPHRleHQgeD0iNDYiIHk9IjIyMCI+TWVtYnVhdCB3ZWIgcHJvZmlsIHNla29sYWg8L3RleHQ+CiAgICA8Y2lyY2xlIGN4PSIzNCIgY3k9IjI0MCIgcj0iNCIgZmlsbD0iIzA2QjZENCIvPgogICAgPHRleHQgeD0iNDYiIHk9IjI0NCI+SWt1dCBsb21iYSB3ZWIgZGVzaWduPC90ZXh0PgogIDwvZz4KCiAgPHJlY3QgeD0iMjgiIHk9IjI2MiIgd2lkdGg9IjEwNCIgaGVpZ2h0PSIyNCIgcng9IjEyIiBmaWxsPSIjNEY0NkU1Ii8+CiAgPHRleHQgeD0iODAiIHk9IjI3OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZiI+RGFmdGFyIFNla2FyYW5nPC90ZXh0PgoKICA8cmVjdCB4PSIyNjgiIHk9IjE3OCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSI5MiIgcng9IjE0IiBmaWxsPSIjRUVGMkZGIi8+CiAgPHBhdGggZD0iTTI5NiAyMzhsMTQtMTggMTIgMTQgOC05IDE2IDEzeiIgZmlsbD0iI0E1QjRGQyIvPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjIwNCIgcj0iOCIgZmlsbD0iI0ZCQkYyNCIvPgo8L3N2Zz4K", "webBerantakan": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0id2ItdCB3Yi1kIj4KICA8dGl0bGUgaWQ9IndiLXQiPkhhbGFtYW4gQjogd2ViIHlhbmcgbWVtYmluZ3VuZ2thbjwvdGl0bGU+CiAgPGRlc2MgaWQ9IndiLWQiPk1vY2t1cCBicm93c2VyIGRlbmdhbiB0dWxpc2FuIHlhbmcgc2FsaW5nIGJlcmhpbXBpdGFuLCB1a3VyYW4gaHVydWYgdGlkYWsga29uc2lzdGVuLCB3YXJuYSBtZW5jb2xvaywgZGFuIHN1c3VuYW4gaW5mb3JtYXNpIHlhbmcgYWNhay48L2Rlc2M+CiAgPHJlY3QgeD0iMSIgeT0iMSIgd2lkdGg9IjM5OCIgaGVpZ2h0PSIyOTgiIHJ4PSIxNiIgZmlsbD0iI0ZGRkRGMiIgc3Ryb2tlPSIjRTJFOEYwIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cGF0aCBkPSJNMTcgMWgzNjZhMTYgMTYgMCAwIDEgMTYgMTZ2MTdIMVYxN0ExNiAxNiAwIDAgMSAxNyAxeiIgZmlsbD0iI0YxRjVGOSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iMTgiIHI9IjUiIGZpbGw9IiNGNDNGNUUiLz4KICA8Y2lyY2xlIGN4PSIzNiIgY3k9IjE4IiByPSI1IiBmaWxsPSIjRkJCRjI0Ii8+CiAgPGNpcmNsZSBjeD0iNTIiIGN5PSIxOCIgcj0iNSIgZmlsbD0iIzIyQzU1RSIvPgogIDxyZWN0IHg9IjcyIiB5PSI5IiB3aWR0aD0iMjUwIiBoZWlnaHQ9IjE4IiByeD0iOSIgZmlsbD0iI2ZmZiIvPgogIDx0ZXh0IHg9Ijg2IiB5PSIyMiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY0NzQ4QiI+a2x1YmNvZGluZy5zY2guaWQ8L3RleHQ+CgogIDxnIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksICdTZWdvZSBVSScsIHNhbnMtc2VyaWYiPgogICAgPHRleHQgeD0iMjEwIiB5PSI1OCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzk0QTNCOCI+a2FtaXMgc29yZSBsYWIgMj8/IGRhZnRhciEhITwvdGV4dD4KICAgIDx0ZXh0IHg9IjE0IiB5PSI3MCIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI0RCMjc3NyI+a2VnaWF0YW4ga2FtaTwvdGV4dD4KICAgIDx0ZXh0IHg9IjExMCIgeT0iODQiIGZvbnQtc2l6ZT0iMzAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiM2NUEzMEQiIHRyYW5zZm9ybT0icm90YXRlKC00IDExMCA4NCkiPktMVUI8L3RleHQ+CiAgICA8dGV4dCB4PSIxOTYiIHk9Ijk2IiBmb250LXNpemU9IjExIiBmaWxsPSIjMEVBNUU5Ij5jb2Rpbmcgc21rPC90ZXh0PgogICAgPHRleHQgeD0iMjQiIHk9IjEwMiIgZm9udC1zaXplPSI5IiBmaWxsPSIjNDc1NTY5IiBsZXR0ZXItc3BhY2luZz0iLS42Ij5UZW1wYXQgYmVsYWphciBtZW1idWF0IHdlYiBiZXJzYW1hIHRlbWFuIHRlbWFuIHBlcnRlbXVhbjwvdGV4dD4KICAgIDx0ZXh0IHg9IjMwIiB5PSIxMTAiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzQ3NTU2OSIgbGV0dGVyLXNwYWNpbmc9Ii0uNiI+c2V0aWFwIGthbWlzIHNvcmUgZGkgbGFiIGtvbXB1dGVyIGJlbGFqYXIgaHRtbCBkYXJpIG5vbCBpa3V0PC90ZXh0PgogICAgPHRleHQgeD0iMjQwIiB5PSIxMzIiIGZvbnQtc2l6ZT0iMjEiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiM3QzNBRUQiIHRyYW5zZm9ybT0icm90YXRlKDYgMjQwIDEzMikiPkxvbWJhISE8L3RleHQ+CiAgICA8dGV4dCB4PSIxOCIgeT0iMTQwIiBmb250LXNpemU9IjE3IiBmaWxsPSIjRUE1ODBDIj7igKIgbWVtYnVhdCB3ZWI8L3RleHQ+CiAgICA8dGV4dCB4PSI5NiIgeT0iMTQ4IiBmb250LXNpemU9IjgiIGZpbGw9IiMzMzQxNTUiPnByb2ZpbCBzZWtvbGFoIOKAoiBiZWxhamFyIGh0bWwg4oCiIGxvbWJhIHdlYiBkZXNpZ24g4oCiIGRhZnRhcjwvdGV4dD4KICAgIDxyZWN0IHg9IjMwMCIgeT0iMTU2IiB3aWR0aD0iODAiIGhlaWdodD0iNDAiIGZpbGw9IiNGREUwNDciIHRyYW5zZm9ybT0icm90YXRlKC04IDM0MCAxNzYpIi8+CiAgICA8dGV4dCB4PSIzMDQiIHk9IjE4MiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI0RDMjYyNiIgdHJhbnNmb3JtPSJyb3RhdGUoLTggMzQwIDE3NikiPktMSUsgREkgU0lOSTwvdGV4dD4KICAgIDx0ZXh0IHg9IjM2IiB5PSIxNzYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSIzMDAiIGZpbGw9IiMxNEI4QTYiIGxldHRlci1zcGFjaW5nPSIzIj5zZWthcmFuZzwvdGV4dD4KICAgIDx0ZXh0IHg9IjE1MCIgeT0iMTkwIiBmb250LXNpemU9IjEwIiBmaWxsPSIjQkUxMjNDIiB0cmFuc2Zvcm09InJvdGF0ZSgtMyAxNTAgMTkwKSI+S2x1YiBDb2RpbmcgU01LIEtsdWIgQ29kaW5nIFNNSzwvdGV4dD4KICAgIDx0ZXh0IHg9IjEwIiB5PSIyMTIiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMxRDRFRDgiIGxldHRlci1zcGFjaW5nPSItLjgiPmluZm8gaW5mbyBpbmZvIHBlcnRlbXVhbiBrYW1pcyBzb3JlIGxhYiBrb21wdXRlciBkdWE8L3RleHQ+CiAgICA8dGV4dCB4PSI2MCIgeT0iMjA4IiBmb250LXNpemU9IjExIiBmaWxsPSIjOTMzM0VBIiBvcGFjaXR5PSIuOCI+dGVtcGF0IGJlbGFqYXIgbWVtYnVhdCB3ZWI8L3RleHQ+CiAgICA8dGV4dCB4PSIyMjAiIHk9IjIzNiIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzE2QTM0QSIgdHJhbnNmb3JtPSJyb3RhdGUoMTAgMjIwIDIzNikiPuKAoiBodG1sPC90ZXh0PgogICAgPHRleHQgeD0iMjAiIHk9IjI0OCIgZm9udC1zaXplPSI4LjUiIGZpbGw9IiM2NDc0OEIiPndlYiBkZXNpZ24gd2ViIGRlc2lnbiB3ZWIgZGVzaWduIHdlYiBkZXNpZ248L3RleHQ+CiAgICA8dGV4dCB4PSIxMjAiIHk9IjI2MiIgZm9udC1zaXplPSIxOSIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI0Y5NzMxNiIgdHJhbnNmb3JtPSJyb3RhdGUoLTYgMTIwIDI2MikiPktlZ2lhdGFuPC90ZXh0PgogICAgPHRleHQgeD0iMjgwIiB5PSIyODAiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzQ3NTU2OSI+ZGFmdGFyIHNla2FyYW5nIGp1Z2EgeWE8L3RleHQ+CiAgICA8dGV4dCB4PSIxNiIgeT0iMjg0IiBmb250LXNpemU9IjEzIiBmaWxsPSIjRTExRDQ4Ij4hISE8L3RleHQ+CiAgPC9nPgogIDxjaXJjbGUgY3g9IjM1NiIgY3k9IjcyIiByPSIyMCIgZmlsbD0iIzIyRDNFRSIgb3BhY2l0eT0iLjciLz4KICA8cmVjdCB4PSIzMjAiIHk9IjEwMCIgd2lkdGg9IjU4IiBoZWlnaHQ9IjIyIiBmaWxsPSIjRjQ3MkI2IiBvcGFjaXR5PSIuNyIgdHJhbnNmb3JtPSJyb3RhdGUoMTIgMzQ5IDExMSkiLz4KPC9zdmc+Cg=="};
-  const W = 1280, H = 720;
+  // Ukuran logis panggung: minimal 1280×720, melebar/meninggi mengikuti layar agar tidak ada sisi kosong
+  let W = 1280, H = 720;
   const MAP = D.peta;
   const ORDER = D.level.reduce((a, l) => a.concat(l.misi), []);
   const LEVEL_OF = {};
@@ -1636,6 +1651,8 @@ window.JH_ART = (function () {
   }
 
   const ICONS = {
+    zin: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M8 11h6M11 8v6"/>',
+    zout: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M8 11h6"/>',
     joystick: '<circle cx="12" cy="9" r="4"/><path d="M12 13v4"/><rect x="5" y="17" width="14" height="4" rx="2"/>',
     map: '<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>',
     help: '<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5"/><path d="M12 17.5h.01"/>',
@@ -1777,7 +1794,7 @@ window.JH_ART = (function () {
     return {
       v: 1, started: false, name: '', avatar: 'L', prolog: false, m2step: 0,
       missions: {}, hearts: D.aturan.nyawa, penalty: 0, badges: {}, pos: null, dir: 'up',
-      settings: { music: true, sfx: true, musicVol: 40, sfxVol: 70, ctrl: null }
+      settings: { music: true, sfx: true, musicVol: 40, sfxVol: 70, ctrl: null, zoom: 1 }
     };
   }
   function loadProg() {
@@ -1882,12 +1899,30 @@ window.JH_ART = (function () {
   const stage = $('#stage'), cv = $('#world');
   let ctx = cv.getContext('2d');
   let S = 1, RK = 1;
+  const safeProbe = document.createElement('div');
+  safeProbe.style.cssText = 'position:fixed;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';
+  document.body.appendChild(safeProbe);
   function fit() {
     const r = $('#fit').getBoundingClientRect();
     if (!r.width || !r.height) return;
+    // Skala dasar: panggung 1280×720 muat di layar, lalu sisi yang tersisa diisi dengan memperlebar/mempertinggi panggung.
+    const s0 = Math.min(r.width / 1280, r.height / 720);
+    W = Math.min(r.width / s0, 720 * 2.6);
+    H = Math.min(r.height / s0, 1280 / 0.4);
+    S = Math.min(r.width / W, r.height / H);
+    W = Math.round(r.width / S); H = Math.round(r.height / S);
+    if (W / H > 2.6) W = Math.round(H * 2.6);
+    if (H > W) H = W; // potret: panggung persegi selebar layar (ada anjuran memutar HP)
     S = Math.min(r.width / W, r.height / H);
     const ox = (r.width - W * S) / 2, oy = (r.height - H * S) / 2;
+    stage.style.width = W + 'px'; stage.style.height = H + 'px';
     stage.style.transform = `translate(${ox}px, ${oy}px) scale(${S})`;
+    const cs = getComputedStyle(safeProbe);
+    stage.style.setProperty('--sl', Math.round((parseFloat(cs.paddingLeft) || 0) / S) + 'px');
+    stage.style.setProperty('--sr', Math.round((parseFloat(cs.paddingRight) || 0) / S) + 'px');
+    stage.style.setProperty('--sb', Math.round((parseFloat(cs.paddingBottom) || 0) / S) + 'px');
+    stage.style.setProperty('--cover', String(Math.max(W / 1280, H / 720)));
+    stage.style.setProperty('--ty', Math.round((H - 720) / 2) + 'px');
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     let k = S * dpr;
     if (W * k > 4096) k = 4096 / W;
@@ -1948,6 +1983,9 @@ window.JH_ART = (function () {
     if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'w', 'a', 's', 'd'].includes(k)) { keys.add(k); e.preventDefault(); }
     if (k === 'e' || ((k === ' ' || k === 'enter') && nearNPC)) { e.preventDefault(); if (nearNPC) talkTo(nearNPC.id); }
     if (k === 'm') { e.preventDefault(); openMap(); }
+    if (k === '+' || k === '=') { e.preventDefault(); setZoom(zoomVal() + .15); }
+    if (k === '-' || k === '_') { e.preventDefault(); setZoom(zoomVal() - .15); }
+    if (k === '0') { e.preventDefault(); setZoom(1); }
   });
   document.addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
   window.addEventListener('blur', () => keys.clear());
@@ -2136,6 +2174,22 @@ window.JH_ART = (function () {
   let camX = 0, camY = 0;
   let MONO = 'monospace', SANS = 'sans-serif';
   const pix = document.createElement('canvas'); pix.width = W / PX; pix.height = H / PX;
+  /* Zoom dunia (diatur lewat tombol − / +, roda mouse, cubit dua jari, atau Pengaturan) */
+  const ZMIN = 0.8, ZMAX = 1.75;
+  const zoomVal = () => clamp(+prog.settings.zoom || 1, ZMIN, ZMAX);
+  function setZoom(z) {
+    z = Math.round(clamp(z, ZMIN, ZMAX) * 100) / 100;
+    if (z === zoomVal()) { updateZoomUI(); return; }
+    prog.settings.zoom = z; save(); updateZoomUI();
+  }
+  function updateZoomUI() {
+    const z = zoomVal(), t = Math.round(z * 100) + '%';
+    const el = $('#zoom-val'); if (el) el.textContent = t;
+    const zo = $('#b-zout'), zi = $('#b-zin');
+    if (zo) zo.disabled = z <= ZMIN; if (zi) zi.disabled = z >= ZMAX;
+    $$('[data-zoom-out]').forEach(e => { e.textContent = t; });
+    $$('[data-zoom-range]').forEach(e => { if (+e.value !== Math.round(z * 100)) e.value = Math.round(z * 100); });
+  }
   const pctx = pix.getContext('2d');
   let terrain = null;
   const mainCtx = ctx;
@@ -2617,23 +2671,28 @@ window.JH_ART = (function () {
 
   function render(t) {
     if (!terrain) buildTerrain();
-    camX = Math.round(clamp(player.x - W / 2, 0, MAP.lebar - W) / PX) * PX;
-    camY = Math.round(clamp(player.y - H / 2 - 30, 0, MAP.tinggi - H) / PX) * PX;
+    const Z = zoomVal(), vw = W / Z, vh = H / Z, wpp = PX / Z;
+    const pw = Math.ceil(W / PX), ph = Math.ceil(H / PX);
+    if (pix.width !== pw || pix.height !== ph) { pix.width = pw; pix.height = ph; }
+    camX = clamp(player.x - vw / 2, 0, Math.max(0, MAP.lebar - vw));
+    camY = clamp(player.y - vh / 2 - 30, 0, Math.max(0, MAP.tinggi - vh));
+    camX = Math.round(camX / wpp) * wpp; camY = Math.round(camY / wpp) * wpp;
     // 1) dunia setengah resolusi
     ctx = pctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(terrain, camX / PX, camY / PX, W / PX, H / PX, 0, 0, W / PX, H / PX);
-    ctx.setTransform(1 / PX, 0, 0, 1 / PX, -camX / PX, -camY / PX);
+    ctx.fillStyle = '#6CBF4E'; ctx.fillRect(0, 0, pw, ph);
+    ctx.drawImage(terrain, camX / PX, camY / PX, vw / PX, vh / PX, 0, 0, W / PX, H / PX);
+    ctx.setTransform(Z / PX, 0, 0, Z / PX, -camX * Z / PX, -camY * Z / PX);
     drawEntities(t, true);
     // 2) perbesar ke kanvas utama tanpa penghalusan
     ctx = mainCtx;
     ctx.setTransform(RK, 0, 0, RK, 0, 0);
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(pix, 0, 0, W, H);
+    ctx.drawImage(pix, 0, 0, pw * PX, ph * PX);
     ctx.imageSmoothingEnabled = true;
     // 3) tulisan & penanda tajam
-    ctx.save(); ctx.translate(-camX, -camY);
+    ctx.save(); ctx.scale(Z, Z); ctx.translate(-camX, -camY);
     drawLabels(t, target());
     ctx.restore();
   }
@@ -2683,6 +2742,7 @@ window.JH_ART = (function () {
     const open = prog.settings.quest !== false;
     $('#quest').classList.toggle('closed', !open);
     $('#quest-toggle').setAttribute('aria-expanded', String(open));
+    updateZoomUI();
     applyControls();
   }
   function setBanner(stg, lvl, title, ins) {
@@ -2834,7 +2894,7 @@ window.JH_ART = (function () {
   function openInfo() {
     const box = modal(`<div class="modal-head"><h2>${icon('info')} Info Materi</h2><button class="modal-x" data-close aria-label="Tutup">${icon('x')}</button></div>
       <p><b>${esc(D.meta.judul)} — ${esc(D.meta.subjudul)}</b><br>${esc(D.meta.materi)} · ${esc(D.meta.sasaran)}</p>
-      <p>Dibuat oleh: <b>${esc(D.meta.pembuat)}</b></p>
+      <p>Dibuat Oleh : <b>${esc(D.meta.pembuat)}</b></p>
       <ul class="rule-list">${D.meta.kredit.map(k => `<li>${esc(k)}</li>`).join('')}</ul>
       <p style="font-size:16px;color:#55607A">${esc(D.meta.catatan)}</p>
       <div class="modal-actions"><button class="btn btn-danger" data-restart>${icon('rotate')}Mulai Ulang Game</button><button class="btn btn-primary" data-close data-focus>Tutup</button></div>`);
@@ -2845,9 +2905,10 @@ window.JH_ART = (function () {
   }
   function openSettings() {
     const s = prog.settings;
-    const box = modal(`<div class="modal-head"><h2>${icon('sliders')} Pengaturan Suara</h2><button class="modal-x" data-close aria-label="Tutup">${icon('x')}</button></div>
+    const box = modal(`<div class="modal-head"><h2>${icon('sliders')} Pengaturan</h2><button class="modal-x" data-close aria-label="Tutup">${icon('x')}</button></div>
       <div class="set-row"><span class="lbl">Musik Latar<small>Instrumental ceria bertema teknologi</small></span><input type="range" min="0" max="100" step="5" value="${s.musicVol}" data-mv aria-label="Volume musik"><button class="toggle" data-mt aria-pressed="${s.music}">${s.music ? 'Nyala' : 'Mati'}</button></div>
       <div class="set-row"><span class="lbl">Efek Suara<small>Klik, langkah, notifikasi, benar, salah</small></span><input type="range" min="0" max="100" step="5" value="${s.sfxVol}" data-sv aria-label="Volume efek suara"><button class="toggle" data-st aria-pressed="${s.sfx}">${s.sfx ? 'Nyala' : 'Mati'}</button></div>
+      <div class="set-row"><span class="lbl">Zoom Layar<small>Perbesar atau perkecil tampilan kota (juga: tombol − / + di HUD, roda mouse, cubit dua jari)</small></span><input type="range" min="${ZMIN * 100}" max="${ZMAX * 100}" step="5" value="${Math.round(zoomVal() * 100)}" data-zoom-range aria-label="Zoom layar"><button class="toggle" data-zoom-reset aria-label="Kembalikan zoom ke 100%" aria-pressed="true"><span data-zoom-out>${Math.round(zoomVal() * 100)}%</span></button></div>
       <div class="modal-actions"><button class="btn" data-test>${icon('volume')}Tes Suara</button><button class="btn btn-primary" data-close data-focus>Selesai</button></div>`);
     const tg = (btn, key) => { s[key] = !s[key]; btn.setAttribute('aria-pressed', String(s[key])); btn.textContent = s[key] ? 'Nyala' : 'Mati'; save(); unlockAudio(); Audio.sync(); updateHUD(); };
     $('[data-mt]', box).addEventListener('click', e => tg(e.currentTarget, 'music'));
@@ -2855,6 +2916,8 @@ window.JH_ART = (function () {
     $('[data-mv]', box).addEventListener('input', e => { s.musicVol = +e.target.value; Audio.vol(); save(); });
     $('[data-sv]', box).addEventListener('input', e => { s.sfxVol = +e.target.value; Audio.vol(); save(); });
     $('[data-test]', box).addEventListener('click', () => { unlockAudio(); sfx('correct'); });
+    $('[data-zoom-range]', box).addEventListener('input', e => setZoom(+e.target.value / 100));
+    $('[data-zoom-reset]', box).addEventListener('click', () => setZoom(1));
   }
 
   function confetti(n = 90) {
@@ -3792,6 +3855,15 @@ window.JH_ART = (function () {
     $$('.avatar-card').forEach(b => b.addEventListener('click', () => { avatarSel = b.dataset.av; sfx('click'); $$('.avatar-card').forEach(x => x.setAttribute('aria-pressed', String(x === b))); }));
     $('#b-ctrl').addEventListener('click', () => { prog.settings.ctrl = !ctrlOn(); save(); updateHUD(); });
     $('#b-map').addEventListener('click', openMap);
+    $('#b-zin').addEventListener('click', () => { sfx('click'); setZoom(zoomVal() + .15); });
+    $('#b-zout').addEventListener('click', () => { sfx('click'); setZoom(zoomVal() - .15); });
+    $('#zoom-val').addEventListener('click', () => { sfx('click'); setZoom(1); });
+    let wheelT = 0;
+    cv.addEventListener('wheel', e => { if (mode !== 'world') return; e.preventDefault(); const now = performance.now(); if (now - wheelT < 60) return; wheelT = now; setZoom(zoomVal() * (e.deltaY < 0 ? 1.08 : 1 / 1.08)); }, { passive: false });
+    const pinch = new Map(); let pinchD = 0, pinchZ = 1;
+    cv.addEventListener('pointerdown', e => { if (e.pointerType !== 'touch') return; pinch.set(e.pointerId, [e.clientX, e.clientY]); if (pinch.size === 2) { const [a, b] = [...pinch.values()]; pinchD = Math.hypot(a[0] - b[0], a[1] - b[1]); pinchZ = zoomVal(); } });
+    cv.addEventListener('pointermove', e => { if (!pinch.has(e.pointerId)) return; pinch.set(e.pointerId, [e.clientX, e.clientY]); if (pinch.size === 2 && pinchD > 0 && mode === 'world') { const [a, b] = [...pinch.values()]; setZoom(pinchZ * Math.hypot(a[0] - b[0], a[1] - b[1]) / pinchD); } });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => cv.addEventListener(ev, e => { pinch.delete(e.pointerId); if (pinch.size < 2) pinchD = 0; }));
     $('#quest-toggle').addEventListener('click', () => { prog.settings.quest = prog.settings.quest === false; save(); updateHUD(); });
     $('#b-help').addEventListener('click', openHelp);
     $('#b-info').addEventListener('click', openInfo);
