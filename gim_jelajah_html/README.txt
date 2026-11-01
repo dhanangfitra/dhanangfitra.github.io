@@ -140,6 +140,21 @@ DAFTAR ISI
   - Pengaturan : menu Pengaturan > "Zoom Layar" (penggeser 80%–175%).
   - Besar zoom tersimpan otomatis dan dipakai lagi saat game dibuka.
 
+  Zoom halaman materi (memperbesar tulisan dialog, kartu materi, soal,
+  hasil, laporan, dan jendela informasi)
+  - Setiap halaman materi punya tombol  [ − ]  [ 100% ]  [ + ]  sendiri:
+      di kotak dialog (kanan atas kotak), di kepala panel Aktivitas
+      Developer (di samping nyawa), dan di Laporan Akhir.
+  - Rentang 80%–150%. Klik angka persen untuk kembali ke 100%.
+  - Keyboard   : + / − / 0 saat halaman materi terbuka.
+  - Mouse      : Ctrl + putar roda mouse di halaman materi.
+  - Layar sentuh: cubit dua jari di halaman materi.
+  - Pengaturan : menu Pengaturan > "Zoom Materi".
+  - Pada zoom 120% ke atas, kolom maskot disembunyikan agar materi punya
+    ruang lebih luas. Jika isi tidak muat, geser (scroll) ke bawah. Saat
+    menyeret kartu ke tepi bawah/atas, halaman ikut bergulir otomatis.
+  - Zoom kota dan zoom materi diatur terpisah dan sama-sama tersimpan.
+
 
 ------------------------------------------------------------------------------
 6. KONTROL PERMAINAN
@@ -150,6 +165,8 @@ DAFTAR ISI
     E                        bicara dengan warga (NPC) terdekat
     M                        buka Peta Petualangan
     + / − / 0                zoom perbesar / perkecil / kembali 100%
+                             (kota saat berjalan, materi saat halaman
+                             materi terbuka)
     Spasi / Enter            percepat tulisan dialog atau lanjut dialog
     Tab, Shift+Tab           pindah fokus tombol atau kartu
     Enter                    pilih tombol atau kartu yang sedang difokus
@@ -158,7 +175,8 @@ DAFTAR ISI
   Layar sentuh (HP/tablet)
     Joystick (kiri bawah)       geser untuk berjalan
     Tombol "Sentuh/Bicara"      muncul di kanan bawah saat dekat warga
-    Cubit dua jari              zoom tampilan kota
+    Cubit dua jari              zoom kota, atau zoom materi saat halaman
+                                materi terbuka
     Tombol joystick di HUD      tampilkan/sembunyikan kontrol sentuh
 
   Mouse
@@ -396,7 +414,8 @@ DAFTAR ISI
 ------------------------------------------------------------------------------
 
   - Progres tersimpan otomatis di browser: nama, tokoh, misi, skor,
-    bintang, nyawa, lencana, posisi di kota, pengaturan suara, zoom, dan
+    bintang, nyawa, lencana, posisi di kota, pengaturan suara, zoom kota,
+    zoom materi, dan
     status panel Daftar Misi.
   - Tombol "Lanjutkan" muncul di layar judul jika ada progres.
   - Progres hanya ada di browser dan perangkat yang sama. Membuka file di
@@ -417,6 +436,7 @@ DAFTAR ISI
     Musik Latar   penggeser volume + tombol Nyala/Mati
     Efek Suara    penggeser volume + tombol Nyala/Mati
     Zoom Layar    penggeser 80%–175% + tombol untuk kembali ke 100%
+    Zoom Materi   penggeser 80%–150% + tombol untuk kembali ke 100%
     Tes Suara     memutar contoh efek suara
 
   Catatan: browser baru mengizinkan suara setelah ada klik/ketukan
@@ -436,7 +456,8 @@ DAFTAR ISI
   - Pembaca layar mendapat label pada tombol dan status misi.
   - Jika perangkat mengaktifkan pengaturan "kurangi gerakan" (reduce
     motion), animasi dikurangi otomatis.
-  - Zoom layar membantu pemain yang membutuhkan tampilan lebih besar.
+  - Zoom layar dan zoom materi membantu pemain yang membutuhkan tampilan
+    atau tulisan lebih besar, termasuk di HP.
 
 
 ------------------------------------------------------------------------------
@@ -522,8 +543,8 @@ DAFTAR ISI
       volume di Pengaturan, dan pastikan perangkat tidak dalam mode senyap.
 
   Tampilan terlalu kecil atau terlalu besar
-    → Gunakan zoom layar (− / +) di HUD. Untuk ukuran tulisan tombol dan
-      panel, gunakan zoom browser (Ctrl + / Ctrl −) di komputer.
+    → Kota: tombol − / + di HUD. Tulisan materi, soal, dan dialog: tombol
+      − / + di halaman materi tersebut (atau menu Pengaturan > Zoom Materi).
 
   Tokoh tidak bisa berjalan
     → Tutup jendela yang masih terbuka (Esc), klik area kota sekali agar
@@ -556,7 +577,8 @@ DAFTAR ISI
   hanya sebagai pendukung pembelajaran.
 
   Sudah diuji: alur lengkap Prolog sampai Laporan Akhir (termasuk nyawa
-  habis, Gagal di Misi Terakhir, dan Lanjut dengan Penalti), zoom layar,
+  habis, Gagal di Misi Terakhir, dan Lanjut dengan Penalti) pada zoom
+  materi 100%, 130%, dan 150%, zoom layar,
   serta tampilan layar penuh pada ukuran 360×640, 640×360, 844×390,
   390×844, 768×1024, 1024×768, 1280×1024, 1366×768, 1920×1080, dan
   2560×1080.
