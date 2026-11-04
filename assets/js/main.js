@@ -25,8 +25,9 @@
   const setActive = id => {
     if (id === activeId) return;
     activeId = id;
-    $$("#navLinks a").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+    $$('#navLinks a[href^="#"]').forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
   };
+  const spy = $$('#navLinks a[href^="#"]').length > 0;
   const update = () => {
     ticking = false;
     const y = window.scrollY;
@@ -39,7 +40,7 @@
     progress.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";
     let current = "home";
     sections.forEach(sec => { if (y >= sec.offsetTop - 140) current = sec.id; });
-    setActive(current);
+    if (spy) setActive(current);
   };
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   addEventListener("scroll", onScroll, { passive: true });
@@ -50,7 +51,7 @@
   const words = ["Teacher", "Web Developer", "System Analyst", "Game Developer", "UI / UX Enthusiast"];
   const typedEl = $("#typed");
   let wi = 0, ci = 0, del = false;
-  (function type() {
+  if (typedEl) (function type() {
     const w = words[wi];
     typedEl.textContent = w.slice(0, ci);
     if (!del && ci < w.length) ci++;
@@ -85,7 +86,37 @@
     $$(".project").forEach(p => p.classList.toggle("hide", f !== "all" && p.dataset.cat !== f));
   }));
 
+  // ---- Popup QR (tombol dengan atribut data-qr) ----
+  const qrModal = $("#qrModal");
+  if (qrModal) {
+    let lastFocus = null;
+    const openQR = btn => {
+      const url = btn.dataset.qrUrl || "#";
+      $("#qrImg").src = btn.dataset.qr;
+      $("#qrImg").alt = "Kode QR " + (btn.dataset.qrTitle || "");
+      $("#qrTitle").textContent = btn.dataset.qrTitle || "Scan QR";
+      $("#qrLink").href = url;
+      $("#qrLink").textContent = url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+      $("#qrOpen").href = url;
+      $("#qrDownload").href = btn.dataset.qr;
+      $("#qrDownload").setAttribute("download", "QR-" + (btn.dataset.qrTitle || "media").replace(/\s+/g, "-") + ".png");
+      lastFocus = btn;
+      qrModal.hidden = false;
+      document.body.classList.add("modal-open");
+      $(".qr-close", qrModal).focus();
+    };
+    const closeQR = () => {
+      qrModal.hidden = true;
+      document.body.classList.remove("modal-open");
+      if (lastFocus) lastFocus.focus();
+    };
+    $$("[data-qr]").forEach(b => b.addEventListener("click", () => openQR(b)));
+    $$("[data-close]", qrModal).forEach(el => el.addEventListener("click", closeQR));
+    addEventListener("keydown", e => { if (e.key === "Escape" && !qrModal.hidden) closeQR(); });
+  }
+
   // ---- Toast ----
+  if ($("#contactForm")) {
   const toast = $("#toast");
   const showToast = msg => { toast.textContent = msg; toast.classList.add("show"); setTimeout(() => toast.classList.remove("show"), 4000); };
 
@@ -186,5 +217,8 @@
     }
   });
 
-  $("#year").textContent = new Date().getFullYear();
+  } // end contact form
+
+  const yearEl = $("#year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 })();

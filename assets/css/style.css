@@ -432,6 +432,71 @@ footer p { color: var(--muted); font-size: .9rem; }
   .avail b { font-size: .82rem; }
   footer .container { flex-direction: column; text-align: center; }
 }
+/* ============ HALAMAN MPI ============ */
+.mpi-hero h1 { font-size: clamp(2.3rem, 5.4vw, 3.9rem); }
+.mpi-points { display: flex; flex-wrap: wrap; gap: 10px; margin: -12px 0 32px; }
+.mpi-points span {
+  font-size: .85rem; font-weight: 600; padding: 7px 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+}
+.mpi-cards .project { display: flex; flex-direction: column; }
+.mpi-cards .project-body { display: flex; flex-direction: column; flex: 1; }
+.mpi-cards .project-link { margin-top: auto; }
+.mpi-feats { list-style: none; display: grid; gap: 8px; margin: -4px 0 22px; }
+.mpi-feats li { position: relative; padding-left: 26px; font-size: .9rem; color: var(--text); }
+.mpi-feats li::before {
+  content: "✓"; position: absolute; left: 0; top: 2px; width: 18px; height: 18px; border-radius: 6px;
+  display: grid; place-items: center; font-size: .7rem; font-weight: 800; color: #fff; background: var(--grad);
+}
+.page-mpi .mono-sub { letter-spacing: .26em; }
+@media (max-width: 860px) {
+  .mpi-points { justify-content: center; }
+}
+
+/* tombol aksi kartu MPI */
+.btn-sm { padding: 11px 20px; font-size: .88rem; gap: 8px; }
+.btn-sm svg { width: 16px; height: 16px; }
+.mpi-actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mpi-actions .btn { justify-content: center; }
+/* cover MPI: gambar utuh, proporsional, di tengah + latar blur dari gambar yang sama */
+.mpi-cards .project-img { aspect-ratio: 16 / 9; display: grid; place-items: center; background: var(--bg-2); isolation: isolate; }
+.mpi-cards .project-img::before {
+  content: ""; position: absolute; inset: -20px; z-index: -1;
+  background: var(--cover) center / cover no-repeat; filter: blur(18px) saturate(1.2); opacity: .55;
+}
+.mpi-cards .project-img img { object-fit: contain; object-position: center; }
+.mpi-cards .project:hover .project-img img { transform: scale(1.03); }
+.mpi-tag {
+  align-self: flex-start; font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  padding: 5px 11px; border-radius: 999px; margin-bottom: 12px; color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent); border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent);
+}
+
+/* popup QR */
+.qr-modal { position: fixed; inset: 0; z-index: 500; display: grid; place-items: center; padding: 16px; }
+.qr-modal[hidden] { display: none; }
+.qr-backdrop { position: absolute; inset: 0; background: rgba(5, 7, 15, .72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: qrFade .25s ease; }
+.qr-box {
+  position: relative; width: min(380px, 100%); max-height: calc(100vh - 32px); overflow-y: auto;
+  padding: 30px 26px 26px; text-align: center; background: var(--bg-2);
+  animation: qrPop .3s cubic-bezier(.2, .9, .3, 1.2);
+}
+.qr-box .eyebrow { margin-bottom: 10px; }
+.qr-box h3 { font-size: 1.5rem; margin-bottom: 6px; }
+.qr-desc { color: var(--muted); font-size: .9rem; margin-bottom: 18px; }
+.qr-frame {
+  width: min(260px, 100%); aspect-ratio: 1; margin: 0 auto 14px; padding: 14px; border-radius: 20px; background: #fff;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 35%, transparent), 0 20px 40px -18px rgba(109, 93, 252, .7);
+}
+.qr-frame img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+.qr-link { display: inline-block; font-size: .85rem; font-weight: 600; color: var(--primary); margin-bottom: 18px; word-break: break-all; }
+.qr-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.qr-btns .btn { justify-content: center; }
+.qr-close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; }
+body.modal-open { overflow: hidden; }
+@keyframes qrFade { from { opacity: 0; } }
+@keyframes qrPop { from { opacity: 0; transform: translateY(20px) scale(.95); } }
+
 /* ============ MOBILE / TOUCH STABILITY ============ */
 /* Di perangkat sentuh: matikan efek hover yang "tertinggal" setelah disentuh */
 @media (hover: none) {
