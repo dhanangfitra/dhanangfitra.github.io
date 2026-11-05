@@ -18,6 +18,8 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-tap-highlight-color:transparent}
+/* tanpa ligatur: >= <= != == tetap tampil apa adanya */
+body,body *,pre,code,textarea,input{font-variant-ligatures:none!important;font-feature-settings:'liga' 0,'calt' 0,'dlig' 0!important}
 button{font-family:inherit;cursor:pointer}
 .screen{display:none;min-height:100vh;min-height:100dvh}
 .screen.active{display:flex}
@@ -1816,7 +1818,8 @@ function renderFrameFO(){
 function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
 const TOKC={t:'#ff8fb1',a:'#ffcf6b',s:'#9ee6a1',c:'#8a84a6',d:'#7fc7ff',k:'#c792ea',n:'#f78c6c',f:'#82aaff','':'#ece9f7'};
 function tokLines(code){const out=[[]];tokenize(code).forEach(([c,t])=>{t.replace(/\t/g,'    ').split('\n').forEach((p,k)=>{if(k)out.push([]);if(p)out[out.length-1].push([c,p]);});});return out;}
-function drawCodeLine(ctx,toks,x,y,maxX){for(const [c,p] of toks){if(x>maxX)break;ctx.fillStyle=TOKC[c]||TOKC[''];ctx.fillText(p,x,y);x+=ctx.measureText(p).width;}}
+const nolig=t=>String(t).replace(/([^\w\s])(?=[^\w\s])/g,'$1\u200C');
+function drawCodeLine(ctx,toks,x,y,maxX){for(const [c,p0] of toks){if(x>maxX)break;const p=nolig(p0);ctx.fillStyle=TOKC[c]||TOKC[''];ctx.fillText(p,x,y);x+=ctx.measureText(p).width;}}
 function syncFormAttrs(doc){try{doc.querySelectorAll('input,textarea,select').forEach(e=>{if(e.tagName==='TEXTAREA')e.textContent=e.value;else if(e.tagName==='SELECT')[...e.options].forEach(o=>o.toggleAttribute('selected',o.selected));else if(e.type==='checkbox'||e.type==='radio')e.toggleAttribute('checked',e.checked);else e.setAttribute('value',e.value);});}catch(x){}}
 async function capture(){
   const m=$('#mShot');$('#shotBody').innerHTML='<div class="shot-wait"><div class="spin"></div>Membuat tangkapan layar…</div>';
@@ -1884,7 +1887,7 @@ async function capture(){
     ctx.font='400 13.5px "JetBrains Mono",monospace';const colr={log:'#ece9f7',info:'#8fd0ff',warn:'#ffe19a',error:'#ff8a8a',alert:'#ffd27a',prompt:'#9ee6a1'};
     cl.forEach((l,i)=>{const yy=y0+62+i*CLH;ctx.fillStyle=colr[l.type]||'#ece9f7';
       let t=(CON_IC[l.type]||'›')+' '+(l.type==='alert'&&!/^confirm:/.test(l.msg)?'alert: ':'')+(l.type==='prompt'?'prompt: ':'')+l.msg+(l.type==='error'&&l.line?'  (baris '+l.line+')':'');
-      while(ctx.measureText(t).width>PW-32&&t.length>4)t=t.slice(0,-2);ctx.fillText(t,bx+16,yy);});
+      t=nolig(t);while(ctx.measureText(t).width>PW-32&&t.length>4)t=t.slice(0,-2);ctx.fillText(t,bx+16,yy);});
   }
   ctx.restore();
 
