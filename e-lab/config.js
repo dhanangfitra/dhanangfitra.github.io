@@ -6,5 +6,5 @@ window.APP_CONFIG = {
   // OAuth Client ID dari Google Cloud Console (HARUS sama dengan GOOGLE_CLIENT_ID di Code.gs)
   GOOGLE_CLIENT_ID: '553740532104-r02vq7o7jmam52kqb58cb71q61l3i8bh.apps.googleusercontent.com',
 
-  NAMA_LAB: 'Inventaris Lab'
+  NAMA_LAB: 'Inventaris Lab PPLG (RPL)'
 };
