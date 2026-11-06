@@ -11,7 +11,7 @@
  */
 
 // OAuth Client ID dari Google Cloud Console (sama dengan di config.js)
-const GOOGLE_CLIENT_ID = 'ISI_CLIENT_ID_ANDA.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '553740532104-r02vq7o7jmam52kqb58cb71q61l3i8bh.apps.googleusercontent.com';
 
 // Lama sesi login (maksimal 6 jam, batas CacheService)
 const SESSION_JAM = 6;
