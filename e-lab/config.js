@@ -4,7 +4,7 @@ window.APP_CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbyz17lNXInAUrXEqSsG2EmShw6LEFTST8kQdNq1HAv8tgPZOpC5gHBAJJRszOMMyP4p/exec',
 
   // OAuth Client ID dari Google Cloud Console (HARUS sama dengan GOOGLE_CLIENT_ID di Code.gs)
-  GOOGLE_CLIENT_ID: 'ISI_CLIENT_ID_ANDA.apps.googleusercontent.com',
+  GOOGLE_CLIENT_ID: '553740532104-r02vq7o7jmam52kqb58cb71q61l3i8bh.apps.googleusercontent.com',
 
-  NAMA_LAB: 'Laboratorium IPA'
+  NAMA_LAB: 'Inventaris Lab'
 };
