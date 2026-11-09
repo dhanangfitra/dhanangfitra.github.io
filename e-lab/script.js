@@ -155,6 +155,7 @@
   function showView(v) {
     S.view = v;
     ['login', 'register', 'app'].forEach((x) => ($('#view-' + x).hidden = x !== v));
+    $('#themeFloat').hidden = v === 'app';
     if (v === 'register') renderRegister();
     renderGoogleButtons();
     window.scrollTo(0, 0);
@@ -199,7 +200,8 @@
     if (!gReady) return;
     const card = $(`#view-${S.view} .auth-card`);
     const width = Math.max(200, Math.min(356, (card ? card.clientWidth : 420) - 64));
-    const base = { theme: 'outline', size: 'large', shape: 'pill', width, locale: 'id' };
+    const gelap = window.Tema && window.Tema.get() === 'dark';
+    const base = { theme: gelap ? 'filled_black' : 'outline', size: 'large', shape: 'pill', width, locale: 'id' };
     if (S.view === 'login') google.accounts.id.renderButton($('#gLoginBtn'), { ...base, text: 'signin_with' });
     if (S.view === 'register' && !S.reg) google.accounts.id.renderButton($('#gRegBtn'), { ...base, text: 'signup_with' });
   }
@@ -235,6 +237,8 @@
     }
     onLoggedIn(r);
   };
+
+  window.addEventListener('temaberubah', () => { if (S.view !== 'app') renderGoogleButtons(); });
 
   /* ====================== LOGIN & REGISTER ====================== */
   $('#formLogin').addEventListener('submit', async (e) => {
