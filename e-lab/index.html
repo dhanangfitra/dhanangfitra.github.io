@@ -36,6 +36,7 @@
       <div class="divider"><span>atau</span></div>
       <div id="gLoginBtn" class="gbtn"></div>
       <p class="auth-switch">Belum punya akun? <a href="#register">Daftar dengan akun Google</a></p>
+      <p class="auth-switch" style="margin-top:8px"><a href="display.html">Lihat papan informasi inventaris →</a></p>
     </div>
   </section>
 
@@ -123,6 +124,7 @@
         </div>
         <div class="toolbar">
           <input id="qKatalog" type="search" placeholder="Cari nama atau kode barang…">
+          <select id="fKatalogLab"><option value="">Semua lab</option></select>
           <select id="fKatalogKat"><option value="">Semua kategori</option></select>
           <label class="check"><input type="checkbox" id="fKatalogAda" checked> Hanya yang tersedia</label>
         </div>
@@ -183,7 +185,8 @@
       <section id="p-barang" class="panel">
         <div class="toolbar">
           <input id="qBarang" type="search" placeholder="Cari kode, nama, lokasi…">
-          <select id="fKategori"><option value="">Semua kategori</option></select>
+          <select id="fLab"><option value="">Semua lab</option></select>
+        <select id="fKategori"><option value="">Semua kategori</option></select>
           <select id="fKondisi"><option value="">Semua kondisi</option></select>
           <div class="spacer"></div>
           <button id="btnExport" class="btn ghost">Export CSV</button>
@@ -192,7 +195,7 @@
         <div class="card table-wrap">
           <table>
             <thead><tr>
-              <th>Kode</th><th>Nama barang</th><th>Kategori</th><th class="num">Jumlah</th>
+              <th>Kode</th><th>Nama barang</th><th>Lab</th><th>Kategori</th><th class="num">Jumlah</th>
               <th class="num">Tersedia</th><th>Kondisi</th><th>Lokasi</th><th class="aksi">Aksi</th>
             </tr></thead>
             <tbody id="tbBarang"></tbody>
@@ -290,6 +293,7 @@
       <div class="form-grid">
         <label>Kode barang *<input name="kode" required placeholder="ALT-001"></label>
         <label>Nama barang *<input name="nama" required placeholder="Mikroskop binokuler"></label>
+        <label>Lab<input name="lab" list="dlLab" placeholder="Lab Kimia"></label>
         <label>Kategori<input name="kategori" list="dlKategori" placeholder="Alat Ukur"></label>
         <label>Jumlah *<input name="jumlah" type="number" min="0" step="1" required value="1"></label>
         <label>Kondisi<select name="kondisi"></select></label>
@@ -298,6 +302,7 @@
         <label class="full">Keterangan<textarea name="keterangan" rows="2"></textarea></label>
       </div>
       <datalist id="dlKategori"></datalist>
+      <datalist id="dlLab"></datalist>
       <div class="dlg-actions">
         <button type="button" class="btn ghost" data-close>Batal</button>
         <button type="submit" class="btn primary">Simpan</button>
