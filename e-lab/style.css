@@ -116,6 +116,11 @@ a:hover { text-decoration: underline; }
 .divider { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 12px; margin: 20px 0; }
 .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 .gbtn { display: flex; justify-content: center; min-height: 44px; }
+/* Tombol Google dirender di iframe bertema terang. Jika halaman bertema gelap, browser memberi
+   iframe latar putih buram sehingga sudut tombol tampak putih. Menyamakan color-scheme
+   wadahnya membuat latar iframe kembali transparan. */
+.gbtn, .gbtn iframe { color-scheme: light; }
+.gbtn > div, .gbtn iframe { background: transparent !important; }
 .gbtn .hint { text-align: center; padding: 10px; background: var(--surface-2); border: 1px dashed var(--border); border-radius: 8px; }
 .auth-switch { text-align: center; margin: 22px 0 0; color: var(--muted); font-size: 13px; }
 .email-chip {
