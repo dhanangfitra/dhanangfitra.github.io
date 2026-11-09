@@ -142,6 +142,60 @@
     .card-head .aside { color: var(--text-3); font-size: 12px; white-space: nowrap; }
     .empty { color: var(--text-3); text-align: center; padding: 28px 8px; font-size: 13px; }
 
+    /* ---- Kartu per lab ---- */
+    .labs-sec { margin-bottom: 20px; }
+    .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 4px 2px 14px; flex-wrap: wrap; }
+    .sec-head h2 { font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
+    .sec-head p { color: var(--text-3); font-size: 13px; }
+    .key { display: flex; gap: 14px; flex-wrap: wrap; color: var(--text-2); font-size: 12px; }
+    .key span { display: inline-flex; align-items: center; gap: 6px; }
+    .key i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+    .labs { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .lab-card {
+      font: inherit; color: inherit; text-align: left; cursor: pointer; width: 100%;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 20px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 14px;
+      transition: border-color .15s, transform .15s, box-shadow .15s; position: relative; overflow: hidden;
+    }
+    .lab-card::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 4px; background: var(--s1); opacity: .9; }
+    .lab-card:hover { border-color: var(--brand); transform: translateY(-2px); }
+    .lab-card:focus-visible { outline: 3px solid rgba(31,111,235,.35); outline-offset: 2px; }
+    .lab-card.active { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(31,111,235,.18); }
+    .lab-card.none::before { background: var(--border); }
+    .lab-top { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; }
+    .lab-av {
+      width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+      background: var(--info-bg); color: var(--info-ink); font-weight: 800; font-size: 15px; letter-spacing: .02em;
+    }
+    .lab-card.none .lab-av { background: var(--muted-bg); color: var(--muted-ink); }
+    .lab-id { min-width: 0; }
+    .lab-id h3 { font-size: 16px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lab-id span { display: block; color: var(--text-3); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lab-status { justify-self: start; }
+    .lab-nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .lab-nums div { background: var(--surface-2); border-radius: 10px; padding: 8px 10px; }
+    .lab-nums b { display: block; font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -.01em; }
+    .lab-nums span { color: var(--text-3); font-size: 11px; }
+    .stack.sm { height: 12px; border-radius: 4px; }
+    .stack.sm > div:first-child { border-radius: 4px 0 0 4px; }
+    .stack.sm > div:last-child { border-radius: 0 4px 4px 0; }
+    .stack.sm > div:only-child { border-radius: 4px; }
+    .lab-leg { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--text-2); margin-top: -6px; }
+    .lab-leg span { display: inline-flex; align-items: center; gap: 5px; }
+    .lab-leg i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+    .lab-leg b { color: var(--text); }
+    .lab-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-top: 12px; border-top: 1px solid var(--border); margin-top: auto; }
+    .kond-mini { display: flex; gap: 6px; flex-wrap: wrap; }
+    .kond-mini span { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+    .lab-link { color: var(--brand); font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .lab-kat { color: var(--text-3); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: -6px; }
+    .lab-kat b { color: var(--text-2); font-weight: 600; }
+    .lab-empty { grid-column: 1 / -1; }
+    .filter-chip {
+      display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 12px; font-weight: 600;
+      background: var(--info-bg); color: var(--info-ink); border: 0; border-radius: 99px; padding: 4px 10px; cursor: pointer; margin-left: 6px;
+    }
+
     /* ---- Ketersediaan: stacked bar ---- */
     .avail-big { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
     .avail-big strong { font-size: 44px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
@@ -309,6 +363,14 @@
       .col .val { font-size: 12px; }
       .hbar { grid-template-columns: minmax(80px, 38%) 1fr 40px; gap: 10px; }
 
+      .labs { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin: 0 -16px; padding: 2px 16px 10px; scrollbar-width: none; }
+      .labs::-webkit-scrollbar { display: none; }
+      .lab-card { flex: 0 0 84%; scroll-snap-align: start; padding: 16px; }
+      .lab-card:hover { transform: none; }
+      .lab-empty { flex: 0 0 100%; }
+      .sec-head { margin-bottom: 10px; }
+      .labs-sec { margin-bottom: 16px; }
+
       /* tabel → kartu */
       .tbl-head { padding: 16px; }
       .filters, .filters input[type=search], .filters select { width: 100%; }
@@ -324,7 +386,7 @@
       td.td-kode { display: none; }
       td.td-name { grid-column: 1; }
       td.td-name span { display: block; color: var(--text-3); font-size: 12px; }
-      td.td-kat, td.td-lok { display: none; }
+      td.td-kat, td.td-lok, td.td-lab { display: none; }
       td.td-kond { grid-column: 2; grid-row: 1; align-self: start; }
       td.td-meter { grid-column: 1 / -1; }
     }
@@ -347,7 +409,7 @@
           <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.5 18.5A2 2 0 0 0 6.2 21.5h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></svg>
         </div>
         <div>
-          <h1>Papan Informasi LAB PPLG (RPL)</h1>
+          <h1>Papan Informasi Inventaris</h1>
           <p id="namaLab">Laboratorium</p>
         </div>
       </div>
@@ -403,6 +465,19 @@
         <div class="kpi-val num" id="kTelat">0</div>
         <div class="kpi-sub" id="kTelatSub">peminjaman</div>
       </div>
+    </section>
+
+    <!-- ================= PER LAB ================= -->
+    <section class="labs-sec" aria-label="Ringkasan per laboratorium">
+      <div class="sec-head">
+        <div><h2>Laboratorium</h2><p id="labsInfo">Ringkasan inventaris tiap lab · ketuk kartu untuk melihat daftar barangnya</p></div>
+        <div class="key" aria-hidden="true">
+          <span><i style="background:var(--s1)"></i>Tersedia</span>
+          <span><i style="background:var(--s2)"></i>Dipinjam</span>
+          <span><i style="background:var(--s3)"></i>Menunggu</span>
+        </div>
+      </div>
+      <div class="labs" id="labs"></div>
     </section>
 
     <!-- ================= INFOGRAFIS ================= -->
@@ -462,11 +537,12 @@
     </section>
 
     <!-- ================= TABEL ================= -->
-    <section class="card tbl-card">
+    <section class="card tbl-card" id="tabel">
       <div class="tbl-head">
         <div><h2>Daftar inventaris</h2><p id="tblInfo">—</p></div>
         <div class="filters">
           <input id="q" type="search" placeholder="Cari nama, kode, lokasi…" aria-label="Cari barang">
+          <select id="fLab" aria-label="Filter lab"><option value="">Semua lab</option></select>
           <select id="fKat" aria-label="Filter kategori"><option value="">Semua kategori</option></select>
           <select id="fKond" aria-label="Filter kondisi">
             <option value="">Semua kondisi</option><option>Baik</option><option>Rusak Ringan</option><option>Rusak Berat</option>
@@ -477,7 +553,7 @@
       <div class="tbl-scroll">
         <table>
           <thead><tr>
-            <th>Kode</th><th>Nama barang</th><th>Kategori</th><th>Lokasi</th><th>Kondisi</th><th>Ketersediaan</th>
+            <th>Kode</th><th>Nama barang</th><th>Lab</th><th>Kategori</th><th>Lokasi</th><th>Kondisi</th><th>Ketersediaan</th>
           </tr></thead>
           <tbody id="tbody"></tbody>
         </table>
@@ -679,7 +755,15 @@
         </div>`).join('')
         : '<p class="empty">Belum ada aktivitas.</p>';
 
+      // Per lab
+      renderLabs(B);
+
       // Tabel
+      const fl = $('#fLab'), curL = fl.value;
+      const daftarLab = labList(B);
+      fl.innerHTML = '<option value="">Semua lab</option>' + daftarLab.map((l) =>
+        `<option value="${esc(l.key)}" ${l.key === curL ? 'selected' : ''}>${esc(l.nama)}</option>`).join('');
+      fl.hidden = daftarLab.length === 0 || (daftarLab.length === 1 && daftarLab[0].key === NONE);
       const sel = $('#fKat'), cur = sel.value;
       sel.innerHTML = '<option value="">Semua kategori</option>' +
         kats.sort().map((k) => `<option ${k === cur ? 'selected' : ''}>${esc(k)}</option>`).join('');
@@ -689,6 +773,107 @@
       $('#tblInfo').textContent = `${fmt(B.length)} jenis barang · ${habis} sedang habis`;
       renderTable();
     }
+
+    /* ---------------- per lab ---------------- */
+    const NONE = '__none';
+    const labKey = (b) => (String(b.lab || '').trim() || NONE);
+
+    function labList(B) {
+      const conf = Array.isArray(CFG.LABS) ? CFG.LABS.filter((l) => l && l.nama) : [];
+      const fromData = [...new Set(B.map((b) => String(b.lab || '').trim()).filter(Boolean))]
+        .filter((n) => !conf.some((c) => c.nama === n)).sort((a, b) => a.localeCompare(b));
+      const list = [...conf.map((c) => ({ key: c.nama, nama: c.nama, info: c.info || '' })),
+                    ...fromData.map((n) => ({ key: n, nama: n, info: '' }))];
+      if (B.some((b) => labKey(b) === NONE)) list.push({ key: NONE, nama: 'Lab belum diatur', info: 'Isi kolom Lab pada data barang' });
+      return list;
+    }
+
+    function inisial(nama) {
+      const w = nama.replace(/^(laboratorium|lab\.?)\s+/i, '').split(/\s+/).filter(Boolean);
+      if (!w.length) return 'LB';
+      return (w.length > 1 ? w[0][0] + w[1][0] : w[0].slice(0, 2)).toUpperCase();
+    }
+
+    function lokasiTeks(items) {
+      const lok = [...new Set(items.map((b) => String(b.lokasi || '').trim()).filter(Boolean))];
+      if (!lok.length) return items.length ? 'Lokasi belum diisi' : 'Belum ada barang';
+      return lok.slice(0, 2).join(', ') + (lok.length > 2 ? ` +${lok.length - 2} lokasi` : '');
+    }
+
+    function renderLabs(B) {
+      const list = labList(B);
+      const box = $('#labs');
+      const aktif = $('#fLab').value;
+      const adaLab = list.some((l) => l.key !== NONE);
+      $('#labsInfo').textContent = adaLab
+        ? `${list.filter((l) => l.key !== NONE).length} laboratorium · ketuk kartu untuk melihat daftar barangnya`
+        : 'Belum ada barang yang diberi nama lab. Admin dapat mengisi kolom "Lab" di menu Barang.';
+      if (!list.length) { box.innerHTML = '<div class="card lab-empty"><p class="empty">Belum ada data barang.</p></div>'; return; }
+
+      box.innerHTML = list.map((l) => {
+        const items = B.filter((b) => labKey(b) === l.key);
+        const sum = (f) => items.reduce((s, b) => s + (Number(b[f]) || 0), 0);
+        const total = sum('jumlah'), tersedia = sum('tersedia'), dipinjam = sum('dipinjam'), menunggu = sum('menunggu');
+        const telat = sum('terlambat');
+        const kU = (k) => items.filter((b) => b.kondisi === k).reduce((s, b) => s + b.jumlah, 0);
+        const rusakJenis = items.filter((b) => b.kondisi !== 'Baik').length;
+        const habis = items.filter((b) => b.tersedia <= 0).length;
+        const kat = {};
+        items.forEach((b) => { const k = b.kategori || 'Lainnya'; kat[k] = (kat[k] || 0) + b.jumlah; });
+        const topKat = Object.entries(kat).sort((a, b) => b[1] - a[1]).slice(0, 3).map((x) => x[0]);
+
+        let status;
+        if (!items.length) status = '<span class="badge b-muted">Belum ada barang</span>';
+        else if (telat) status = `<span class="badge b-crit">⚠ ${telat} terlambat kembali</span>`;
+        else if (rusakJenis) status = `<span class="badge b-warn">! ${rusakJenis} jenis perlu perbaikan</span>`;
+        else if (habis) status = `<span class="badge b-info">${habis} jenis sedang habis</span>`;
+        else status = '<span class="badge b-good">✓ Semua siap pakai</span>';
+
+        const seg = [['Tersedia', tersedia, 'var(--s1)'], ['Dipinjam', dipinjam, 'var(--s2)'], ['Menunggu', menunggu, 'var(--s3)']];
+        const bar = total ? seg.filter((x) => x[1] > 0).map(([n, v, c]) =>
+          `<div style="width:${(v / total) * 100}%;background:${c}" data-tip="<b>${esc(l.nama)} · ${n}</b><br>${fmt(v)} unit · ${pct(v, total)}%"></div>`).join('') : '';
+
+        return `
+        <button type="button" class="lab-card ${l.key === NONE ? 'none' : ''} ${aktif === l.key ? 'active' : ''}" data-lab="${esc(l.key)}"
+                aria-label="Lihat barang di ${esc(l.nama)}">
+          <div class="lab-top">
+            <div class="lab-av" aria-hidden="true">${l.key === NONE ? '?' : esc(inisial(l.nama))}</div>
+            <div class="lab-id"><h3>${esc(l.nama)}</h3><span>${esc(l.info || lokasiTeks(items))}</span></div>
+          </div>
+          <div class="lab-status">${status}</div>
+          <div class="lab-nums">
+            <div><b class="num">${fmt(items.length)}</b><span>jenis</span></div>
+            <div><b class="num">${fmt(total)}</b><span>unit</span></div>
+            <div><b class="num">${pct(tersedia, total)}%</b><span>tersedia</span></div>
+          </div>
+          <div class="stack sm" role="img" aria-label="Tersedia ${tersedia}, dipinjam ${dipinjam}, menunggu ${menunggu}">${bar}</div>
+          <div class="lab-leg">
+            <span><i style="background:var(--s1)"></i><b class="num">${fmt(tersedia)}</b> tersedia</span>
+            <span><i style="background:var(--s2)"></i><b class="num">${fmt(dipinjam)}</b> dipinjam</span>
+            <span><i style="background:var(--s3)"></i><b class="num">${fmt(menunggu)}</b> menunggu</span>
+          </div>
+          ${topKat.length ? `<div class="lab-kat">Kategori: <b>${topKat.map(esc).join(', ')}</b></div>` : ''}
+          <div class="lab-foot">
+            <div class="kond-mini">
+              <span class="b-good" title="Baik">✓ ${fmt(kU('Baik'))}</span>
+              <span class="b-warn" title="Rusak ringan">! ${fmt(kU('Rusak Ringan'))}</span>
+              <span class="b-crit" title="Rusak berat">✕ ${fmt(kU('Rusak Berat'))}</span>
+            </div>
+            <span class="lab-link">Lihat barang →</span>
+          </div>
+        </button>`;
+      }).join('');
+    }
+
+    $('#labs').addEventListener('click', (e) => {
+      const c = e.target.closest('.lab-card');
+      if (!c) return;
+      const fl = $('#fLab');
+      fl.value = fl.value === c.dataset.lab ? '' : c.dataset.lab;
+      renderTable();
+      renderLabs(DATA.barang || []);
+      if (fl.value) $('#tabel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     function niceCeil(v) {
       if (v <= 5) return 5;
@@ -712,17 +897,19 @@
     function renderTable() {
       if (!DATA) return;
       const q = $('#q').value.trim().toLowerCase();
-      const k = $('#fKat').value, c = $('#fKond').value, ada = $('#fAda').checked;
+      const k = $('#fKat').value, c = $('#fKond').value, ada = $('#fAda').checked, lb = $('#fLab').value;
       const rows = (DATA.barang || [])
         .filter((b) => (!k || (b.kategori || 'Lainnya') === k) && (!c || b.kondisi === c) && (!ada || b.tersedia > 0))
-        .filter((b) => !q || [b.kode, b.nama, b.kategori, b.lokasi].join(' ').toLowerCase().includes(q))
+        .filter((b) => !lb || labKey(b) === lb)
+        .filter((b) => !q || [b.kode, b.nama, b.kategori, b.lokasi, b.lab].join(' ').toLowerCase().includes(q))
         .sort((a, b) => a.nama.localeCompare(b.nama));
       $('#tblEmpty').hidden = rows.length > 0;
       $('#tbody').innerHTML = rows.map((b) => {
         const p = b.jumlah > 0 ? (b.tersedia / b.jumlah) * 100 : 0;
         return `<tr>
           <td class="td-kode kode">${esc(b.kode)}</td>
-          <td class="td-name"><strong>${esc(b.nama)}</strong><span>${esc(b.kode)} · ${esc(b.kategori)}${b.lokasi ? ' · ' + esc(b.lokasi) : ''}</span></td>
+          <td class="td-name"><strong>${esc(b.nama)}</strong><span>${b.lab ? esc(b.lab) + ' · ' : ''}${esc(b.kode)} · ${esc(b.kategori)}${b.lokasi ? ' · ' + esc(b.lokasi) : ''}</span></td>
+          <td class="td-lab">${esc(b.lab) || '—'}</td>
           <td class="td-kat">${esc(b.kategori)}</td>
           <td class="td-lok">${esc(b.lokasi) || '—'}</td>
           <td class="td-kond">${badgeKondisi(b.kondisi)}</td>
@@ -731,9 +918,17 @@
             <b class="num ${b.tersedia <= 0 ? 'habis' : ''}">${b.tersedia <= 0 ? 'Habis' : b.tersedia}<small> / ${b.jumlah}</small></b></div></td>
         </tr>`;
       }).join('');
-      $('#tblFoot').textContent = `Menampilkan ${rows.length} dari ${(DATA.barang || []).length} jenis barang`;
+      const lbNama = lb ? (lb === NONE ? 'Lab belum diatur' : lb) : '';
+      $('#tblFoot').innerHTML = `Menampilkan ${rows.length} dari ${(DATA.barang || []).length} jenis barang` +
+        (lbNama ? ` · <button type="button" class="filter-chip" id="clearLab">${esc(lbNama)} ✕</button>` : '');
     }
     ['#q', '#fKat', '#fKond', '#fAda'].forEach((s) => $(s).addEventListener('input', renderTable));
+    $('#fLab').addEventListener('input', () => { renderTable(); renderLabs(DATA.barang || []); });
+    $('#tblFoot').addEventListener('click', (e) => {
+      if (!e.target.closest('#clearLab')) return;
+      $('#fLab').value = '';
+      renderTable(); renderLabs(DATA.barang || []);
+    });
 
     /* ---------------- tooltip ---------------- */
     const tip = $('#tip');
@@ -772,8 +967,12 @@
 
     /* ---------------- data contoh ---------------- */
     function demoData() {
+      const LAB = { 'ALT-001': 'Lab Biologi', 'ALT-002': 'Lab Kimia', 'ALT-003': 'Lab Fisika', 'GLS-001': 'Lab Kimia',
+        'GLS-002': 'Lab Kimia', 'GLS-003': 'Lab Kimia', 'ELK-001': 'Lab Fisika', 'ELK-002': 'Lab Fisika', 'ELK-003': 'Lab Fisika',
+        'KMP-001': 'Lab Komputer', 'KMP-002': 'Lab Komputer', 'KIM-001': 'Lab Kimia', 'KIM-002': 'Lab Kimia', 'FRN-001': 'Lab Biologi' };
       const b = (kode, nama, kategori, jumlah, dipinjam, menunggu, kondisi, lokasi) =>
-        ({ kode, nama, kategori, jumlah, dipinjam, menunggu, tersedia: jumlah - dipinjam - menunggu, kondisi, lokasi });
+        ({ kode, nama, kategori, jumlah, dipinjam, menunggu, tersedia: jumlah - dipinjam - menunggu, kondisi, lokasi,
+           lab: LAB[kode], terlambat: kode === 'ELK-001' ? 1 : 0 });
       const barang = [
         b('ALT-001', 'Mikroskop binokuler', 'Alat Ukur', 12, 5, 2, 'Baik', 'Lemari A'),
         b('ALT-002', 'Neraca digital 0,01 g', 'Alat Ukur', 4, 1, 0, 'Baik', 'Meja Timbang'),
