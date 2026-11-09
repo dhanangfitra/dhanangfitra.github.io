@@ -373,6 +373,11 @@
     const cur = sel.value;
     const kats = [...new Set(S.d.katalog.map((b) => b.kategori).filter(Boolean))].sort();
     sel.innerHTML = '<option value="">Semua kategori</option>' + opts(kats, cur);
+    const sl = $('#fKatalogLab');
+    const curL = sl.value;
+    const labs = [...new Set(S.d.katalog.map((b) => b.lab).filter(Boolean))].sort();
+    sl.innerHTML = '<option value="">Semua lab</option>' + opts(labs, curL);
+    sl.hidden = labs.length === 0;
     const ss = $('#fSayaStatus');
     if (ss.options.length <= 1) ss.innerHTML = '<option value="">Semua status</option>' + opts(STATUS_PINJAM);
   }
@@ -380,10 +385,11 @@
   function renderKatalog() {
     const q = $('#qKatalog').value.trim().toLowerCase();
     const k = $('#fKatalogKat').value;
+    const lb = $('#fKatalogLab').value;
     const ada = $('#fKatalogAda').checked;
     const rows = S.d.katalog
-      .filter((b) => (!k || b.kategori === k) && (!ada || b.tersedia > 0))
-      .filter((b) => !q || [b.kode, b.nama, b.kategori, b.lokasi].join(' ').toLowerCase().includes(q))
+      .filter((b) => (!k || b.kategori === k) && (!lb || b.lab === lb) && (!ada || b.tersedia > 0))
+      .filter((b) => !q || [b.kode, b.nama, b.kategori, b.lokasi, b.lab].join(' ').toLowerCase().includes(q))
       .sort((a, b) => a.nama.localeCompare(b.nama));
     $('#emptyKatalog').hidden = rows.length > 0;
     $('#gridKatalog').innerHTML = rows.map((b) => {
@@ -392,7 +398,7 @@
       <div class="item-card">
         <div class="item-top"><span class="kode">${esc(b.kode)}</span>${badgeKondisi(b.kondisi)}</div>
         <h4>${esc(b.nama)}</h4>
-        <p class="muted">${esc(b.kategori)}${b.lokasi ? ' · ' + esc(b.lokasi) : ''}</p>
+        <p class="muted">${b.lab ? esc(b.lab) + ' · ' : ''}${esc(b.kategori)}${b.lokasi ? ' · ' + esc(b.lokasi) : ''}</p>
         <div class="item-foot">
           <span class="stok ${b.tersedia <= 0 ? 'habis' : ''}"><strong>${b.tersedia}</strong> <span class="muted">/ ${b.jumlah} tersedia</span></span>
           <button class="btn primary sm" data-ajukan="${esc(b.id)}" ${bisa ? '' : 'disabled'}>Ajukan</button>
@@ -405,7 +411,7 @@
     const b = e.target.closest('[data-ajukan]');
     if (b) openAjukan(b.dataset.ajukan);
   });
-  ['#qKatalog', '#fKatalogKat', '#fKatalogAda'].forEach((s) => $(s).addEventListener('input', renderKatalog));
+  ['#qKatalog', '#fKatalogKat', '#fKatalogLab', '#fKatalogAda'].forEach((s) => $(s).addEventListener('input', renderKatalog));
 
   function openAjukan(id) {
     const b = S.d.katalog.find((x) => x.id === id);
@@ -419,7 +425,7 @@
     f.rencana_kembali.value = addDays(today(), 3);
     f.rencana_kembali.min = today();
     $('#ajukanInfo').innerHTML = `<strong>${esc(b.nama)}</strong>
-      <span class="muted">${esc(b.kode)} · ${esc(b.lokasi || '—')} · tersedia ${b.tersedia} unit</span>`;
+      <span class="muted">${esc(b.kode)} · ${b.lab ? esc(b.lab) + ' · ' : ''}${esc(b.lokasi || '—')} · tersedia ${b.tersedia} unit</span>`;
     $('#dlgAjukan').showModal();
   }
   $('#formAjukan').tanggal_pinjam.addEventListener('change', (e) => {
@@ -472,6 +478,11 @@
     const kats = [...new Set(S.d.barang.map((b) => b.kategori).filter(Boolean))].sort();
     sel.innerHTML = '<option value="">Semua kategori</option>' + opts(kats, cur);
     $('#dlKategori').innerHTML = [...new Set([...KATEGORI_DEFAULT, ...kats])].map((k) => `<option value="${esc(k)}">`).join('');
+    const labs = [...new Set([...(CFG.LABS || []).map((l) => l.nama), ...S.d.barang.map((b) => b.lab)].filter(Boolean))].sort();
+    const fl = $('#fLab'), curL = fl.value;
+    fl.innerHTML = '<option value="">Semua lab</option>' + opts(labs, curL) +
+      (S.d.barang.some((b) => !b.lab) ? `<option value="__none" ${curL === '__none' ? 'selected' : ''}>Belum diatur</option>` : '');
+    $('#dlLab').innerHTML = labs.map((l) => `<option value="${esc(l)}">`).join('');
     if ($('#fKondisi').options.length <= 1) $('#fKondisi').innerHTML = '<option value="">Semua kondisi</option>' + opts(KONDISI);
     if ($('#fLoanStatus').options.length <= 1) {
       $('#fLoanStatus').innerHTML = '<option value="">Semua status</option>' +
@@ -535,9 +546,11 @@
     const q = $('#qBarang').value.trim().toLowerCase();
     const k = $('#fKategori').value;
     const c = $('#fKondisi').value;
+    const lb = $('#fLab').value;
     return S.d.barang
       .filter((b) => (!k || b.kategori === k) && (!c || b.kondisi === c))
-      .filter((b) => !q || [b.kode, b.nama, b.lokasi, b.kategori, b.keterangan].join(' ').toLowerCase().includes(q))
+      .filter((b) => !lb || (lb === '__none' ? !b.lab : b.lab === lb))
+      .filter((b) => !q || [b.kode, b.nama, b.lokasi, b.kategori, b.keterangan, b.lab].join(' ').toLowerCase().includes(q))
       .sort((a, b) => a.kode.localeCompare(b.kode));
   }
 
@@ -548,6 +561,7 @@
       <tr>
         <td class="kode">${esc(b.kode)}</td>
         <td><strong>${esc(b.nama)}</strong></td>
+        <td>${esc(b.lab) || '<span class="muted">—</span>'}</td>
         <td>${esc(b.kategori)}</td>
         <td class="num">${b.jumlah}</td>
         <td class="num ${b.tersedia <= 0 ? 'zero' : ''}">${b.tersedia}</td>
@@ -559,7 +573,7 @@
         </span></td>
       </tr>`).join('');
   }
-  ['#qBarang', '#fKategori', '#fKondisi'].forEach((s) => $(s).addEventListener('input', renderBarang));
+  ['#qBarang', '#fLab', '#fKategori', '#fKondisi'].forEach((s) => $(s).addEventListener('input', renderBarang));
 
   let editBarangId = null;
   function openBarang(b = null) {
@@ -568,7 +582,7 @@
     f.reset();
     f.kondisi.innerHTML = opts(KONDISI, b ? b.kondisi : 'Baik');
     $('#dlgBarangTitle').textContent = b ? 'Edit barang' : 'Tambah barang';
-    if (b) ['kode', 'nama', 'kategori', 'jumlah', 'lokasi', 'tanggal_masuk', 'keterangan'].forEach((k) => (f[k].value = b[k] ?? ''));
+    if (b) ['kode', 'nama', 'lab', 'kategori', 'jumlah', 'lokasi', 'tanggal_masuk', 'keterangan'].forEach((k) => (f[k].value = b[k] ?? ''));
     else f.tanggal_masuk.value = today();
     $('#dlgBarang').showModal();
   }
@@ -593,7 +607,7 @@
   });
 
   $('#btnExport').addEventListener('click', () => {
-    const cols = ['kode', 'nama', 'kategori', 'jumlah', 'tersedia', 'kondisi', 'lokasi', 'tanggal_masuk', 'keterangan'];
+    const cols = ['kode', 'nama', 'lab', 'kategori', 'jumlah', 'tersedia', 'kondisi', 'lokasi', 'tanggal_masuk', 'keterangan'];
     const q = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
     const lines = [cols.join(';'), ...filteredBarang().map((b) => cols.map((c) => q(b[c])).join(';'))];
     const blob = new Blob(['﻿' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
